@@ -2,7 +2,8 @@
 Software Engineering group repository
 
 
-ideas
-1 - a discord bot website
+Ideas:
 
-2 - dumb ways to die game
+Main: Roguelike
+
+Backup: Dumb Ways to Die
