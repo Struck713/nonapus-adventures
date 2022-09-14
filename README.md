@@ -1,7 +1,7 @@
 # 8-1-Man-Carry
 This repository contains all of the code and information for [Dr. DeLozier's](https://www.kent.edu/cs/global-circ/dr-gregory-delozier-progressive-insurance) Software Engineering class at [Kent State University](https://www.kent.edu/). 
 
-### Game Plan
+## Game Plan
 We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.steampowered.com/app/113200/The_Binding_of_Isaac/)). If we abstract away the entire idea, it is quite simply:
 - A maze
 - A character stuck in that maze
@@ -13,7 +13,7 @@ We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.s
 - sound effects
 - art
 
-### Ideas 
+## Ideas 
 **Theme**: Ocean
 
 **Main character**: Nonapus
