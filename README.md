@@ -1,5 +1,5 @@
 # 8-1-Man-Carry
-Software Engineering group repository
+This repository contains all of the code and information for [Dr. DeLozier's](https://www.kent.edu/cs/global-circ/dr-gregory-delozier-progressive-insurance) Software Engineering class at [Kent State University](https://www.kent.edu/). 
 
 We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.steampowered.com/app/113200/The_Binding_of_Isaac/)). If we abstract away the entire idea, it is quite simply:
 - A maze
@@ -9,4 +9,34 @@ We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.s
 - A story (??)
 - An ending (??)
 
-Our backup is going to be the original Dumb Ways to Die idea.
+
+### Things that need to be discussed
+- Music
+- Sound effects
+- Art
+
+### Ideas 
+**Theme**: Ocean
+**Main character**: Nonapus
+**Enemies**:
+- Plants (standalone)
+- Piranhas (or other small fish)
+- Clams
+- Crabs
+- Boss
+	- Human
+	- Shark
+	- The Kraken
+
+**Buffs**:
+- Health items
+	- Small fish
+    - Fish food
+- Nuclear core (glow in the dark)
+- Health buffs
+
+**Room types**: (Perlin Noise for designating room type)
+- Regular ocean
+- Deep ocean
+- Caves
+- Shipwreck (loot room)
