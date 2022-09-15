@@ -56,19 +56,18 @@ class GameObject {
     constructor (x, y) {
         this.x = x;
         this.y = y;
+        console.log("called gameobject: " + x + ", " + y);
     }
 
-    translate(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
+    
     render() {
         // to be overwritten
     }
-
+    
+    set setX(x) { this.x = x; }
+    set setY(y) { this.y = y; }
     get getX() { return this.x };
     get getY() { return this.y };
 
 
-}
+} 

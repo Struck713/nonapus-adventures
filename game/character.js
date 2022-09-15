@@ -13,9 +13,7 @@ class Character extends GameObject {
     }
 
     keyPressed(code) {
-        if (code == 'a' || code == 'ArrowLeft') {
-            super.translate(0, 0);
-        }
+        console.log(super.getX());
     }
 
 }

@@ -34,7 +34,7 @@ class SpriteManager {
             
             this.sprites.push(sprite);
         });
-        this.toLoad = [];
+        delete this.toLoad;
     }
 
     loadAll() {
