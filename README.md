@@ -21,6 +21,8 @@ We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.s
 **Enemies**:
 - Plants (standalone)
 - Piranhas (or other small fish)
+- Eels
+- Stingrays
 - Clams
 - Crabs
 - Boss
