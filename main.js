@@ -1,0 +1,32 @@
+
+const gameManager = new GameManager();
+const gameController = new GameController();
+const spriteManager = new SpriteManager();
+
+let character;
+
+function preload() {
+  spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
+  spriteManager.preloadAll();
+}
+
+function setup() {
+  spriteManager.loadAll(); // load sprites
+
+  let character = new Character(10, 10, spriteManager.get("Nona"));
+  gameController.subscribe(character.keyPressed); // subscribe to gameController event bus
+
+  gameManager.queue(character); // add our character to the render queue
+  gameManager.queue(new Character(200, 200, spriteManager.get("Nona"))); // add a second character to the render queue
+
+  createCanvas(800, 800);
+  background(255);
+}
+
+function draw(){
+  gameManager.render();
+}
+
+function keyPressed() {
+  gameController.keyPressed(key);
+}
