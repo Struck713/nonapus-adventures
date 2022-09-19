@@ -23,6 +23,8 @@ function setup() {
   background(255);
 }
 
+// test comment
+
 function draw(){
   gameManager.render();
 }
