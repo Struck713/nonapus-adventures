@@ -19,7 +19,7 @@ function setup() {
 
   gameController.subscribe(character.keyPressed); // subscribe to gameController event bus
 
-  createCanvas(800, 800);
+  createCanvas(640, 480); // Canvas size adheres to 4:3 aspect ratio
   background(255);
 }
 
