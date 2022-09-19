@@ -42,3 +42,8 @@ We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.s
 - Deep ocean
 - Caves
 - Shipwreck (loot room)
+
+**Movement/abilities**:
+- WASD for basic up, down, left, right
+- left click for basic attack
+- right click for special attack (charge up ability)?
