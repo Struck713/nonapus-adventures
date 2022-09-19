@@ -45,5 +45,5 @@ We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.s
 
 **Movement/abilities**:
 - WASD for basic up, down, left, right
-- left click for basic attack
-- right click for special attack (charge up ability)?
+- Left click for basic attack
+- Right click for special attack (charge up ability)?
