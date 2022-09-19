@@ -23,6 +23,8 @@ function setup() {
   background(255);
 }
 
+// test commit
+
 function draw(){
   gameManager.render();
 }
