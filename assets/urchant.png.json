@@ -1,0 +1,32 @@
+{
+    "name": "Urchant",
+    "frames": [
+        {
+            "name": "urchant-00",
+            "position": {
+                "x": 0,
+                "y": 0,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "name": "urchant-01",
+            "position": {
+                "x": 32,
+                "y": 0,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "name": "urchant-02",
+            "position": {
+                "x": 0,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            }
+        }
+    ]
+}

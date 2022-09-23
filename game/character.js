@@ -17,3 +17,25 @@ class Character extends GameObject {
     }
 
 }
+
+class Enemy extends GameObject {
+
+    constructor (x, y, sprite) {
+        super(x, y);
+        this.sprite = sprite;
+
+        if (!this.sprite.loaded) this.sprite.load();
+    }
+
+    render () {
+        this.doUpdate();
+        
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.x, this.y); // show on screen
+    }
+
+    doUpdate() {
+
+    }
+
+} 

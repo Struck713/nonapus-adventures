@@ -55,6 +55,7 @@ class Sprite {
     constructor(fileName) {
         this.fileName = fileName;
         this.index = 0;
+        this.delay = 0;
         this.animation = [];
         this.loaded = false;
     }
@@ -85,7 +86,11 @@ class Sprite {
     cycleAnimation() {
         if (this.animation.length <= 1) return; // do nothing, not animated
 
-        this.index += 1;
+        this.delay++;
+        if (this.delay <= 5) return; // wait 5 frames per animation 
+        
+        this.delay = 0;
+        this.index++;
         if (this.index >= this.animation.length) this.index = 0;
     }
 
