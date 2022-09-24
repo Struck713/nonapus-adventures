@@ -2,7 +2,6 @@
     "name": "Shark",
     "frames": [
         {
-            "name": "shark-00",
             "position": {
                 "x": 0,
                 "y": 0,
@@ -11,7 +10,6 @@
             }
         },
         {
-            "name": "shark-01",
             "position": {
                 "x": 32,
                 "y": 0,
@@ -20,7 +18,6 @@
             }
         },
         {
-            "name": "shark-02",
             "position": {
                 "x": 0,
                 "y": 32,

@@ -39,7 +39,7 @@ class GameController {
     }
 
     keyPressed(code) {
-        this.subscribers.forEach(subscriberCallback => subscriberCallback(code)); // this is insane that it is possible
+        this.subscribers.forEach(subscriberCallback => subscriberCallback.keyPressed(code)); // this is insane that it is possible
     }
 
 }
@@ -63,11 +63,6 @@ class GameObject {
     render() {
         // to be overwritten
     }
-    
-    set setX(x) { this.x = x; }
-    set setY(y) { this.y = y; }
-    get getX() { return this.x };
-    get getY() { return this.y };
 
 
 } 

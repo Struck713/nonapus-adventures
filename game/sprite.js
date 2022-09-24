@@ -23,6 +23,11 @@ class SpriteManager {
     }
 
     load(spriteName) {
+        if (Array.isArray(spriteName)) {
+            for (let i = 0; i < spriteName.length; i++) this.toLoad.push(spriteName[i]);
+            return;
+        }
+        
         this.toLoad.push(spriteName);
     }
 

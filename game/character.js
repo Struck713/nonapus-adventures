@@ -13,7 +13,22 @@ class Character extends GameObject {
     }
 
     keyPressed(code) {
-        console.log(super.getX());
+        switch (code.toUpperCase()) {
+            case 'W':
+                this.y -= 8;
+                break;
+            case 'S':
+                this.y += 8;
+                break;
+            case 'A':
+                this.x -= 8;
+                break;
+            case 'D':
+                this.x += 8;
+                break;
+            default:
+                break;
+        }
     }
 
 }

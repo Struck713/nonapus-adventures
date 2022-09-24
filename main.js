@@ -7,8 +7,8 @@ let character;
 
 function preload() {
   spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
-  spriteManager.load("shark.png");
-  spriteManager.load("urchant.png");
+  spriteManager.load([ "shark.png", "urchant.png", "clam.png" ]);
+
   spriteManager.preloadAll();
 }
 
@@ -20,14 +20,11 @@ function setup() {
   gameManager.queue(character); // add our character to the render queue
 
   gameManager.queue(new Enemy(400, 400, spriteManager.get("Shark")));
-  gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchant")))
+  gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchant")));
+  gameManager.queue(new Enemy(300, 300, spriteManager.get("Clam")));
 
-  //gameManager.queue(new Character(200, 200, spriteManager.get("Nona"))); // add a second character to the render queue
+  gameController.subscribe(character); // subscribe to gameController event bus
 
-  gameController.subscribe(character.keyPressed); // subscribe to gameController event bus
-
-  //createCanvas(640, 480); // Canvas size adheres to 4:3 aspect ratio
-  //background(12);
   let gameCanvas = createCanvas(640, 480);
   gameCanvas.background(100,140,160);
   //gameCanvas.center();
