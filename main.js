@@ -18,12 +18,12 @@ function setup() {
   //let character = new Character(10, 10, spriteManager.get("Nona"));
   let character = new Character(250, 200, spriteManager.get("Nona"));
   gameManager.queue(character); // add our character to the render queue
+  gameController.subscribe(character); // subscribe to gameController event bus
 
   gameManager.queue(new Enemy(400, 400, spriteManager.get("Shark")));
   gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchant")));
   gameManager.queue(new Enemy(300, 300, spriteManager.get("Clam")));
 
-  gameController.subscribe(character); // subscribe to gameController event bus
 
   let gameCanvas = createCanvas(640, 480);
   gameCanvas.background(100,140,160);
@@ -37,5 +37,9 @@ function draw(){
 }
 
 function keyPressed() {
-  gameController.keyPressed(key);
+  gameController.keyPressed(key, true);
+}
+
+function keyReleased() {
+  gameController.keyPressed(key, false);
 }

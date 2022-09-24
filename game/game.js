@@ -38,8 +38,8 @@ class GameController {
         this.subscribers.push(subscriber);
     }
 
-    keyPressed(code) {
-        this.subscribers.forEach(subscriberCallback => subscriberCallback.keyPressed(code)); // this is insane that it is possible
+    keyPressed(code, pressed) {
+        this.subscribers.forEach(subscriberCallback => subscriberCallback.keyPressed(code, pressed)); // this is insane that it is possible
     }
 
 }
@@ -54,8 +54,7 @@ class GameController {
 class GameObject {
 
     constructor (x, y) {
-        this.x = x;
-        this.y = y;
+        this.position = new p5.Vector(x, y);
         console.log("called gameobject: " + x + ", " + y);
     }
 

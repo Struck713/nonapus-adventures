@@ -3,28 +3,51 @@ class Character extends GameObject {
     constructor (x, y, sprite) {
         super(x, y);
         this.sprite = sprite;
+        this.movementMatrix = [ false, false, false, false ];
 
         if (!this.sprite.loaded) this.sprite.load();
     }
 
     render () {
         this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.x, this.y); // show on screen
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        let movement = createVector(0, 0);
+        if (this.movementMatrix[0]) {
+            movement.y -= 1;
+        }
+        if (this.movementMatrix[1]) {
+            movement.y += 1;
+        }
+        if (this.movementMatrix[2]) {
+            movement.x -= 1;
+        }
+        if (this.movementMatrix[3]) {
+            movement.x += 1;
+        }
+
+        movement.setMag(1.5); //speed
+
+        this.position.add(movement);
     }
 
-    keyPressed(code) {
+    keyPressed(code, pressed) {
         switch (code.toUpperCase()) {
             case 'W':
-                this.y -= 8;
+            case 'ARROWUP':
+                this.movementMatrix[0] = pressed;
                 break;
             case 'S':
-                this.y += 8;
+            case 'ARROWDOWN':
+                this.movementMatrix[1] = pressed;
                 break;
             case 'A':
-                this.x -= 8;
+            case 'ARROWLEFT':
+                this.movementMatrix[2] = pressed;
                 break;
             case 'D':
-                this.x += 8;
+            case 'ARROWRIGHT':
+                this.movementMatrix[3] = pressed;
                 break;
             default:
                 break;
@@ -46,7 +69,7 @@ class Enemy extends GameObject {
         this.doUpdate();
         
         this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.x, this.y); // show on screen
+        this.sprite.show(this.position.x, this.position.y); // show on screen
     }
 
     doUpdate() {
