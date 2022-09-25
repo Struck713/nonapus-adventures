@@ -23,9 +23,13 @@ function setup() {
   gameManager.queue(character); // add our character to the render queue
   gameController.subscribe(character); // subscribe to gameController event bus
 
-  let gameCanvas = createCanvas(640, 480);
-  gameCanvas.background(100,140,160);
+  // let gameCanvas = createCanvas(640, 480);
+  // gameCanvas.background(100,140,160);
   //gameCanvas.center();
+
+  let gameCanvas = createCanvas(960, 720);
+  gameCanvas.background(100,140,160);
+  gameCanvas.position((screen.width - 960)/2, 15); //centering the game canvas
 }
 
 function draw(){
