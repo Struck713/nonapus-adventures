@@ -2,6 +2,7 @@ class Character extends GameObject {
 
     constructor (x, y, sprite) {
         super(x, y);
+        super.collider = true;
         this.sprite = sprite;
         this.movementMatrix = [ false, false, false, false ];
 
@@ -26,7 +27,7 @@ class Character extends GameObject {
             movement.x += 1;
         }
 
-        movement.setMag(1.5); //speed
+        movement.setMag(2); //speed
 
         this.position.add(movement);
     }
@@ -66,14 +67,14 @@ class Enemy extends GameObject {
     }
 
     render () {
-        this.doUpdate();
+        // pathing updates
         
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
     }
 
-    doUpdate() {
-
+    onCollision(other) {
+        console.log(`${other.sprite.fileName} collied with ${this.sprite.fileName}`);
     }
 
 } 

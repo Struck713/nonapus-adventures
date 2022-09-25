@@ -16,7 +16,15 @@ class GameManager {
         this.gameObjects.push(gameObject);
     }
 
+    checkCollisions() {
+        this.gameObjects.forEach(gameObject => {
+            if (!gameObject.collider) return;
+            this.gameObjects.forEach(other => gameObject.checkCollisions(other));
+        });
+    }
+
     render() {
+        this.checkCollisions();
         this.gameObjects.forEach(gameObject => gameObject.render());
     }
 
@@ -55,12 +63,26 @@ class GameObject {
 
     constructor (x, y) {
         this.position = new p5.Vector(x, y);
-        console.log("called gameobject: " + x + ", " + y);
+        this.collider = false;
     }
 
-    
     render() {
         // to be overwritten
+    }
+
+    checkCollisions(other) {
+        if (other === this) return;
+
+        let distanceVector = p5.Vector.sub(this.position, other.position);
+        let distanceMag = distanceVector.mag();
+
+        if (distanceMag <= 16) {
+           other.onCollision(this);
+        }
+    }
+
+    onCollision(other) {
+        // upon colliding
     }
 
 

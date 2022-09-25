@@ -1,0 +1,23 @@
+{
+    "startingPosition": {
+        "x": 0,
+        "y": 0
+    },
+    "enemies": [
+        {
+            "x": 100,
+            "y": 100,
+            "enemyName": "Shark"
+        },
+        {
+            "x": 200,
+            "y": 200,
+            "enemyName": "Urchant"
+        },
+        {
+            "x": 300,
+            "y": 300,
+            "enemyName": "Clam"
+        }
+    ]
+}
