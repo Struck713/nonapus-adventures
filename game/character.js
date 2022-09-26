@@ -1,3 +1,9 @@
+/**
+ * Character
+ * 
+ * This is the main character class, it contains character controller
+ * logic, along with a movement matrix and a collision matrix.
+ */
 class Character extends GameObject {
 
     constructor (x, y, sprite) {
@@ -57,6 +63,12 @@ class Character extends GameObject {
 
 }
 
+/**
+ * Enemy
+ * 
+ * This class should have code for pathing and collisions. There
+ * also will be a method to interact with the player damage handler.
+ */
 class Enemy extends GameObject {
 
     constructor (x, y, sprite) {

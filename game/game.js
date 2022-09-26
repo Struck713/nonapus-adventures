@@ -33,8 +33,7 @@ class GameManager {
 /**
  * GameController
  * 
- * Manages keyboard events
- * 
+ * Manages keyboard events by subscribing classes to it.
  */
 class GameController {
 
