@@ -17,19 +17,19 @@ class Character extends GameObject {
 
     render () {
         this.sprite.cycleAnimation(); // run animation
+        
         this.sprite.show(this.position.x, this.position.y); // show on screen
-
         let movement = createVector(0, 0);
-        if (this.movementMatrix[0]) {
+        if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
             movement.y -= 1;
         }
-        if (this.movementMatrix[1]) {
+        if ((this.movementMatrix[1]) && (this.position.y <= gameCanvasSizey-35)) {
             movement.y += 1;
         }
-        if (this.movementMatrix[2]) {
+        if ((this.movementMatrix[2]) && (this.position.x >= 3)) {
             movement.x -= 1;
         }
-        if (this.movementMatrix[3]) {
+        if ((this.movementMatrix[3]) && (this.position.x <= gameCanvasSizex-35)) {
             movement.x += 1;
         }
 

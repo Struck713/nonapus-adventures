@@ -4,6 +4,8 @@ const gameController = new GameController();
 const spriteManager = new SpriteManager();
 
 let character;
+let gameCanvasSizex = 960;
+let gameCanvasSizey = 720;
 
 function preload() {
   spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
@@ -27,9 +29,9 @@ function setup() {
   // gameCanvas.background(100,140,160);
   //gameCanvas.center();
 
-  let gameCanvas = createCanvas(960, 720);
+  let gameCanvas = createCanvas(gameCanvasSizex, gameCanvasSizey);
   gameCanvas.background(100,140,160);
-  gameCanvas.position((screen.width - 960)/2, 15); //centering the game canvas
+  gameCanvas.position((screen.width - gameCanvasSizex)/2, 15); //centering the game canvas
 }
 
 function draw(){
@@ -44,4 +46,8 @@ function keyPressed() {
 
 function keyReleased() {
   gameController.keyPressed(key, false);
+}
+
+function checkBoundaries(position) {
+  console.log(position);
 }
