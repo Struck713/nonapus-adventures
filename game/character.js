@@ -21,10 +21,16 @@ class Character extends GameObject {
 
     render () {
         this.sprite.cycleAnimation(); // run animation
+
+        
+        //let targetAngle = atan2(this.mousePosition.y, this.mousePosition.x);
+        //translate(this.position.x, this.position.y);
+        //rotate(PI/2);
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        this.crosshair.show(this.mousePosition.x - 16, this.mousePosition.y - 16); // centerdsa
+        this.sprite.angle = atan2(this.mousePosition.y - this.position.y, this.mousePosition.x - this.position.x);
 
+        this.crosshair.show(this.mousePosition.x - 16, this.mousePosition.y - 16); // centers
         let movement = createVector(0, 0);
         if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
             movement.y -= 1;
@@ -75,13 +81,6 @@ class Character extends GameObject {
    trackMouse(x, y){
         this.mousePosition.x = x;
         this.mousePosition.y = y;
-
-        let posX = width / 2;
-        let posY = height / 2;
-
-        let angle = Math.atan2(y-posY, x-posX);
-
-        // WORKS!
     }
 
 

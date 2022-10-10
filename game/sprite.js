@@ -61,6 +61,7 @@ class Sprite {
         this.fileName = fileName;
         this.index = 0;
         this.delay = 0;
+        this.angle = 0;
         this.animation = [];
         this.loaded = false;
     }
@@ -85,7 +86,13 @@ class Sprite {
     }
 
     show(x, y) {
-        image(this.animation[this.index], x, y);
+        push();
+        translate(x, y);
+        rotate(this.angle);
+        image(this.animation[this.index], 0, 0);
+        //rotate(PI / 2);
+        pop();
+        
     }
 
     cycleAnimation() {
