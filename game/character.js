@@ -23,7 +23,7 @@ class Character extends GameObject {
         this.sprite.cycleAnimation(); // run animation
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        this.crosshair.show(this.mousePosition.x - 16, this.mousePosition.y - 16); // center
+        this.crosshair.show(this.mousePosition.x - 16, this.mousePosition.y - 16); // centerdsa
 
         let movement = createVector(0, 0);
         if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
