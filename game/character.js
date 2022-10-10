@@ -66,14 +66,13 @@ class Character extends GameObject {
     * tracking mouse pos on canvas
     *
     */
-   trackMouse(){
+   trackMouse(x, y){
         let posX = width / 2;
         let posY = height / 2;
 
-        let angle = Math.atan2(mouseY-posY, mouseX-posX);
+        let angle = Math.atan2(y-posY, x-posX);
 
-        translate(posX,posY);
-        rotate(angle);
+        // WORKS!
     }
 
 

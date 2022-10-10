@@ -52,12 +52,12 @@ function keyReleased() {
   gameController.keyPressed(key, false);
 }
 
+function mouseMoved(){
+  gameController.trackMouse(mouseX, mouseY)
+}
+
 function checkBoundaries(position) {
   console.log(position);
 }
 
-// currently does not work
-function trackMouse(){
-  gameController.trackMouse(true)
-}
 

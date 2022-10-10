@@ -46,7 +46,11 @@ class GameController {
     }
 
     keyPressed(code, pressed) {
-        this.subscribers.forEach(subscriberCallback => subscriberCallback.keyPressed(code, pressed)); // this is insane that it is possible
+        this.subscribers.forEach(subscriberCallback => subscriberCallback.keyPressed(code, pressed));
+    }
+
+    trackMouse(x, y) {
+        this.subscribers.forEach(subscriberCallback => subscriberCallback.trackMouse(x, y));
     }
 
 }
