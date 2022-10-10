@@ -60,6 +60,22 @@ class Character extends GameObject {
                 break;
         }
     }
+   
+    /*
+    *
+    * tracking mouse pos on canvas
+    *
+    */
+   trackMouse(){
+        let posX = width / 2;
+        let posY = height / 2;
+
+        let angle = Math.atan2(mouseY-posY, mouseX-posX);
+
+        translate(posX,posY);
+        rotate(angle);
+    }
+
 
 }
 
