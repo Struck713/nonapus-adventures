@@ -32,16 +32,28 @@ class Character extends GameObject {
 
         this.crosshair.show(this.mousePosition.x - 16, this.mousePosition.y - 16); // centers
         let movement = createVector(0, 0);
-        if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
+        // if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
+        //     movement.y -= 1;
+        // }
+        // if ((this.movementMatrix[1]) && (this.position.y <= gameCanvasSizey-35)) {
+        //     movement.y += 1;
+        // }
+        // if ((this.movementMatrix[2]) && (this.position.x >= 3)) {
+        //     movement.x -= 1;
+        // }
+        // if ((this.movementMatrix[3]) && (this.position.x <= gameCanvasSizex-35)) {
+        //     movement.x += 1;
+        // }
+        if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
             movement.y -= 1;
         }
-        if ((this.movementMatrix[1]) && (this.position.y <= gameCanvasSizey-35)) {
+        if ((this.movementMatrix[1]) && (this.position.y <= gameCanvasSizey - 16)) {
             movement.y += 1;
         }
-        if ((this.movementMatrix[2]) && (this.position.x >= 3)) {
+        if ((this.movementMatrix[2]) && (this.position.x >= 16)) {
             movement.x -= 1;
         }
-        if ((this.movementMatrix[3]) && (this.position.x <= gameCanvasSizex-35)) {
+        if ((this.movementMatrix[3]) && (this.position.x <= gameCanvasSizex - 16)) {
             movement.x += 1;
         }
 
