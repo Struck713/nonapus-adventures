@@ -22,12 +22,10 @@ function setup() {
   gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchant")));
   gameManager.queue(new Enemy(300, 300, spriteManager.get("Clam")));
 
-  let character = new Character(250, 200, spriteManager.get("Nona"));
-  let cross = new Character(250, 225, spriteManager.get("Crosshair"));
+  
+  let character = new Character(250, 200, spriteManager.get("Nona"), spriteManager.get("Crosshair"));
   gameManager.queue(character); // add our character to the render queue
-  gameManager.queue(cross);
   gameController.subscribe(character); // subscribe to gameController event bus
-  gameController.subscribe(cross);
 
   // let gameCanvas = createCanvas(640, 480);
   // gameCanvas.background(100,140,160);

@@ -6,19 +6,25 @@
  */
 class Character extends GameObject {
 
-    constructor (x, y, sprite) {
+    constructor (x, y, sprite, crosshair) {
         super(x, y);
         super.collider = true;
-        this.sprite = sprite;
         this.movementMatrix = [ false, false, false, false ];
 
+        this.sprite = sprite;
         if (!this.sprite.loaded) this.sprite.load();
+
+        this.mousePosition = createVector(0, 0);
+        this.crosshair = crosshair;
+        if (!this.crosshair.loaded) this.crosshair.load();
     }
 
     render () {
         this.sprite.cycleAnimation(); // run animation
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
+        this.crosshair.show(this.mousePosition.x - 16, this.mousePosition.y - 16); // center
+
         let movement = createVector(0, 0);
         if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
             movement.y -= 1;
@@ -67,6 +73,9 @@ class Character extends GameObject {
     *
     */
    trackMouse(x, y){
+        this.mousePosition.x = x;
+        this.mousePosition.y = y;
+
         let posX = width / 2;
         let posY = height / 2;
 
