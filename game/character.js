@@ -39,7 +39,7 @@ class Character extends GameObject {
             movement.x += 1;
         }
 
-        movement.setMag(2); //speed
+        movement.setMag(2.5); //speed
 
         this.position.add(movement);
     }
