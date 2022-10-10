@@ -89,7 +89,7 @@ class Sprite {
         push();
         translate(x, y);
         rotate(this.angle);
-        image(this.animation[this.index], 0, 0);
+        image(this.animation[this.index], -16, -16);
         //rotate(PI / 2);
         pop();
         
