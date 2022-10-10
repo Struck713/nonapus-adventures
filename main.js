@@ -32,6 +32,7 @@ function setup() {
   //gameCanvas.center();
 
   let gameCanvas = createCanvas(gameCanvasSizex, gameCanvasSizey);
+  gameCanvas.style('cursor', 'url(\'assets/crosshair.png\'), none')
   gameCanvas.background(100,140,160);
   gameCanvas.position((screen.width - gameCanvasSizex)/2, 15); //centering the game canvas
 }

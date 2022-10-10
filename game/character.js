@@ -6,17 +6,15 @@
  */
 class Character extends GameObject {
 
-    constructor (x, y, sprite, crosshair) {
+    constructor (x, y, sprite) {
         super(x, y);
         super.collider = true;
+        this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
 
         this.sprite = sprite;
         if (!this.sprite.loaded) this.sprite.load();
 
-        this.mousePosition = createVector(0, 0);
-        this.crosshair = crosshair;
-        if (!this.crosshair.loaded) this.crosshair.load();
     }
 
     render () {
@@ -24,8 +22,7 @@ class Character extends GameObject {
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y, this.mousePosition.x - this.position.x);
-
-        this.crosshair.show(this.mousePosition.x, this.mousePosition.y); // centers
+        
         let movement = createVector(0, 0);
         if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
             movement.y -= 1;
