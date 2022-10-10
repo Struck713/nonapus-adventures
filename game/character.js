@@ -21,29 +21,12 @@ class Character extends GameObject {
 
     render () {
         this.sprite.cycleAnimation(); // run animation
-
-        
-        //let targetAngle = atan2(this.mousePosition.y, this.mousePosition.x);
-        //translate(this.position.x, this.position.y);
-        //rotate(PI/2);
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y, this.mousePosition.x - this.position.x);
 
         this.crosshair.show(this.mousePosition.x, this.mousePosition.y); // centers
         let movement = createVector(0, 0);
-        // if ((this.movementMatrix[0]) && (this.position.y >= 3)) {
-        //     movement.y -= 1;
-        // }
-        // if ((this.movementMatrix[1]) && (this.position.y <= gameCanvasSizey-35)) {
-        //     movement.y += 1;
-        // }
-        // if ((this.movementMatrix[2]) && (this.position.x >= 3)) {
-        //     movement.x -= 1;
-        // }
-        // if ((this.movementMatrix[3]) && (this.position.x <= gameCanvasSizex-35)) {
-        //     movement.x += 1;
-        // }
         if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
             movement.y -= 1;
         }
