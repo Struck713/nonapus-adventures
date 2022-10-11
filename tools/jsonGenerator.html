@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Generator - Sprite Sheets</title>
+</head>
+
+<body>
+  <label>Sprite File:</label> <input type="file" name="inputfile" onchange="onFileSelected(event)" /><br />
+  <label>Sprite Width:</label> <input type="number" name="spriteSizeX" value="32" min="0" onchange="spriteWidth = Number(value)" /><br />
+  <label>Sprite Height:</label> <input type="number" name="spriteSizeY" value="32" min="0" onchange="spriteHeight = Number(value)" /><br />
+
+  <br />
+
+  <img id="spritesheet">
+  <pre id="output"></pre>
+    
+  <script type="text/javascript">
+      let spriteHeight = 32;
+      let spriteWidth = 32;
+      let imgX = 0;
+      let imgY = 0;
+      let name = "No Name"
+
+      onFileSelected = (event) => {
+        var selectedFile = event.target.files[0];
+        var reader = new FileReader();
+        var img = new Image();
+
+        
+        reader.onload = function(event) {
+          name = selectedFile.name;
+          img.src = event.target.result;
+
+          var spritesheet = document.getElementById("spritesheet");
+          spritesheet.src = img.src;  
+        };
+
+        img.onload = (event) => {
+          imgX = img.naturalWidth; 
+          imgY = img.naturalHeight;
+          generateJSON();
+        }
+
+        reader.readAsDataURL(selectedFile);
+      }
+
+      generateJSON = () => {
+
+        var xSprites = imgX / spriteWidth;
+        var ySprites = imgY / spriteHeight;
+
+        var outputJSON = { 
+          name: name,
+          animations: {
+            idle: []
+          }
+        };
+
+        for (var i = 0; i < ySprites; ++i) {
+          for (var j = 0; j < xSprites; ++j) {
+            outputJSON.animations.idle.push({
+              x: j * spriteWidth,
+              y: i * spriteHeight,
+              width: spriteWidth,
+              height: spriteHeight
+            });
+          }
+        }
+        
+        var output = document.getElementById("output");
+        output.innerHTML = "";
+        output.innerHTML += `Image size: ${imgX}, ${imgY}\n`;
+        output.innerHTML += "Output JSON:\n";
+        output.innerHTML += JSON.stringify(outputJSON, null, 4);
+      }
+  </script>
+</body>
+
+</html>
