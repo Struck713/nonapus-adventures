@@ -118,6 +118,8 @@ class Sprite {
     }
 
     swapAnimation(name) {
+        if (this.animation == name) return;
+        this.index = 0;
         this.animation = name;
     }
 

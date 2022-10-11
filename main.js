@@ -9,7 +9,7 @@ let gameCanvasSizey = 720;
 
 function preload() {
   spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
-  spriteManager.load([ "shark.png", "urchin.png", "clam.png" ]);
+  spriteManager.load([ "shark.png", "urchin.png", "clam.png", "pufferfish.png" ]);
 
   spriteManager.preloadAll();
 }
@@ -20,7 +20,7 @@ function setup() {
   gameManager.queue(new Enemy(400, 400, spriteManager.get("Shark")));
   gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchin")));
   gameManager.queue(new Enemy(300, 300, spriteManager.get("Clam")));
-
+  gameManager.queue(new Pufferfish(500, 500, spriteManager.get("Pufferfish")));
   
   let character = new Character(250, 200, spriteManager.get("Nona"));
   gameManager.queue(character); // add our character to the render queue
