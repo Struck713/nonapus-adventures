@@ -107,7 +107,7 @@ class Sprite {
     }
 
     cycleAnimation() {
-        if (this.animations.length <= 0) return; // do nothing, not animated
+        //dif (this.animations.length <= 0) return; // do nothing, not animated
 
         this.delay++;
         if (this.delay <= 5) return; // wait 5 frames per animation 
@@ -115,6 +115,10 @@ class Sprite {
         this.delay = 0;
         this.index++;
         if (this.index >= this.animations[this.animation].length) this.index = 0;
+    }
+
+    swapAnimation(name) {
+        this.animation = name;
     }
 
 }
