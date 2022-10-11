@@ -1,11 +1,11 @@
 
 const gameManager = new GameManager();
 const gameController = new GameController();
+const levelManager = new LevelManager();
 const spriteManager = new SpriteManager();
 
 let character;
-let gameCanvasSizex = 960;
-let gameCanvasSizey = 720;
+
 
 function preload() {
   spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
@@ -26,14 +26,11 @@ function setup() {
   gameManager.queue(character); // add our character to the render queue
   gameController.subscribe(character); // subscribe to gameController event bus
 
-  // let gameCanvas = createCanvas(640, 480);
-  // gameCanvas.background(100,140,160);
-  //gameCanvas.center();
-
-  let gameCanvas = createCanvas(gameCanvasSizex, gameCanvasSizey);
-  gameCanvas.style('cursor', 'url(\'assets/crosshair.png\'), none')
-  gameCanvas.background(100,140,160);
-  gameCanvas.position((screen.width - gameCanvasSizex)/2, 15); //centering the game canvas
+  let canvasSize = { x: 960, y: 720 };
+  let canvas = createCanvas(canvasSize.x, canvasSize.y);
+  canvas.style('cursor', 'url(\'assets/crosshair.png\'), none')
+  canvas.background(100, 140, 160);
+  canvas.position((screen.width - canvasSize.x) / 2, 15); //centering the game canvas
 }
 
 function draw(){
