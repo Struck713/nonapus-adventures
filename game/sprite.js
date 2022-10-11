@@ -59,26 +59,37 @@ class Sprite {
 
     constructor(fileName) {
         this.fileName = fileName;
+
+        this.animation = "idle"; // default animation is idle
         this.index = 0;
         this.delay = 0;
         this.angle = 0;
-        this.animation = [];
+        this.animations = [];
+
         this.loaded = false;
     }
 
     preload() {
-        this.spriteSheet = loadImage(this.fileName); //load spritesheet
-        this.frameData = loadJSON(`${this.fileName}.json`);
+        this.sprites = loadImage(this.fileName); //load spritesheet
+        this.data = loadJSON(`${this.fileName}.json`);
     }
     
     load() {
-        this.name = this.frameData.name;
-        let frames = this.frameData.frames;
-        for (let i = 0; i < frames.length; i++) {
-            let position = frames[i].position;
-            let sprite = this.spriteSheet.get(position.x, position.y, position.width, position.height);
-            this.animation.push(sprite);
-        }
+        this.name = this.data.name;
+
+        let allAnimations = this.data.animations;
+        let allAnimationNames = Object.keys(allAnimations);
+
+        allAnimationNames.forEach(name => {
+            let animation = [];
+            let frames = allAnimations[name];
+            frames.forEach(frame => {
+                let position = frame.position;
+                let sprite = this.sprites.get(position.x, position.y, position.width, position.height);
+                animation.push(sprite);
+            });
+            this.animations[name] = animation;
+        })
 
         this.loaded = true;
         this.frameData = null;
@@ -89,21 +100,21 @@ class Sprite {
         push();
         translate(x, y);
         rotate(this.angle);
-        image(this.animation[this.index], -16, -16);
+        image(this.animations[this.animation][this.index], -16, -16);
         //rotate(PI / 2);
         pop();
         
     }
 
     cycleAnimation() {
-        if (this.animation.length <= 1) return; // do nothing, not animated
+        if (this.animations.length <= 0) return; // do nothing, not animated
 
         this.delay++;
         if (this.delay <= 5) return; // wait 5 frames per animation 
         
         this.delay = 0;
         this.index++;
-        if (this.index >= this.animation.length) this.index = 0;
+        if (this.index >= this.animations[this.animation].length) this.index = 0;
     }
 
 }

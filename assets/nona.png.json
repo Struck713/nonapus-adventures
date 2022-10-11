@@ -1,37 +1,39 @@
 {
     "name": "Nona",
-    "frames": [
-        {
-            "position": {
-                "x": 0,
-                "y": 0,
-                "width": 32,
-                "height": 32
+    "animations": {
+        "idle": [
+            {
+                "position": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 32,
+                    "height": 32
+                }
+            },
+            {
+                "position": {
+                    "x": 32,
+                    "y": 0,
+                    "width": 32,
+                    "height": 32
+                }
+            },
+            {
+                "position": {
+                    "x": 0,
+                    "y": 32,
+                    "width": 32,
+                    "height": 32
+                }
+            },
+            {
+                "position": {
+                    "x": 32,
+                    "y": 32,
+                    "width": 32,
+                    "height": 32
+                }
             }
-        },
-        {
-            "position": {
-                "x": 32,
-                "y": 0,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "position": {
-                "x": 0,
-                "y": 32,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "position": {
-                "x": 32,
-                "y": 32,
-                "width": 32,
-                "height": 32
-            }
-        }
-    ]
+        ]
+    }
 }
