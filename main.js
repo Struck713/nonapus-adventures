@@ -6,7 +6,6 @@ const spriteManager = new SpriteManager();
 
 let character;
 
-
 function preload() {
   spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
   spriteManager.load([ "shark.png", "urchin.png", "clam.png", "pufferfish.png" ]);
@@ -26,11 +25,10 @@ function setup() {
   gameManager.queue(character); // add our character to the render queue
   gameController.subscribe(character); // subscribe to gameController event bus
 
-  let canvasSize = { x: 960, y: 720 };
-  let canvas = createCanvas(canvasSize.x, canvasSize.y);
+  let canvas = createCanvas(GameManager.CANVAS_X, GameManager.CANVAS_Y);
   canvas.style('cursor', 'url(\'assets/crosshair.png\'), none')
   canvas.background(100, 140, 160);
-  canvas.position((screen.width - canvasSize.x) / 2, 15); //centering the game canvas
+  canvas.position((screen.width - GameManager.CANVAS_X) / 2, 15); //centering the game canvas
 }
 
 function draw(){

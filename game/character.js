@@ -27,13 +27,13 @@ class Character extends GameObject {
         if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
             movement.y -= 1;
         }
-        if ((this.movementMatrix[1]) && (this.position.y <= gameCanvasSizey - 16)) {
+        if ((this.movementMatrix[1]) && (this.position.y <= GameManager.CANVAS_Y - 16)) {
             movement.y += 1;
         }
         if ((this.movementMatrix[2]) && (this.position.x >= 16)) {
             movement.x -= 1;
         }
-        if ((this.movementMatrix[3]) && (this.position.x <= gameCanvasSizex - 16)) {
+        if ((this.movementMatrix[3]) && (this.position.x <= GameManager.CANVAS_X - 16)) {
             movement.x += 1;
         }
 
