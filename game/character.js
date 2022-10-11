@@ -8,7 +8,6 @@ class Character extends GameObject {
 
     constructor (x, y, sprite) {
         super(x, y);
-        super.collider = true;
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
 
@@ -21,8 +20,8 @@ class Character extends GameObject {
         this.sprite.cycleAnimation(); // run animation
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        this.sprite.angle = atan2(this.mousePosition.y - this.position.y, this.mousePosition.x - this.position.x);
-        
+        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 16, this.mousePosition.x - this.position.x + 16) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
+
         let movement = createVector(0, 0);
         if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
             movement.y -= 1;
@@ -40,6 +39,11 @@ class Character extends GameObject {
         movement.setMag(2.5); //speed
 
         this.position.add(movement);
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Enemy)) return;
+        console.log('nona collided with enemy!');
     }
 
     keyPressed(code, pressed) {
@@ -65,16 +69,10 @@ class Character extends GameObject {
         }
     }
    
-    /*
-    *
-    * tracking mouse pos on canvas
-    *
-    */
-   trackMouse(x, y){
+    mouseMovement(x, y) {
         this.mousePosition.x = x;
         this.mousePosition.y = y;
     }
-
 
 }
 
@@ -88,6 +86,7 @@ class Enemy extends GameObject {
 
     constructor (x, y, sprite) {
         super(x, y);
+        super.collider = true;
         this.sprite = sprite;
 
         if (!this.sprite.loaded) this.sprite.load();
@@ -100,8 +99,8 @@ class Enemy extends GameObject {
         this.sprite.show(this.position.x, this.position.y); // show on screen
     }
 
-    onCollision(other) {
-        console.log(`${other.sprite.fileName} collied with ${this.sprite.fileName}`);
-    }
+    // onCollision(other) {
+    //     console.log(`${other.sprite.fileName} collied with ${this.sprite.fileName}`);
+    // }
 
 } 

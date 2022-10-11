@@ -1,0 +1,7 @@
+class LevelManager {
+
+}
+
+class Level {
+
+}

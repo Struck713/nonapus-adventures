@@ -9,7 +9,7 @@ let gameCanvasSizey = 720;
 
 function preload() {
   spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
-  spriteManager.load([ "shark.png", "urchant.png", "clam.png" ]);
+  spriteManager.load([ "shark.png", "urchin.png", "clam.png" ]);
   spriteManager.load("crosshair.png"); // load crosshair
 
   spriteManager.preloadAll();
@@ -52,7 +52,7 @@ function keyReleased() {
 }
 
 function mouseMoved(){
-  gameController.trackMouse(mouseX, mouseY)
+  gameController.mouseMovement(mouseX, mouseY)
 }
 
 function checkBoundaries(position) {
