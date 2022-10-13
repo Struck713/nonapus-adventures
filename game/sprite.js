@@ -11,7 +11,6 @@
 class SpriteManager {
 
     constructor() {
-        this.toLoad = [];
         this.sprites = [];
     }
 
@@ -22,18 +21,9 @@ class SpriteManager {
         return null;
     }
 
-    load(spriteName) {
-        if (Array.isArray(spriteName)) {
-            for (let i = 0; i < spriteName.length; i++) this.toLoad.push(spriteName[i]);
-            return;
-        }
-        
-        this.toLoad.push(spriteName);
-    }
-
-    preloadAll() {
-        this.toLoad.forEach(spriteName => {
-            let spriteFile = `../assets/${spriteName}`;
+    preload(toLoad) {
+        toLoad.forEach(spriteName => {
+            let spriteFile = `../assets/sprites/${spriteName}`;
             let sprite = new Sprite(spriteFile);
             sprite.preload();
             
@@ -42,7 +32,7 @@ class SpriteManager {
         delete this.toLoad;
     }
 
-    loadAll() {
+    load() {
         this.sprites.forEach(sprite => sprite.load());
     }
 

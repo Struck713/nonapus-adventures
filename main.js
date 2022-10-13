@@ -7,14 +7,13 @@ const spriteManager = new SpriteManager();
 let character;
 
 function preload() {
-  spriteManager.load("nona.png"); // will look in assets folder for nona.png and nona.png.json
-  spriteManager.load([ "shark.png", "urchin.png", "clam.png", "pufferfish.png" ]);
-
-  spriteManager.preloadAll();
+  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png"]);
+  levelManager.preload([ 0 ]);
 }
 
 function setup() {
-  spriteManager.loadAll(); // load sprites
+  spriteManager.load(); // load sprites
+  levelManager.load(); //load levels
 
   gameManager.queue(new Enemy(400, 400, spriteManager.get("Shark")));
   gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchin")));
@@ -32,8 +31,7 @@ function setup() {
 }
 
 function draw(){
-  background(100, 140, 160); // clear canvas and then render
-
+  levelManager.render();
   gameManager.render();
 }
 

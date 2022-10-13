@@ -9,7 +9,7 @@
 class GameManager {
 
     static CANVAS_X = 960;
-    static CANVAS_Y = 720;
+    static CANVAS_Y = 736;
 
     constructor() {
         this.gameObjects = [];
