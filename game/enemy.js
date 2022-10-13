@@ -24,21 +24,21 @@
 
 
         let movement = createVector(0, 0);
-        if (this.randomX < this.position.x) {
+        if ((this.randomX < this.position.x) && (this.position.x >= 16)) {
             movement.x -= 1;
         }
-        if (this.randomX > this.position.x) {
+        if ((this.randomX > this.position.x) && (this.position.y <= GameManager.CANVAS_Y - 16)) {
             movement.y += 1;
         }
-        if (this.randomY < this.position.x) {
+        if ((this.randomY < this.position.x) && (this.position.x >= 16)) {
             movement.x -= 1;
         }
-        if (this.randomY > this.position.x) {
+        if ((this.randomY > this.position.x) && (this.position.Y <= GameManager.CANVAS_Y - 16)) {
             movement.y += 1;
         }
 
 
-        movement.setMag(2.5); //speed
+        movement.setMag(1.5); //speed
 
         this.position.add(movement);
 
