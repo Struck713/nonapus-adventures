@@ -22,33 +22,33 @@
 
         //this.enemyMove(this.position.x);
 
-
         let movement = createVector(0, 0);
-        if ((this.randomX < this.position.x) && (this.position.x >= 16)) {
+        if (this.randomX < this.position.x) {
             movement.x -= 1;
+            //console.log("1");
         }
-        if ((this.randomX > this.position.x) && (this.position.y <= GameManager.CANVAS_Y - 16)) {
+        if (this.randomX > this.position.x) {
+            movement.x += 1;
+            //console.log("2");
+        }
+        if (this.randomY < this.position.y) {
+            movement.y -= 1;
+            //console.log("3");
+        }
+        if (this.randomY > this.position.y) {
             movement.y += 1;
+            //console.log("4");
         }
-        if ((this.randomY < this.position.x) && (this.position.x >= 16)) {
-            movement.x -= 1;
+       
+        if((abs(this.randomX - this.position.x) < 1) && (abs(this.randomY == this.position.y) < 1)){
+            this.randomX = Math.floor(Math.random() * GameManager.CANVAS_X);
+            this.randomY = Math.floor(Math.random() * GameManager.CANVAS_Y);
+            console.log("hello");
         }
-        if ((this.randomY > this.position.x) && (this.position.Y <= GameManager.CANVAS_Y - 16)) {
-            movement.y += 1;
-        }
-
 
         movement.setMag(1.5); //speed
 
         this.position.add(movement);
-
-        if((this.randomX == this.position.x) && (this.randomY == this.position.y)){
-            movement.x = 0;
-            movement.y = 0;
-            //randomX = Math.floor(Math.random() * GameManager.CANVAS_X);
-            //randomY = Math.floor(Math.random() * GameManager.CANVAS_Y);
-            console.log("hello");
-        }
     }
 
     updatePathing() {
