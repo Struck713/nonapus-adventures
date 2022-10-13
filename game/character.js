@@ -93,6 +93,7 @@ class OilAttack extends GameObject {
 
     constructor (x, y, direction) {
         super(x, y, spriteManager.get("OilAttack"));
+        super.collider = true;
         this.direction = direction;
     }
 
@@ -104,6 +105,9 @@ class OilAttack extends GameObject {
         this.position.add(angleVector);       
     }
 
+    onCollision(other) {
+
+    }
 
 
 }
