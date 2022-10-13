@@ -102,12 +102,10 @@ class OilAttack extends GameObject {
 
         let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));
         angleVector.setMag(3.5); //speed
-        this.position.add(angleVector);       
+        this.position.add(angleVector);
     }
 
     onCollision(other) {
 
     }
-
-
 }

@@ -10,6 +10,8 @@
     constructor (x, y, sprite) {
         super(x, y, sprite);
         super.collider = true;
+        this.randomX = Math.floor(Math.random() * GameManager.CANVAS_X);
+        this.randomY = Math.floor(Math.random() * GameManager.CANVAS_Y);
     }
 
     render () {
@@ -17,6 +19,36 @@
         
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        //this.enemyMove(this.position.x);
+
+
+        let movement = createVector(0, 0);
+        if (this.randomX < this.position.x) {
+            movement.x -= 1;
+        }
+        if (this.randomX > this.position.x) {
+            movement.y += 1;
+        }
+        if (this.randomY < this.position.x) {
+            movement.x -= 1;
+        }
+        if (this.randomY > this.position.x) {
+            movement.y += 1;
+        }
+
+
+        movement.setMag(2.5); //speed
+
+        this.position.add(movement);
+
+        if((this.randomX == this.position.x) && (this.randomY == this.position.y)){
+            movement.x = 0;
+            movement.y = 0;
+            //randomX = Math.floor(Math.random() * GameManager.CANVAS_X);
+            //randomY = Math.floor(Math.random() * GameManager.CANVAS_Y);
+            console.log("hello");
+        }
     }
 
     updatePathing() {
