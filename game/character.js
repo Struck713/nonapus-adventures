@@ -6,15 +6,11 @@
  */
 class Character extends GameObject {
 
-    constructor (x, y, sprite) {
-        super(x, y);
+    constructor (x, y) {
+        super(x, y, spriteManager.get("Nona"));
         super.collider = true;
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
-
-        this.sprite = sprite;
-        if (!this.sprite.loaded) this.sprite.load();
-
     }
 
     render () {
@@ -47,6 +43,11 @@ class Character extends GameObject {
         console.log('nona collided with enemy!');
     }
 
+    fireParticle() {
+        gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
+    }
+
+    // event stuff
     keyPressed(code, pressed) {
         switch (code.toUpperCase()) {
             case 'W':
@@ -74,5 +75,35 @@ class Character extends GameObject {
         this.mousePosition.x = x;
         this.mousePosition.y = y;
     }
+
+    mouseClicked(type) {
+        switch (type) {
+            case 0:
+                this.fireParticle();
+            case 1:
+                // middle click
+            case 2:
+                // right click
+        }
+    }
+
+}
+
+class OilAttack extends GameObject {
+
+    constructor (x, y, direction) {
+        super(x, y, spriteManager.get("OilAttack"));
+        this.direction = direction;
+    }
+
+    render() {
+        this.sprite.show(this.position.x, this.position.y);
+
+        let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));
+        angleVector.setMag(3.5); //speed
+        this.position.add(angleVector);       
+    }
+
+
 
 }

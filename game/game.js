@@ -34,31 +34,6 @@ class GameManager {
 }
 
 /**
- * GameController
- * 
- * Manages keyboard events by subscribing classes to it.
- */
-class GameController {
-
-    constructor() {
-        this.subscribers = [];
-    }
-
-    subscribe(subscriber) {
-        this.subscribers.push(subscriber);
-    }
-
-    keyPressed(code, pressed) {
-        this.subscribers.forEach(subscriberCallback => subscriberCallback.keyPressed(code, pressed));
-    }
-
-    mouseMovement(x, y) {
-        this.subscribers.forEach(subscriberCallback => subscriberCallback.mouseMovement(x, y));
-    }
-
-}
-
-/**
  * GameObject
  * 
  * This class should be inherited by anything that is going to be
@@ -67,9 +42,12 @@ class GameController {
  */
 class GameObject {
 
-    constructor (x, y) {
+    constructor (x, y, sprite) {
         this.position = new p5.Vector(x, y);
         this.collider = false;
+
+        this.sprite = sprite;
+        if (!this.sprite.loaded) this.sprite.load();
     }
 
     render() {

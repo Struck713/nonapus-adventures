@@ -62,10 +62,12 @@
         for (var i = 0; i < ySprites; ++i) {
           for (var j = 0; j < xSprites; ++j) {
             outputJSON.animations.idle.push({
-              x: j * spriteWidth,
-              y: i * spriteHeight,
-              width: spriteWidth,
-              height: spriteHeight
+              "position": {
+                x: j * spriteWidth,
+                y: i * spriteHeight,
+                width: spriteWidth,
+                height: spriteHeight
+              }
             });
           }
         }

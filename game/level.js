@@ -22,12 +22,10 @@ class LevelManager {
         let tilesJSON = this.tilesetJSON.tiles;
         tilesJSON.forEach(tileJSON => {
             let tile = this.tilesetImage.get(tileJSON.x, tileJSON.y, tileJSON.width, tileJSON.height);
-            console.log([tileJSON.x, tileJSON.y, tileJSON.width, tileJSON.height].join(', '))
             this.tiles.push(tile);
         });
 
         this.levels.forEach(level => level.load(this.tiles));
-        this.levels.forEach(level => console.log(level));
 
         delete this.tilesetImage;
         delete this.tilesetJSON;
@@ -53,8 +51,6 @@ class Level {
     load(tiles) {
         this.tileMatrix = this.tileMatrixJSON.layout;
         delete this.tileMatrixJSON;
-    
-        //console.log((GameManager.CANVAS_X * GameManager.CANVAS_Y) / (32 * 32));
 
         this.graphics = createGraphics(GameManager.CANVAS_X, GameManager.CANVAS_Y);
         for (let column = 0; column < (GameManager.CANVAS_Y / 32); ++column) {
@@ -62,7 +58,6 @@ class Level {
                 var tile = tiles[this.tileMatrix[column][row]];
                 var offsetX = row * 32;
                 var offsetY = column * 32;
-                //console.log(`${offsetX}, ${offsetY}: ${this.tileMatrix[column][row]}`)
                 this.graphics.image(tile, offsetX, offsetY);
             }
         }

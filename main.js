@@ -1,33 +1,34 @@
 
 const gameManager = new GameManager();
-const gameController = new GameController();
 const levelManager = new LevelManager();
 const spriteManager = new SpriteManager();
 
-let character;
-
 function preload() {
-  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png"]);
+  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
   levelManager.preload([ 0 ]);
 }
+
+let character;
 
 function setup() {
   spriteManager.load(); // load sprites
   levelManager.load(); //load levels
 
-  gameManager.queue(new Enemy(400, 400, spriteManager.get("Shark")));
-  gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchin")));
-  gameManager.queue(new Enemy(300, 300, spriteManager.get("Clam")));
-  gameManager.queue(new Pufferfish(500, 500, spriteManager.get("Pufferfish")));
+  // test some enemies
+  // gameManager.queue(new Enemy(400, 400, spriteManager.get("Shark")));
+  // gameManager.queue(new Enemy(100, 100, spriteManager.get("Urchin")));
+  // gameManager.queue(new Enemy(300, 300, spriteManager.get("Clam")));
+  // gameManager.queue(new Pufferfish(500, 500));
   
-  let character = new Character(250, 200, spriteManager.get("Nona"));
+  character = new Character(250, 200);
   gameManager.queue(character); // add our character to the render queue
-  gameController.subscribe(character); // subscribe to gameController event bus
 
   let canvas = createCanvas(GameManager.CANVAS_X, GameManager.CANVAS_Y);
-  canvas.style('cursor', 'url(\'assets/crosshair.png\'), none')
+  canvas.style('cursor', 'url(\'assets/crosshair.png\'), none');
   canvas.background(100, 140, 160);
   canvas.position((screen.width - GameManager.CANVAS_X) / 2, 15); //centering the game canvas
+
+  canvas.canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); } // disable right click
 }
 
 function draw(){
@@ -35,20 +36,26 @@ function draw(){
   gameManager.render();
 }
 
+/**
+ * Key Events
+ */
 function keyPressed() {
-  gameController.keyPressed(key, true);
+  character.keyPressed(key, true);
 }
 
 function keyReleased() {
-  gameController.keyPressed(key, false);
+  character.keyPressed(key, false);
 }
 
-function mouseMoved(){
-  gameController.mouseMovement(mouseX, mouseY)
+/**
+ * Mouse Events
+ */
+function mouseMoved() {
+  character.mouseMovement(mouseX, mouseY);
 }
 
-function checkBoundaries(position) {
-  console.log(position);
+function mousePressed(event) {
+  character.mouseClicked(event.button);
 }
 
 

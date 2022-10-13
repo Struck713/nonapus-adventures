@@ -8,11 +8,8 @@
  class Enemy extends GameObject {
 
     constructor (x, y, sprite) {
-        super(x, y);
+        super(x, y, sprite);
         super.collider = true;
-        this.sprite = sprite;
-
-        if (!this.sprite.loaded) this.sprite.load();
     }
 
     render () {
@@ -34,11 +31,9 @@
 
 class Pufferfish extends Enemy {
 
-    constructor (x, y, sprite) {
-        super(x, y, sprite);
+    constructor (x, y) {
+        super(x, y, spriteManager.get("Pufferfish"));
         super.collider = true;
-
-        if (!this.sprite.loaded) this.sprite.load();
     }
 
     updatePathing() {
