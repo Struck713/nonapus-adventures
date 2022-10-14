@@ -22,6 +22,7 @@ class LevelManager {
         let tilesJSON = this.tilesetJSON.tiles;
         tilesJSON.forEach(tileJSON => {
             let tile = this.tilesetImage.get(tileJSON.x, tileJSON.y, tileJSON.width, tileJSON.height);
+            tile.collide = tileJSON.collide;
             this.tiles.push(tile);
         });
 
@@ -32,7 +33,25 @@ class LevelManager {
     }
 
     render() {
-        this.levels[this.level].render();
+        this.current.render();
+    }
+
+    getTile(x, y, offsetRow, offsetColumn) {
+        return this.tiles[this.current.getTile(x, y, offsetRow, offsetColumn)];
+    }
+
+    // returns a list of nearby tiles if they are collideable
+    isCollideable(x, y) {
+        return [
+            !this.getTile(x, y, 0, -1).collide, 
+            !this.getTile(x, y, 0, 1).collide, 
+            !this.getTile(x, y, -1, 0).collide,
+            !this.getTile(x, y, 1, 0).collide
+        ];
+    }
+
+    get current() {
+        return this.levels[this.level];
     }
 
 }
@@ -52,9 +71,11 @@ class Level {
         this.tileMatrix = this.tileMatrixJSON.layout;
         delete this.tileMatrixJSON;
 
+        console.log(this.tileMatrix);
+
         this.graphics = createGraphics(GameManager.CANVAS_X, GameManager.CANVAS_Y);
-        for (let column = 0; column < (GameManager.CANVAS_Y / 32); ++column) {
-            for (let row = 0; row < (GameManager.CANVAS_X / 32); ++row) {
+        for (let column = 0; column < GameManager.COLUMNS; ++column) {
+            for (let row = 0; row < GameManager.ROWS; ++row) {
                 var tile = tiles[this.tileMatrix[column][row]];
                 var offsetX = row * 32;
                 var offsetY = column * 32;
@@ -66,6 +87,16 @@ class Level {
 
     render() {
         image(this.graphics, 0, 0);
+    }
+
+    getTile(x, y, offsetRow, offsetColumn) {
+        let row = floor(x / 32) + offsetRow;
+        if (GameManager.ROWS <= row) return null;
+
+        let column = floor(y / 32) + offsetColumn;
+        if (GameManager.COLUMNS <= column) return null;
+
+        return this.tileMatrix[column][row];
     }
 
 }

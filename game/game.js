@@ -10,25 +10,33 @@ class GameManager {
 
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
+    static ROWS = this.CANVAS_X / 32;
+    static COLUMNS = this.CANVAS_Y / 32;
 
     constructor() {
         this.gameObjects = [];
     }
 
-    queue(gameObject) {
-        this.gameObjects.push(gameObject);
-    }
-
-    checkCollisions() {
+    render() {
+        // render
         this.gameObjects.forEach(gameObject => {
-            if (!gameObject.collider) return;
-            this.gameObjects.forEach(other => gameObject.checkCollisions(other));
+            
+            // check collisions
+            if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other));
+
+            // check if still on screen (object cleanup)
+            if (!gameObject.isOnScreen()) {
+                let index = this.gameObjects.indexOf(gameObject);
+                if (index > -1) this.gameObjects.splice(index, 1);
+                gameObject.destroy();
+            }
+
+            gameObject.render()
         });
     }
 
-    render() {
-        this.checkCollisions();
-        this.gameObjects.forEach(gameObject => gameObject.render());
+    queue(gameObject) {
+        this.gameObjects.push(gameObject);
     }
 
     getByClass(clazz) {
@@ -71,6 +79,10 @@ class GameObject {
         // to be overwritten
     }
 
+    destroy() {
+        delete this;
+    }
+
     checkCollisions(other) {
         if (other === this) return;
 
@@ -84,6 +96,12 @@ class GameObject {
 
     onCollision(other) {
         // upon colliding
+    }
+
+    isOnScreen() {
+        let x = this.position.x;
+        let y = this.position.y;
+        return (x > 0 && y > 0 && x < GameManager.CANVAS_X && y < GameManager.CANVAS_Y);
     }
 
 

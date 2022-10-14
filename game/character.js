@@ -23,16 +23,17 @@ class Character extends GameObject {
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 8 to center the nona and cursor and subtract PI/2  
 
         let movement = createVector(0, 0);
-        if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
+        let collisionMatrix = levelManager.isCollideable(this.position.x, this.position.y);
+        if ((this.movementMatrix[0]) && (collisionMatrix[0])) {
             movement.y -= 1;
         }
-        if ((this.movementMatrix[1]) && (this.position.y <= GameManager.CANVAS_Y - 16)) {
+        if ((this.movementMatrix[1]) && (collisionMatrix[1])) {
             movement.y += 1;
         }
-        if ((this.movementMatrix[2]) && (this.position.x >= 16)) {
+        if ((this.movementMatrix[2]) && (collisionMatrix[2])) {
             movement.x -= 1;
         }
-        if ((this.movementMatrix[3]) && (this.position.x <= GameManager.CANVAS_X - 16)) {
+        if ((this.movementMatrix[3]) && (collisionMatrix[3])) {
             movement.x += 1;
         }
 
@@ -43,7 +44,6 @@ class Character extends GameObject {
 
     onCollision(other) {
         if (!(other instanceof Enemy)) return;
-        console.log('nona collided with enemy!');
     }
 
     fireParticle() {
@@ -95,7 +95,7 @@ class Character extends GameObject {
 class OilAttack extends GameObject {
 
     constructor (x, y, direction) {
-        super(x, y, spriteManager.get("OilAttack"));
+        super(x, y, spriteManager.get("Clam"));
         super.collider = true;
         this.direction = direction;
     }
