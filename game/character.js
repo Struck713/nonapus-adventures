@@ -6,10 +6,12 @@
  */
 class Character extends GameObject {
 
+    static TAG = "CHARACTER";
+
     constructor (x, y) {
         super(x, y, spriteManager.get("Nona"));
         super.collider = true;
-        this.tag = "CHARACTER";
+        this.tag = Character.TAG;
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
     }

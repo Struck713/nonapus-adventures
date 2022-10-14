@@ -13,7 +13,7 @@
     }
 
     calculateAngleToTarget() {
-        let character = gameManager.getByTag("CHARACTER");
+        let character = gameManager.getByTag(Character.TAG);
         this.target = createVector(character.position.x, character.position.y);
         this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
     }
