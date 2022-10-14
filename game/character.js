@@ -9,6 +9,7 @@ class Character extends GameObject {
     constructor (x, y) {
         super(x, y, spriteManager.get("Nona"));
         super.collider = true;
+        this.tag = "CHARACTER";
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
     }
@@ -17,7 +18,7 @@ class Character extends GameObject {
         this.sprite.cycleAnimation(); // run animation
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 16, this.mousePosition.x - this.position.x + 16) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
+        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 8 to center the nona and cursor and subtract PI/2  
 
         let movement = createVector(0, 0);
         if ((this.movementMatrix[0]) && (this.position.y >= 16)) {
@@ -97,6 +98,10 @@ class OilAttack extends GameObject {
         this.direction = direction;
     }
 
+    onCollision(other) {
+
+    }
+
     render() {
         this.sprite.show(this.position.x, this.position.y);
 
@@ -104,8 +109,5 @@ class OilAttack extends GameObject {
         angleVector.setMag(3.5); //speed
         this.position.add(angleVector);
     }
-
-    onCollision(other) {
-
-    }
+    
 }

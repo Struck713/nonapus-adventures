@@ -9,7 +9,6 @@ function preload() {
 }
 
 let character;
-
 function setup() {
   spriteManager.load(); // load sprites
   levelManager.load(); //load levels

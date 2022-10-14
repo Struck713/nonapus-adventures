@@ -31,6 +31,23 @@ class GameManager {
         this.gameObjects.forEach(gameObject => gameObject.render());
     }
 
+    getByClass(clazz) {
+        return this.gameObjects.filter(gameObject => gameObject instanceof clazz);
+    }
+
+    getByTag(tag) {
+        return this.gameObjects.find(gameObject => {
+            if (!gameObject.hasOwnProperty("tag")) return false;
+            if (gameObject.tag !== tag) return false;
+            return true;
+        })
+    }
+
+    getById(id) {
+        if (this.gameObjects.length <= id) return null;
+        return this.gameObjects[id];
+    }
+
 }
 
 /**

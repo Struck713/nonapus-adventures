@@ -10,47 +10,30 @@
     constructor (x, y, sprite) {
         super(x, y, sprite);
         super.collider = true;
-        this.randomX = Math.floor(Math.random() * GameManager.CANVAS_X);
-        this.randomY = Math.floor(Math.random() * GameManager.CANVAS_Y);
+    }
+
+    calculateAngleToTarget() {
+        let character = gameManager.getByTag("CHARACTER");
+        this.target = createVector(character.position.x, character.position.y);
+        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
+    }
+
+    updatePathing() {
+        
     }
 
     render () {
-        this.updatePathing();
-        
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
-        let movement = createVector(0, 0);
-        if (this.randomX < this.position.x) {
-            movement.x -= 1;
-        }
-        if (this.randomX > this.position.x) {
-            movement.x += 1;
-        }
-        if (this.randomY < this.position.y) {
-            movement.y -= 1;
-        }
-        if (this.randomY > this.position.y) {
-            movement.y += 1;
-        }
+        if (!this.target) this.calculateAngleToTarget();
 
-        if(abs(this.randomX - this.position.x) < 1){
-            this.randomX = Math.floor(Math.random() * GameManager.CANVAS_X);
-            console.log("hit x");
-        }
-       
-        if(abs(this.randomY - this.position.y) < 1){
-            this.randomY = Math.floor(Math.random() * GameManager.CANVAS_Y);
-            console.log("hit y");
-        }
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
         movement.setMag(1.5); //speed
 
         this.position.add(movement);
-    }
-
-    updatePathing() {
-
     }
 
     // onCollision(other) {
