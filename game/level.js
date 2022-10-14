@@ -7,8 +7,8 @@ class LevelManager {
     }
 
     preload(toLoad) {
-        this.tilesetImage = loadImage('../assets/levels/tileset.png'); //load tileset
-        this.tilesetJSON = loadJSON('../assets/levels/tileset.json');
+        this.tilesetImage = loadImage('../assets/levels/tileset1.png'); //load tileset
+        this.tilesetJSON = loadJSON('../assets/levels/tileset1.json');
 
         toLoad.forEach(index => {
             let level = new Level(index);
