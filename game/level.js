@@ -96,7 +96,7 @@ class Level {
         let row = floor(x / LevelManager.TILE_SIZE) + offsetRow;
         if (GameManager.ROWS <= row) return null;
 
-        let column = floor(y / LevelManager.TILE_SIZE ) + offsetColumn;
+        let column = floor(y / LevelManager.TILE_SIZE) + offsetColumn;
         if (GameManager.COLUMNS <= column) return null;
 
         return this.tileMatrix[column][row];
