@@ -3,8 +3,8 @@
         {
             "name": "rock",
             "collide": true,
-            "x": 96,
-            "y": 128,
+            "x": 32,
+            "y": 64,
             "width": 32,
             "height": 32
         },
