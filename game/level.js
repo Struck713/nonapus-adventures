@@ -1,5 +1,8 @@
 class LevelManager {
 
+    static TILE_SIZE = 32;
+    static TILE_SIZE_HALF = LevelManager.TILE_SIZE / 2;
+
     constructor() {
         this.levels = []; // this is just a level template list
         this.tiles = [];
@@ -7,8 +10,8 @@ class LevelManager {
     }
 
     preload(toLoad) {
-        this.tilesetImage = loadImage('../assets/levels/tileset1.png'); //load tileset
-        this.tilesetJSON = loadJSON('../assets/levels/tileset1.json');
+        this.tilesetImage = loadImage('../assets/levels/tileset.png'); //load tileset
+        this.tilesetJSON = loadJSON('../assets/levels/tileset.json');
 
         toLoad.forEach(index => {
             let level = new Level(index);
@@ -77,8 +80,8 @@ class Level {
         for (let column = 0; column < GameManager.COLUMNS; ++column) {
             for (let row = 0; row < GameManager.ROWS; ++row) {
                 var tile = tiles[this.tileMatrix[column][row]];
-                var offsetX = row * 32;
-                var offsetY = column * 32;
+                var offsetX = row * LevelManager.TILE_SIZE;
+                var offsetY = column * LevelManager.TILE_SIZE;
                 this.graphics.image(tile, offsetX, offsetY);
             }
         }
@@ -90,10 +93,10 @@ class Level {
     }
 
     getTile(x, y, offsetRow, offsetColumn) {
-        let row = floor(x / 32) + offsetRow;
+        let row = floor(x / LevelManager.TILE_SIZE) + offsetRow;
         if (GameManager.ROWS <= row) return null;
 
-        let column = floor(y / 32) + offsetColumn;
+        let column = floor(y / LevelManager.TILE_SIZE ) + offsetColumn;
         if (GameManager.COLUMNS <= column) return null;
 
         return this.tileMatrix[column][row];

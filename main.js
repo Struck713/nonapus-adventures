@@ -1,6 +1,7 @@
 
 const gameManager = new GameManager();
 const levelManager = new LevelManager();
+const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
 function preload() {
@@ -33,6 +34,7 @@ function setup() {
 function draw(){
   levelManager.render();
   gameManager.render();
+  hudManager.render();
 }
 
 /**
