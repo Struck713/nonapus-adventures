@@ -4,9 +4,14 @@ const levelManager = new LevelManager();
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
+let backgroundMusic; 
+
 function preload() {
   spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
   levelManager.preload([ 0 ]);
+
+  backgroundMusic = loadSound('assets/sound/background.mp3');
+
 }
 
 let character;
@@ -29,6 +34,8 @@ function setup() {
   canvas.position((screen.width - GameManager.CANVAS_X) / 2, 15); //centering the game canvas
 
   canvas.canvas.oncontextmenu = function(e) { e.preventDefault(); e.stopPropagation(); } // disable right click
+
+  backgroundMusic.play();
 }
 
 function draw(){
