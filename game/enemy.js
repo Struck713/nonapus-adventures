@@ -31,7 +31,7 @@
         let movement = p5.Vector.fromAngle(this.angle);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
-        movement.setMag(1.5); //speed
+        movement.setMag(1); //speed
 
         this.position.add(movement);
     }
