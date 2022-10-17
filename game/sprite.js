@@ -51,6 +51,7 @@ class Sprite {
         this.fileName = fileName;
 
         this.animation = "idle"; // default animation is idle
+        this.resetOnFinish = false;
         this.index = 0;
         this.delay = 0;
         this.angle = 0;
@@ -104,13 +105,17 @@ class Sprite {
         
         this.delay = 0;
         this.index++;
-        if (this.index >= this.animations[this.animation].length) this.index = 0;
+        if (this.index >= this.animations[this.animation].length) {
+            if (this.resetOnFinish) this.swapAnimation("idle", false);
+            this.index = 0;
+        }
     }
 
-    swapAnimation(name) {
+    swapAnimation(name, resetOnFinish) {
         if (this.animation == name) return;
         this.index = 0;
         this.animation = name;
+        this.resetOnFinish = resetOnFinish;
     }
 
 }

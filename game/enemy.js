@@ -55,7 +55,7 @@ class Pufferfish extends Enemy {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
-        this.sprite.swapAnimation("explode");
+        this.sprite.swapAnimation("explode", true);
     }
 
 }
