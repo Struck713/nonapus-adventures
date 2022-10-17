@@ -1,18 +1,98 @@
 {
     "tiles": [
         {
-            "name": "rock",
-            "collide": true,
+            "name": "sand",
+            "collide": false,
+            "x": 0,
+            "y": 0,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-2",
+            "collide": false,
             "x": 32,
+            "y": 0,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-3",
+            "collide": true,
+            "x": 64,
+            "y": 0,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-4",
+            "collide": false,
+            "x": 96,
+            "y": 0,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-5",
+            "collide": false,
+            "x": 128,
+            "y": 0,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-6",
+            "collide": false,
+            "x": 0,
+            "y": 32,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-7",
+            "collide": false,
+            "x": 32,
+            "y": 32,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-8",
+            "collide": false,
+            "x": 64,
+            "y": 32,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-9",
+            "collide": false,
+            "x": 96,
+            "y": 32,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-10",
+            "collide": false,
+            "x": 128,
+            "y": 32,
+            "width": 32,
+            "height": 32
+        },
+        {
+            "name": "sand-11",
+            "collide": false,
+            "x": 0,
             "y": 64,
             "width": 32,
             "height": 32
         },
         {
-            "name": "sand",
-            "collide": false,
-            "x": 0,
-            "y": 0,
+            "name": "rock",
+            "collide": true,
+            "x": 32,
+            "y": 64,
             "width": 32,
             "height": 32
         }
