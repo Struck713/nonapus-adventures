@@ -15,10 +15,10 @@ function setup() {
   levelManager.load(); //load levels
 
   // test some enemies
-  // gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Shark")));
-  // gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Urchin")));
-  // gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Clam")));
-  // gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Shark")));
+  gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Urchin")));
+  gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Clam")));
+  gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
   
   character = new Character(400, 400);
   gameManager.queue(character); // add our character to the render queue
