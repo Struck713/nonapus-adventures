@@ -26,8 +26,6 @@ class GameManager {
 
             // check if still on screen (object cleanup)
             if (!gameObject.isOnScreen()) {
-                let index = this.gameObjects.indexOf(gameObject);
-                if (index > -1) this.gameObjects.splice(index, 1);
                 gameObject.destroy();
             }
 
@@ -38,6 +36,11 @@ class GameManager {
     queue(gameObject) {
         this.gameObjects.push(gameObject);
     }
+
+    dequeue(gameObject) {
+        let index = this.gameObjects.indexOf(gameObject);
+        if (index > - 1) this.gameObjects.splice(index, 1)
+    } 
 
     getByClass(clazz) {
         return this.gameObjects.filter(gameObject => gameObject instanceof clazz);
@@ -80,6 +83,7 @@ class GameObject {
     }
 
     destroy() {
+        gameManager.dequeue(this);
         delete this;
     }
 

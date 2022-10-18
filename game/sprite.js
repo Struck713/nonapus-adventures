@@ -107,15 +107,22 @@ class Sprite {
         this.index++;
         if (this.index >= this.animations[this.animation].length) {
             if (this.resetOnFinish) this.swapAnimation("idle", false);
+            if (this.callback) { this.callback(); delete this.callback; }
+            
             this.index = 0;
         }
     }
 
     swapAnimation(name, resetOnFinish) {
+        this.swapAnimation(name, () => {}, resetOnFinish);
+    }
+
+    swapAnimation(name, callback, resetOnFinish) {
         if (this.animation == name) return;
         this.index = 0;
         this.animation = name;
         this.resetOnFinish = resetOnFinish;
+        this.callback = callback;
     }
 
 }

@@ -8,7 +8,7 @@ function preload() {
   spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
   levelManager.preload([ 0 ]);
 
-  loadSound('assets/sound/background.mp3', e => e.play());
+  //loadSound('assets/sound/background.mp3', e => e.play());
 
 }
 

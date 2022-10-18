@@ -34,8 +34,6 @@ class Character extends GameObject {
         this.sprite.show(this.position.x, this.position.y); // show on screen
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 8 to center the nona and cursor and subtract PI/2  
 
-        //add ink every 5 seconds
-
         let movement = createVector(0, 0);
         let collisionMatrix = levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
         if ((this.movementMatrix[0]) && (collisionMatrix[0])) {
