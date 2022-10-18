@@ -2,7 +2,7 @@ class HUDManager {
 
     constructor() {
         this.hudItems = [
-            new DebugStatsItem(5, 15, 12)
+            new InkRemainingProgressBar(15, 10, 12)
         ];
     }
 
@@ -41,27 +41,22 @@ class TextItem extends HUDItem {
 
 }
 
-class DebugStatsItem extends HUDItem {
+class InkRemainingProgressBar extends HUDItem {
 
-    constructor(x, y, size) {
+    constructor(x, y) {
         super(x, y);
-        this.size = size;
     }
 
     render() {
-
-        if (!this.characterPosition) {
-            let character = gameManager.getByTag(Character.TAG);
-            this.characterPosition = character.position;
+    
+        if (!this.character) {
+            this.character = gameManager.getByTag(Character.TAG);
         }
 
-        textSize(this.size);
-        fill(255);
-        text(
-              `Frame Rate: ${frameRate()}\n`
-            + `Character Position: (${this.characterPosition.x}, ${this.characterPosition.y})`, 
-            this.x, 
-            this.y);
+        fill(0);
+        rect(this.x, this.y, 100, 25)
+        fill(161, 33, 240);
+        rect(this.x, this.y, this.character.inkLeft * (100 / Character.INK_DEFAULT_VALUE), 25);
     }
 
 }

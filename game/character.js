@@ -6,14 +6,26 @@
  */
 class Character extends GameObject {
 
+    static INK_DEFAULT_VALUE = 15; // how many shots
+    static INK_INCREASE_SECONDS = 1250; // how many milliseconds to increate
+
     static TAG = "CHARACTER";
 
     constructor (x, y) {
+
+        // set super tags
         super(x, y, spriteManager.get("Nona"));
         super.collider = true;
+
+        // set game object tags
         this.tag = Character.TAG;
+
+        // character specific traits
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
+
+        this.inkLeft = Character.INK_DEFAULT_VALUE;
+        setInterval(() => { if (this.inkLeft < Character.INK_DEFAULT_VALUE) this.inkLeft++ }, Character.INK_INCREASE_SECONDS);
     }
 
     render () {
@@ -21,6 +33,8 @@ class Character extends GameObject {
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 8 to center the nona and cursor and subtract PI/2  
+
+        //add ink every 5 seconds
 
         let movement = createVector(0, 0);
         let collisionMatrix = levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
@@ -47,6 +61,9 @@ class Character extends GameObject {
     }
 
     fireParticle() {
+        if (this.inkLeft <= 0) return;
+        this.inkLeft--;
+
         gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
     }
 
