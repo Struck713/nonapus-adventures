@@ -25,6 +25,7 @@ We're going to build a 2D roguelike (like the [Binding of Isaac](https://store.s
 - Stingrays
 - Clams
 - Crabs
+- Sea Urchin
 - Boss
 	- Human
 	- Shark
