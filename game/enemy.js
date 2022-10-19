@@ -22,7 +22,7 @@
         
     }
 
-    render () {
+   /*  render () {
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
@@ -34,7 +34,7 @@
         movement.setMag(1); //speed
 
         this.position.add(movement);
-    }
+    } */
 
     // onCollision(other) {
     //     console.log(`${other.sprite.fileName} collied with ${this.sprite.fileName}`);
@@ -50,12 +50,104 @@ class Pufferfish extends Enemy {
     }
 
     updatePathing() {
-        // do something!
+        //movement.setMag(3); // do something!
+    }
+
+    render () {
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(1); //speed
+
+        this.position.add(movement);
     }
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
         this.sprite.swapAnimation("explode", () => this.destroy(), false);
+    }
+
+}
+
+class Shark extends Enemy{
+    constructor (x, y) {
+        super(x, y, spriteManager.get("Shark"));
+        super.collider = true;
+    }
+
+    updatePathing() {
+        //movement.setMag(3); // do something!
+    }
+
+    render () {
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(1.5); //speed
+
+        this.position.add(movement);
+    }
+
+}
+
+class Urchin extends Enemy{
+    constructor (x, y) {
+        super(x, y, spriteManager.get("Urchin"));
+        super.collider = true;
+    }
+
+    updatePathing() {
+        //movement.setMag(3); // do something!
+    }
+
+    render () {
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(0); //speed
+
+        this.position.add(movement);
+    }
+
+}
+
+class Clam extends Enemy{
+    constructor (x, y) {
+        super(x, y, spriteManager.get("Clam"));
+        super.collider = true;
+    }
+
+    updatePathing() {
+        //movement.setMag(3); // do something!
+    }
+
+    render () {
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(0); //speed
+
+        this.position.add(movement);
     }
 
 }
