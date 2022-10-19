@@ -25,7 +25,7 @@ class GameManager {
             if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other));
 
             // check if still on screen (object cleanup)
-            if (!gameObject.isOnScreen()) {
+            if (!gameObject.isRenderable()) {
                 gameObject.destroy();
             }
 
@@ -102,7 +102,8 @@ class GameObject {
         // upon colliding
     }
 
-    isOnScreen() {
+    isRenderable() {
+        if (this.tag) return true;
         let x = this.position.x;
         let y = this.position.y;
         return (x > 0 && y > 0 && x < GameManager.CANVAS_X && y < GameManager.CANVAS_Y);

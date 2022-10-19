@@ -57,18 +57,20 @@ class LevelManager {
     // returns a list of nearby tiles if they are collideable
     isCollideable(x, y) {
 
-        var tile = this.current.getTileByXY(x, y);
-        var up = this.current.getTileByRowColumn(tile.row, tile.column - 1);
-        var down = this.current.getTileByRowColumn(tile.row, tile.column + 1);
-        var left = this.current.getTileByRowColumn(tile.row - 1, tile.column);
-        var right = this.current.getTileByRowColumn(tile.row + 1, tile.column);
+        return [ true, true, true, true ];
 
-        return [ 
-            up.checkCollisionY(y), 
-            down.checkCollisionY(y), 
-            left.checkCollisionX(x), 
-            right.checkCollisionX(x)
-        ];
+        // var tile = this.current.getTileByXY(x, y);
+        // var up = this.current.getTileByRowColumn(tile.row, tile.column - 1);
+        // var down = this.current.getTileByRowColumn(tile.row, tile.column + 1);
+        // var left = this.current.getTileByRowColumn(tile.row - 1, tile.column);
+        // var right = this.current.getTileByRowColumn(tile.row + 1, tile.column);
+
+        // return [ 
+        //     up.checkCollisionY(y), 
+        //     down.checkCollisionY(y), 
+        //     left.checkCollisionX(x), 
+        //     right.checkCollisionX(x)
+        // ];
     }
 
     get current() {
