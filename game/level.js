@@ -7,18 +7,18 @@ class LevelManager {
         this.levels = []; // this is just a level template list
         this.tiles = [];
         this.level = 0; // index of current level
+        this.layout = new LevelLayout();
     }
 
     preload(toLoad) {
         this.tilesetImage = loadImage('../assets/levels/tileset.png'); //load tileset
         this.tilesetJSON = loadJSON('../assets/levels/tileset.json');
 
-        toLoad.forEach(index => {
+        for (let index = 0; index < toLoad; index++) {
             let level = new Level(index);
             level.preload();
-
             this.levels.push(level);
-        });
+        }
     }
 
     load() {
@@ -37,6 +37,21 @@ class LevelManager {
 
     render() {
         this.current.render();
+    }
+
+    generateLayout() {
+        this.layout.generate();
+    }
+
+    useLayout() {
+        let cell = this.layout.getCell(0, 0);
+        for (let index = 0; index < this.levels.length; index++) {
+            let level = this.levels[index];
+            if (Utils.compare(level.openings, cell.walls)) {
+                this.level = index;
+                return;
+            }
+        }
     }
 
     // returns a list of nearby tiles if they are collideable
@@ -62,6 +77,88 @@ class LevelManager {
 
 }
 
+class LevelLayout {
+
+    static LEVEL_WIDTH = 10;
+    static LEVEL_HEIGHT = 10;
+    
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+
+        this.matrix = [];
+        for (let y = 0; y < LevelLayout.LEVEL_WIDTH; y++) {
+            this.matrix[y] = [];
+            for (let x = 0; x < LevelLayout.LEVEL_HEIGHT; x++) {
+                this.matrix[y][x] = new Cell(x, y);
+            }
+        }
+    }
+        
+    generate() {
+        let stack = [];
+        
+        let initial = this.getRandomCell();
+        initial.visited = true;
+        stack.push(initial);
+        
+        while (stack.length != 0) {
+            let current = stack.pop();
+            
+            let neighbors = this.getNeighbors(current);
+            if (neighbors.length == 0) continue;
+            
+            stack.push(current);
+            
+            let nextCell = random(neighbors);
+            nextCell.visited = true;
+            
+            let direction = nextCell.direction;
+            current.remove(direction);
+            nextCell.remove(Cell.getOppositeDirection(direction));
+            
+            stack.push(nextCell);
+        }
+    }
+        
+    getNeighbors(cell) {
+        let neighbors = [];
+        
+        let up = this.getCell(cell.x, cell.y - 1, Cell.UP);
+        if (up && !up.visited) neighbors.push(up);
+        
+        let down = this.getCell(cell.x, cell.y + 1, Cell.DOWN);
+        if (down && !down.visited) neighbors.push(down);
+        
+        let left = this.getCell(cell.x - 1, cell.y, Cell.LEFT);
+        if (left && !left.visited) neighbors.push(left);
+        
+        let right = this.getCell(cell.x + 1, cell.y, Cell.RIGHT);
+        if (right && !right.visited) neighbors.push(right);
+        
+        return neighbors;
+    }
+    
+    getCell(x, y) {
+        return this.getCell(x, y, 0);
+    }
+    
+    getCell(x, y, direction) {
+        if (x >= LevelLayout.LEVEL_WIDTH || x < 0 || y >= LevelLayout.LEVEL_HEIGHT || y < 0) return null;
+        
+        let cell = this.matrix[y][x];
+        cell.direction = direction;
+        return cell;
+    }
+    
+    getRandomCell() {
+        let ranX = floor(random(0, LevelLayout.LEVEL_WIDTH));
+        let ranY = floor(random(0, LevelLayout.LEVEL_HEIGHT));
+        return this.getCell(ranX, ranY);
+    }
+        
+}
+
 class Level {
 
     constructor(index) {
@@ -74,6 +171,7 @@ class Level {
     }
 
     load(tiles) {
+        this.openings = this.tileMatrixJSON.openings; // set walls
         let tileIndexes = this.tileMatrixJSON.layout;
         delete this.tileMatrixJSON;
 
@@ -122,7 +220,6 @@ class Level {
     }
 }
 
-
 class Tile {
 
     constructor(index, collide, row, column, center) {
@@ -143,4 +240,33 @@ class Tile {
         return !(distanceY < LevelManager.TILE_SIZE && this.collide);
     }
 
+}
+    
+class Cell {
+    
+    static UP = 0;
+    static DOWN = 1;
+    static RIGHT = 2;
+    static LEFT = 3;
+
+    static getOppositeDirection(direction) {
+        if (direction % 2 == 0) return direction + 1;
+        return direction - 1;
+    } 
+    
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.visited = false;
+        this.walls = [ true, true, true, true ];
+    }
+
+    has(index) {
+        return this.walls[index];
+    }
+
+    remove(index) {
+        this.walls[index] = false;
+    }
+    
 }

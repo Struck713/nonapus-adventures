@@ -2,14 +2,14 @@ class HUDManager {
 
     constructor() {
         this.hudItems = [
-            new InkRemainingProgressBar(15, 10, 12)
+            new InkRemainingProgressBar(15, 10, 12),
         ];
     }
 
     render() {
         this.hudItems.forEach(hudItem => hudItem.render());
     }
-
+a
 }
 
 class HUDItem {

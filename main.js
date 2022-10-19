@@ -6,7 +6,7 @@ const spriteManager = new SpriteManager();
 
 function preload() {
   spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
-  levelManager.preload([ 0 ]);
+  levelManager.preload(16); // load 16 levels
 
   //loadSound('assets/sound/background.mp3', e => e.play());
 
@@ -15,13 +15,16 @@ function preload() {
 let character;
 function setup() {
   spriteManager.load(); // load sprites
+
   levelManager.load(); //load levels
+  levelManager.generateLayout(); // build a layout
+  levelManager.useLayout(); // use it
 
   // test some enemies
-  gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Shark")));
-  gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Urchin")));
-  gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Clam")));
-  gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  //gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Shark")));
+  //gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Urchin")));
+  //gameManager.queue(new Enemy(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y), spriteManager.get("Clam")));
+  //gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
   
   character = new Character(400, 400);
   gameManager.queue(character); // add our character to the render queue
