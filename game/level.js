@@ -58,10 +58,10 @@ class LevelManager {
 
     generateLayout() {
         this.layout.generate();
+        this.cell = this.layout.getRandomCell();
     }
 
     useLayout() {
-        this.cell = this.layout.getRandomCell();
         for (let index = 0; index < this.levels.length; index++) {
             let level = this.levels[index];
             if (Utils.compare(level.openings, this.cell.walls)) {
