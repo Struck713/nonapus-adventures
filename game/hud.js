@@ -86,9 +86,12 @@ class Minimap extends HUDItem {
                 if (cell.has(Cell.DOWN)) this.map.line(xOffset, yOffset + 7, xOffset + 7, yOffset + 7);
                 if (cell.has(Cell.RIGHT)) this.map.line(xOffset + 7, yOffset, xOffset + 7, yOffset + 7);
                 if (cell == levelManager.cell) {
-                this.map.fill(0, 255, 0);
-                this.map.square(xOffset, yOffset, 7);
-                this.map.fill(0);
+                    this.map.fill(0, 255, 0);
+                    this.map.noStroke();
+                    this.map.square(xOffset, yOffset, 6);
+                    this.map.stroke(0);
+                    this.map.strokeWeight(2);
+                    this.map.fill(0);
                 }
             }
         }
