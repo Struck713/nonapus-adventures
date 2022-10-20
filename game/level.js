@@ -44,15 +44,30 @@ class LevelManager {
 
         let characterPosition = this.characterReference.position;
         let newCell;
-        if (characterPosition.y < 0) newCell = this.layout.getCell(this.cell.x, this.cell.y + 1);
-        if (characterPosition.y > GameManager.CANVAS_Y) newCell = this.layout.getCell(this.cell.x, this.cell.y - 1);
-        if (characterPosition.x < 0) newCell = this.layout.getCell(this.cell.x - 1, this.cell.y);
-        if (characterPosition.x > GameManager.CANVAS_X) newCell = this.layout.getCell(this.cell.x + 1, this.cell.y);
+        
+        if (characterPosition.y < 0) newCell = this.layout.getCell(this.cell.x, this.cell.y - 1, Cell.UP);
+        if (characterPosition.y > GameManager.CANVAS_Y) newCell = this.layout.getCell(this.cell.x, this.cell.y + 1, Cell.DOWN);
+        if (characterPosition.x < 0) newCell = this.layout.getCell(this.cell.x - 1, this.cell.y, Cell.LEFT);
+        if (characterPosition.x > GameManager.CANVAS_X) newCell = this.layout.getCell(this.cell.x + 1, this.cell.y, Cell.RIGHT);
 
         if (newCell) {
             this.cell = newCell;
             this.useLayout();
-            this.characterReference.position = createVector(100, 100);
+
+            switch(this.cell.direction) {
+                case Cell.UP:
+                    this.characterReference.position = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y - 50);
+                    break;
+                case Cell.DOWN:
+                    this.characterReference.position = createVector(GameManager.CANVAS_X / 2, 50);
+                    break;
+                case Cell.LEFT:
+                    this.characterReference.position = createVector(GameManager.CANVAS_X - 50, GameManager.CANVAS_Y / 2);
+                    break;
+                case Cell.RIGHT:
+                    this.characterReference.position = createVector(50, GameManager.CANVAS_Y / 2);
+                    break;
+            }
         }
     }
 

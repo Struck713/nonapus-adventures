@@ -70,8 +70,6 @@ class Minimap extends HUDItem {
 
     render() {
 
-        console.log(levelManager.cell);
-
         this.map = createGraphics(LevelLayout.LEVEL_WIDTH * 7, LevelLayout.LEVEL_HEIGHT * 7);
         this.map.background(255);
         this.map.fill(0);
