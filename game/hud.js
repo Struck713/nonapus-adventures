@@ -3,13 +3,14 @@ class HUDManager {
     constructor() {
         this.hudItems = [
             new InkRemainingProgressBar(15, 10, 12),
+            new Minimap(GameManager.CANVAS_X - 75, 5)
         ];
     }
 
     render() {
         this.hudItems.forEach(hudItem => hudItem.render());
     }
-a
+
 }
 
 class HUDItem {
@@ -57,6 +58,39 @@ class InkRemainingProgressBar extends HUDItem {
         rect(this.x, this.y, 100, 25)
         fill(161, 33, 240);
         rect(this.x, this.y, this.character.inkLeft * (100 / Character.INK_DEFAULT_VALUE), 25);
+    }
+
+}
+
+class Minimap extends HUDItem {
+
+    constructor(x, y) {
+        super(x, y)
+    }
+
+    render() {
+
+        if (!this.map) {
+            this.map = createGraphics(LevelLayout.LEVEL_WIDTH * 7, LevelLayout.LEVEL_HEIGHT * 7);
+            this.map.background(255);
+            this.map.fill(0);
+            this.map.strokeWeight(2);
+
+            for (let x = 0; x < LevelLayout.LEVEL_WIDTH; x++) {
+                for (let y = 0; y < LevelLayout.LEVEL_HEIGHT; y++) {
+                  let cell = levelManager.layout.getCell(x, y);
+                  let xOffset = x * 7;
+                  let yOffset = y * 7;
+    
+                  if (cell.has(Cell.UP)) this.map.line(xOffset, yOffset, xOffset + 7, yOffset);
+                  if (cell.has(Cell.LEFT)) this.map.line(xOffset, yOffset, xOffset, yOffset + 7);
+                  if (cell.has(Cell.DOWN)) this.map.line(xOffset, yOffset + 7, xOffset + 7, yOffset + 7);
+                  if (cell.has(Cell.RIGHT)) this.map.line(xOffset + 7, yOffset, xOffset + 7, yOffset + 7);
+                }
+            }
+        }
+
+        image(this.map, this.x, this.y);
     }
 
 }

@@ -37,6 +37,23 @@ class LevelManager {
 
     render() {
         this.current.render();
+
+        if (!this.characterReference) {
+            this.characterReference = gameManager.getByTag(Character.TAG);
+        }
+
+        let characterPosition = this.characterReference.position;
+        let newCell;
+        if (characterPosition.y < 0) newCell = this.layout.getCell(this.cell.x, this.cell.y + 1);
+        if (characterPosition.y > GameManager.CANVAS_Y) newCell = this.layout.getCell(this.cell.x, this.cell.y - 1);
+        if (characterPosition.x < 0) newCell = this.layout.getCell(this.cell.x - 1, this.cell.y);
+        if (characterPosition.x > GameManager.CANVAS_X) newCell = this.layout.getCell(this.cell.x + 1, this.cell.y);
+
+        if (newCell) {
+            this.cell = newCell;
+            this.useLayout();
+            this.characterReference.position = createVector(100, 100);
+        }
     }
 
     generateLayout() {
@@ -44,10 +61,10 @@ class LevelManager {
     }
 
     useLayout() {
-        let cell = this.layout.getCell(0, 0);
+        this.cell = this.layout.getRandomCell();
         for (let index = 0; index < this.levels.length; index++) {
             let level = this.levels[index];
-            if (Utils.compare(level.openings, cell.walls)) {
+            if (Utils.compare(level.openings, this.cell.walls)) {
                 this.level = index;
                 return;
             }
