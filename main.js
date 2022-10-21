@@ -5,7 +5,7 @@ const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
 function preload() {
-  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
+  spriteManager.preload([ "NonaRemaster.png", "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
   levelManager.preload(16); // load 16 levels
 
   //loadSound('assets/sound/background.mp3', e => e.play());
