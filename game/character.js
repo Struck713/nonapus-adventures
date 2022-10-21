@@ -14,7 +14,7 @@ class Character extends GameObject {
     constructor (x, y) {
 
         // set super tags
-        super(x, y, spriteManager.get("Nona"));
+        super(x, y, spriteManager.get("NonaR"));
         super.collider = true;
 
         // set game object tags
@@ -32,7 +32,7 @@ class Character extends GameObject {
         this.sprite.cycleAnimation(); // run animation
         
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 8 to center the nona and cursor and subtract PI/2  
+        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 16, this.mousePosition.x - this.position.x + 16) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
 
         let movement = createVector(0, 0);
         let collisionMatrix = levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
