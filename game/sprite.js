@@ -91,7 +91,10 @@ class Sprite {
         push();
         translate(x, y);
         rotate(this.angle);
-        image(this.animations[this.animation][this.index], -16, -16);
+
+        let frame = this.animations[this.animation][this.index];
+        image(frame, -(frame.width / 2), -(frame.height / 2));
+        
         //rotate(PI / 2);
         pop();
         

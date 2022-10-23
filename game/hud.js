@@ -70,33 +70,33 @@ class Minimap extends HUDItem {
 
     render() {
 
-        this.map = createGraphics(LevelLayout.LEVEL_WIDTH * 7, LevelLayout.LEVEL_HEIGHT * 7);
-        this.map.background(255);
+        this.scale = 7;
+        this.map = createGraphics(LevelLayout.LEVEL_WIDTH * this.scale, LevelLayout.LEVEL_HEIGHT * this.scale);
+        this.map.background(255, 255, 255, 255);
         this.map.fill(0);
-        this.map.strokeWeight(2);
 
-        for (let x = 0; x < LevelLayout.LEVEL_WIDTH; x++) {
-            for (let y = 0; y < LevelLayout.LEVEL_HEIGHT; y++) {
-                let cell = levelManager.layout.getCell(x, y);
-                let xOffset = x * 7;
-                let yOffset = y * 7;
+        let cell = levelManager.cell;
+        let halfScale = this.scale / 2;
+        this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
 
-                if (cell.has(Cell.UP)) this.map.line(xOffset, yOffset, xOffset + 7, yOffset);
-                if (cell.has(Cell.LEFT)) this.map.line(xOffset, yOffset, xOffset, yOffset + 7);
-                if (cell.has(Cell.DOWN)) this.map.line(xOffset, yOffset + 7, xOffset + 7, yOffset + 7);
-                if (cell.has(Cell.RIGHT)) this.map.line(xOffset + 7, yOffset, xOffset + 7, yOffset + 7);
-                if (cell == levelManager.cell) {
-                    this.map.fill(0, 255, 0);
-                    this.map.noStroke();
-                    this.map.square(xOffset, yOffset, 6);
-                    this.map.stroke(0);
-                    this.map.strokeWeight(2);
-                    this.map.fill(0);
-                }
-            }
-        }
+        this.map.fill(0, 255, 0);
+        this.map.square(0, 0, 7);
+        this.map.fill(0);
+
+        this.drawCell(cell, Cell.UP, 0, -10);
+        this.drawCell(cell, Cell.LEFT, 10, 0);
+        this.drawCell(cell, Cell.DOWN, 0, 10);
+        this.drawCell(cell, Cell.RIGHT, -10, 0);
 
         image(this.map, this.x, this.y);
+    }
+
+    drawCell(cell, direction, x, y) {
+        if (cell.has(direction)) return;
+
+        if (levelManager.layout.getRelative(cell, direction).visited) this.map.fill(255, 0, 0);
+        this.map.square(x, y, this.scale);
+        this.map.fill(0);
     }
 
 }

@@ -47,11 +47,12 @@ class LevelManager {
         
         if (characterPosition.y < 0) newCell = this.layout.getCell(this.cell.x, this.cell.y - 1, Cell.UP);
         if (characterPosition.y > GameManager.CANVAS_Y) newCell = this.layout.getCell(this.cell.x, this.cell.y + 1, Cell.DOWN);
-        if (characterPosition.x < 0) newCell = this.layout.getCell(this.cell.x - 1, this.cell.y, Cell.LEFT);
-        if (characterPosition.x > GameManager.CANVAS_X) newCell = this.layout.getCell(this.cell.x + 1, this.cell.y, Cell.RIGHT);
+        if (characterPosition.x < 0) newCell = this.layout.getCell(this.cell.x + 1, this.cell.y, Cell.LEFT);
+        if (characterPosition.x > GameManager.CANVAS_X) newCell = this.layout.getCell(this.cell.x - 1, this.cell.y, Cell.RIGHT);
 
         if (newCell) {
             this.cell = newCell;
+            this.cell.visited = true;
             this.useLayout();
 
             switch(this.cell.direction) {
@@ -74,6 +75,7 @@ class LevelManager {
     generateLayout() {
         this.layout.generate();
         this.cell = this.layout.getRandomCell();
+        this.cell.visited = true;
     }
 
     useLayout() {
@@ -153,21 +155,26 @@ class LevelLayout {
             
             stack.push(nextCell);
         }
+
+        // clear cells visited property
+        this.matrix.forEach(cells => {
+            cells.forEach(cell => (cell.visited = false));
+        })
     }
         
     getNeighbors(cell) {
         let neighbors = [];
         
-        let up = this.getCell(cell.x, cell.y - 1, Cell.UP);
+        let up = this.getRelative(cell, Cell.UP);
         if (up && !up.visited) neighbors.push(up);
         
-        let down = this.getCell(cell.x, cell.y + 1, Cell.DOWN);
+        let down = this.getRelative(cell, Cell.DOWN);
         if (down && !down.visited) neighbors.push(down);
         
-        let left = this.getCell(cell.x - 1, cell.y, Cell.LEFT);
+        let left = this.getRelative(cell, Cell.LEFT);
         if (left && !left.visited) neighbors.push(left);
         
-        let right = this.getCell(cell.x + 1, cell.y, Cell.RIGHT);
+        let right = this.getRelative(cell, Cell.RIGHT);
         if (right && !right.visited) neighbors.push(right);
         
         return neighbors;
@@ -183,6 +190,20 @@ class LevelLayout {
         let cell = this.matrix[y][x];
         cell.direction = direction;
         return cell;
+    }
+
+    getRelative(cell, direction) {
+        switch (direction) {
+            case Cell.UP:
+                return this.getCell(cell.x, cell.y - 1, Cell.UP);
+            case Cell.DOWN:
+                return this.getCell(cell.x, cell.y + 1, Cell.DOWN);
+            case Cell.LEFT:
+                return this.getCell(cell.x - 1, cell.y, Cell.LEFT);
+            case Cell.RIGHT:
+                return this.getCell(cell.x + 1, cell.y, Cell.RIGHT);
+        }
+        return null;
     }
     
     getRandomCell() {
