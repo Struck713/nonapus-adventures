@@ -82,7 +82,14 @@ class LevelManager {
         for (let index = 0; index < this.levels.length; index++) {
             let level = this.levels[index];
             if (Utils.compare(level.openings, this.cell.walls)) {
+                
+                // remove canvas for old level
+                if (this.level != 0) this.current.destroy();
+
+                // change to new level and build it
                 this.level = index;
+                this.current.build(this.tiles);
+
                 return;
             }
         }
@@ -231,29 +238,40 @@ class Level {
         delete this.tileMatrixJSON;
 
         this.tileMatrix = [];
-        this.graphics = createGraphics(GameManager.CANVAS_X, GameManager.CANVAS_Y);
         for (let column = 0; column < GameManager.COLUMNS; ++column) {
             this.tileMatrix[column] = [];
             for (let row = 0; row < GameManager.ROWS; ++row) {
                 var tileIndex = tileIndexes[column][row];
-                var tile = tiles[tileIndex];
                 var offsetX = row * LevelManager.TILE_SIZE;
                 var offsetY = column * LevelManager.TILE_SIZE;
 
                 this.tileMatrix[column][row] = 
                     new Tile(tileIndex,
-                        tile.collide,
+                        tiles[tileIndex].collide,
                         row, 
                         column, 
                         { 
-                            x: offsetX + LevelManager.TILE_SIZE_HALF, 
-                            y: offsetY + LevelManager.TILE_SIZE_HALF, 
+                            x: offsetX, 
+                            y: offsetY, 
                         }
                     );
-                
-                this.graphics.image(tile, offsetX, offsetY);
             }
         }
+    }
+
+    build(tiles) {
+        this.graphics = createGraphics(GameManager.CANVAS_X, GameManager.CANVAS_Y);
+        this.tileMatrix.forEach(column => {
+            column.forEach(item => {
+                var tile = tiles[item.index];
+                this.graphics.image(tile, item.center.x, item.center.y);
+            });
+        })
+    }
+
+    destroy() {
+        this.graphics.remove();
+        this.graphics = null;
     }
 
     render() {

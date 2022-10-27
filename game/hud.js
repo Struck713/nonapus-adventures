@@ -71,14 +71,16 @@ class Minimap extends HUDItem {
     render() {
 
         this.scale = 7;
-        this.map = createGraphics(LevelLayout.LEVEL_WIDTH * this.scale, LevelLayout.LEVEL_HEIGHT * this.scale);
+        if (!this.map) {
+            this.map = createGraphics(LevelLayout.LEVEL_WIDTH * this.scale, LevelLayout.LEVEL_HEIGHT * this.scale);
+            
+            let halfScale = this.scale / 2;
+            this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
+        }
         this.map.background(255, 255, 255, 255);
         this.map.fill(0);
 
         let cell = levelManager.cell;
-        let halfScale = this.scale / 2;
-        this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
-
         this.map.fill(0, 255, 0);
         this.map.square(0, 0, 7);
         this.map.fill(0);
