@@ -3,7 +3,8 @@ class HUDManager {
     constructor() {
         this.hudItems = [
             new InkRemainingProgressBar(15, 10, 12),
-            new Minimap(GameManager.CANVAS_X - 75, 5)
+            new Minimap(GameManager.CANVAS_X - 75, 5),
+            new PlayerHealth(15, 40)
         ];
     }
 
@@ -60,6 +61,31 @@ class InkRemainingProgressBar extends HUDItem {
         rect(this.x, this.y, this.character.inkLeft * (100 / Character.INK_DEFAULT_VALUE), 25);
     }
 
+}
+
+class PlayerHealth extends HUDItem {
+
+    constructor(x, y) {
+        super(x, y);
+    }
+
+    preload(){
+        this.fullHeart = loadImage('../assets/heart_full.png');
+        this.emptyHeart = loadImage("../assets/heart_empty.png");
+    }
+
+    render() {
+        if (!this.character) {
+            this.character = gameManager.getByTag(Character.TAG);
+        }
+
+        for(let i = 0; i < Character.PLAYER_STARTING_HEALTH; ++i){
+            if((i+1) <= this.character.playerHealth)
+                image(this.fullHeart, (this.x + 32*i), this.y);
+            else
+                image(this.emptyHeart, (this.x + 32*i), this.y);
+        }
+    }
 }
 
 class Minimap extends HUDItem {
