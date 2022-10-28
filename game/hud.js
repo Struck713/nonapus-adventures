@@ -3,7 +3,8 @@ class HUDManager {
     constructor() {
         this.hudItems = [
             new InkRemainingProgressBar(15, 10, 12),
-            new Minimap(GameManager.CANVAS_X - 75, 5)
+            new Minimap(GameManager.CANVAS_X - 75, 5),
+            new PlayerHealth(15, 40)
         ];
     }
 
@@ -62,6 +63,31 @@ class InkRemainingProgressBar extends HUDItem {
 
 }
 
+class PlayerHealth extends HUDItem {
+
+    constructor(x, y) {
+        super(x, y);
+    }
+
+    preload(){
+        this.fullHeart = loadImage('../assets/heart_full.png');
+        this.emptyHeart = loadImage("../assets/heart_empty.png");
+    }
+
+    render() {
+        if (!this.character) {
+            this.character = gameManager.getByTag(Character.TAG);
+        }
+
+        for(let i = 0; i < Character.PLAYER_STARTING_HEALTH; ++i){
+            if((i+1) <= this.character.playerHealth)
+                image(this.fullHeart, (this.x + 32*i), this.y);
+            else
+                image(this.emptyHeart, (this.x + 32*i), this.y);
+        }
+    }
+}
+
 class Minimap extends HUDItem {
 
     constructor(x, y) {
@@ -71,14 +97,16 @@ class Minimap extends HUDItem {
     render() {
 
         this.scale = 7;
-        this.map = createGraphics(LevelLayout.LEVEL_WIDTH * this.scale, LevelLayout.LEVEL_HEIGHT * this.scale);
+        if (!this.map) {
+            this.map = createGraphics(LevelLayout.LEVEL_WIDTH * this.scale, LevelLayout.LEVEL_HEIGHT * this.scale);
+            
+            let halfScale = this.scale / 2;
+            this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
+        }
         this.map.background(255, 255, 255, 255);
         this.map.fill(0);
 
         let cell = levelManager.cell;
-        let halfScale = this.scale / 2;
-        this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
-
         this.map.fill(0, 255, 0);
         this.map.square(0, 0, 7);
         this.map.fill(0);

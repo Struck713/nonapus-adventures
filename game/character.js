@@ -8,6 +8,7 @@ class Character extends GameObject {
 
     static INK_DEFAULT_VALUE = 15; // how many shots
     static INK_INCREASE_SECONDS = 1250; // how many milliseconds to increate
+    static PLAYER_STARTING_HEALTH = 4;
 
     static TAG = "CHARACTER";
 
@@ -19,6 +20,11 @@ class Character extends GameObject {
 
         // set game object tags
         this.tag = Character.TAG;
+
+        // player health
+        this.playerHealth = Character.PLAYER_STARTING_HEALTH;
+        this.tookDamage = false;
+        this.damageCoolDown = 0;
 
         // character specific traits
         this.mousePosition = createVector(0, 0);
@@ -49,6 +55,9 @@ class Character extends GameObject {
             movement.x += 1;
         }
 
+        if(this.tookDamage) this.loseHealth();
+        if(this.damageCoolDown > 0) --this.damageCoolDown;
+
         movement.setMag(2.5); //speed
 
         this.position.add(movement);
@@ -63,6 +72,17 @@ class Character extends GameObject {
         this.inkLeft--;
 
         gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
+    }
+
+    loseHealth() {
+        if(this.damageCoolDown <= 0){
+            --this.playerHealth;
+            this.damageCoolDown = 120;
+        }
+        else
+            --this.damageCoolDown;
+        console.log(this.playerHealth);
+        this.tookDamage = false;
     }
 
     // event stuff
@@ -83,6 +103,9 @@ class Character extends GameObject {
             case 'D':
             case 'ARROWRIGHT':
                 this.movementMatrix[3] = pressed;
+                break;
+            case 'R':
+                this.tookDamage = true;
                 break;
             default:
                 break;
