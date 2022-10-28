@@ -31,7 +31,7 @@ function setup() {
   gameManager.queue(character); // add our character to the render queue
 
   let canvas = createCanvas(GameManager.CANVAS_X, GameManager.CANVAS_Y);
-  canvas.style('cursor', 'url(\'assets/crosshair.png\'), none');
+  canvas.style('cursor', 'url(\'assets/hud/crosshair.png\'), none');
   canvas.background(100, 140, 160);
   canvas.position((screen.width - GameManager.CANVAS_X) / 2, 15); //centering the game canvas
 
