@@ -70,8 +70,8 @@ class PlayerHealth extends HUDItem {
     }
 
     preload(){
-        this.fullHeart = loadImage('../assets/heart_full.png');
-        this.emptyHeart = loadImage("../assets/heart_empty.png");
+        this.fullHeart = loadImage('../assets/hud/nonaHeartFull.png');
+        this.emptyHeart = loadImage("../assets/hud/nonaHeartEmpty.png");
     }
 
     render() {
@@ -81,9 +81,9 @@ class PlayerHealth extends HUDItem {
 
         for(let i = 0; i < Character.PLAYER_STARTING_HEALTH; ++i){
             if((i+1) <= this.character.playerHealth)
-                image(this.fullHeart, (this.x + 32*i), this.y);
+                image(this.fullHeart, (this.x + 34*i), this.y);
             else
-                image(this.emptyHeart, (this.x + 32*i), this.y);
+                image(this.emptyHeart, (this.x + 34*i), this.y);
         }
     }
 }
