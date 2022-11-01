@@ -45,6 +45,12 @@ public:
 
     ~Cell(){}
 
+    void setDoors(bool left, bool right, bool top, bool bottom){
+        doors_[0] = left;
+        doors_[1] = right;
+        doors_[2] = top;
+        doors_[3] = bottom;
+    }
 
     void matrixConstruct(bool randFill = false, int randSeed = 0) {
         if(randFill == false) {
@@ -195,9 +201,10 @@ int main() {
     Cell cellMatrix;
 
     // seeding is 0-100, 100 being most noise
-    cellMatrix.chooseDoors();
+    // cellMatrix.chooseDoors();
     for(int i = 0; i < loopIterations; ++i) {
         cellMatrix.matrixConstruct(randomFill, noiseChance);
+        cellMatrix.setDoors(true, true, true, false);
         cellMatrix.doorsConstruct();
         cellMatrix.outputToFile(outputFile, doorConcat + doorLocations[0] + doorLocations[1] + doorLocations[2] + doorLocations[3]);
     }
