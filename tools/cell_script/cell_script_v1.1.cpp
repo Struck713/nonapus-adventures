@@ -26,8 +26,7 @@ const string fillSand[fillSandCount] = {"0", "1", "2", "3", "4", "5", "6", "7", 
 const bool allDoorsComb[16][4] = {{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 1, 0}, {0, 1, 0, 0},
                                   {0, 1, 0, 1}, {0, 1, 1, 0}, {0, 1, 1, 1}, {1, 0, 0, 0},
                                   {1, 0, 0, 1}, {1, 0, 1, 0}, {1, 0, 1, 1}, {1, 1, 0, 0},
-                                  {1, 1, 0, 1}, {1, 1, 1, 0}, {1, 1, 0, 1}, {1, 1, 1, 1}
-                                 };
+                                  {1, 1, 0, 1}, {1, 1, 1, 0}, {1, 1, 0, 1}, {1, 1, 1, 1}};
 
 class Cell {
 public:
@@ -119,6 +118,7 @@ public:
         else
             doors_[3] = false;            
     }
+
     void doorsConstruct(){
         for(int i = 0; i < matrixSizeN; ++i) {
             for(int j = 0; j < matrixSizeM; ++j) {
