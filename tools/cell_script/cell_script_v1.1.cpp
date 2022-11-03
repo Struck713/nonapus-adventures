@@ -103,10 +103,10 @@ public:
         for(int i = 0; i < matrixSizeN; ++i) {
             for(int j = 0; j < matrixSizeM; ++j) {
                 if (i >= (matrixSizeN / 2 - 3) && i <= (matrixSizeN / 2 + 3) && j == 0 && doors_[0])
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
+                    matrix_[i][j] = "[" + plainSand[rand()%plainSandCount] + ", ";
                 
                 if (i >= (matrixSizeN / 2 - 3) && i <= (matrixSizeN / 2 + 3) && j == (matrixSizeM - 1) && doors_[1])
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
+                    matrix_[i][j] = plainSand[rand()%plainSandCount] + "]";
                 
                 if(j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == 0 && doors_[2])
                     matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
