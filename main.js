@@ -5,7 +5,7 @@ const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
 function preload() {
-  hudManager.hudItems[2].preload();
+  hudManager.preload();
   spriteManager.preload([ "NonaRemaster.png", "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
   levelManager.preload(16); // load 16 levels
 
