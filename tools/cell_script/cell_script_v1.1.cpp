@@ -154,7 +154,7 @@ public:
 
     // Utility draw function allowing a us to print our matrices to console.
     // Useful for debugging
-    void draw() {
+    void draw() const {
         for(int i = 0; i < matrixSizeN; ++i){
             for(int j = 0; j < matrixSizeM; ++j){
                 cout << matrix_[i][j];
@@ -167,7 +167,7 @@ public:
     //
     // This isn't very advanced. Our matrix constructor does acutal building of matrices.
     // This function just outputs the work already done.
-    void outputToFile(ofstream& outputFile) {
+    void outputToFile(ofstream& outputFile) const {
         for(int i = 0; i < matrixSizeN; ++i){
             for(int j = 0; j < matrixSizeM; ++j){
                 outputFile << matrix_[i][j];
