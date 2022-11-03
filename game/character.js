@@ -6,9 +6,10 @@
  */
 class Character extends GameObject {
 
-    static INK_DEFAULT_VALUE = 15; // how many shots
-    static INK_INCREASE_SECONDS = 1250; // how many milliseconds to increate
-    static PLAYER_STARTING_HEALTH = 4;
+    static INK_DEFAULT_VALUE = 4; // how many shots
+    static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
+
+    static HEALTH_DEFAULT_VALUE = 4; // player health starting amount
 
     static TAG = "CHARACTER";
 
@@ -22,7 +23,7 @@ class Character extends GameObject {
         this.tag = Character.TAG;
 
         // player health
-        this.playerHealth = Character.PLAYER_STARTING_HEALTH;
+        this.health = Character.HEALTH_DEFAULT_VALUE;
         this.tookDamage = false;
         this.damageCoolDown = 0;
 
@@ -30,8 +31,8 @@ class Character extends GameObject {
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
 
-        this.inkLeft = Character.INK_DEFAULT_VALUE;
-        setInterval(() => { if (this.inkLeft < Character.INK_DEFAULT_VALUE) this.inkLeft++ }, Character.INK_INCREASE_SECONDS);
+        this.ink = Character.INK_DEFAULT_VALUE;
+        setInterval(() => { if (this.ink < Character.INK_DEFAULT_VALUE) this.ink++ }, Character.INK_INCREASE_SECONDS);
     }
 
     render () {
@@ -68,8 +69,8 @@ class Character extends GameObject {
     }
 
     fireParticle() {
-        if (this.inkLeft <= 0) return;
-        this.inkLeft--;
+        if (this.ink <= 0) return;
+        this.ink--;
 
         gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
     }

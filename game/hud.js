@@ -2,10 +2,14 @@ class HUDManager {
 
     constructor() {
         this.hudItems = [
-            new InkRemainingProgressBar(15, 10, 12),
             new Minimap(GameManager.CANVAS_X - 75, 5),
-            new PlayerHealth(15, 40)
+            new Ink(15, 10),
+            new Health(15, 40)
         ];
+    }
+
+    preload() {
+        this.hudItems.forEach(hudItem => hudItem.preload());
     }
 
     render() {
@@ -19,6 +23,10 @@ class HUDItem {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+    }
+
+    preload() {
+
     }
 
     render() {
@@ -43,27 +51,52 @@ class TextItem extends HUDItem {
 
 }
 
-class InkRemainingProgressBar extends HUDItem {
+// class Ink extends HUDItem {
+
+//     constructor(x, y) {
+//         super(x, y);
+//     }
+
+//     render() {
+    
+//         if (!this.character) {
+//             this.character = gameManager.getByTag(Character.TAG);
+//         }
+
+//         fill(0);
+//         rect(this.x, this.y, 100, 25)
+//         fill(161, 33, 240);
+//         rect(this.x, this.y, this.character.inkLeft * (100 / Character.INK_DEFAULT_VALUE), 25);
+//     }
+
+// }
+
+class Ink extends HUDItem {
 
     constructor(x, y) {
         super(x, y);
     }
 
+    preload() {
+        this.fullInk = loadImage('../assets/hud/ink_full.png');
+        this.emptyInk = loadImage("../assets/hud/ink_empty.png");
+    }
+
     render() {
-    
         if (!this.character) {
             this.character = gameManager.getByTag(Character.TAG);
         }
 
-        fill(0);
-        rect(this.x, this.y, 100, 25)
-        fill(161, 33, 240);
-        rect(this.x, this.y, this.character.inkLeft * (100 / Character.INK_DEFAULT_VALUE), 25);
+        for(let i = 0; i < Character.INK_DEFAULT_VALUE; ++i){
+            if((i+1) <= this.character.ink)
+                image(this.fullInk, (this.x + 34*i), this.y);
+            else
+                image(this.emptyInk, (this.x + 34*i), this.y);
+        }
     }
-
 }
 
-class PlayerHealth extends HUDItem {
+class Health extends HUDItem {
 
     constructor(x, y) {
         super(x, y);
@@ -79,8 +112,8 @@ class PlayerHealth extends HUDItem {
             this.character = gameManager.getByTag(Character.TAG);
         }
 
-        for(let i = 0; i < Character.PLAYER_STARTING_HEALTH; ++i){
-            if((i+1) <= this.character.playerHealth)
+        for(let i = 0; i < Character.HEALTH_DEFAULT_VALUE; ++i){
+            if((i+1) <= this.character.health)
                 image(this.fullHeart, (this.x + 34*i), this.y);
             else
                 image(this.emptyHeart, (this.x + 34*i), this.y);
@@ -102,9 +135,10 @@ class Minimap extends HUDItem {
             
             let halfScale = this.scale / 2;
             this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
+            this.map.background(0, 0, 0, 0);
         }
-        this.map.background(255, 255, 255, 255);
-        this.map.fill(0);
+        this.map.fill(255);
+        this.map.circle(this.scale / 2, this.scale / 2, this.scale * 10);
 
         let cell = levelManager.cell;
         this.map.fill(0, 255, 0);
