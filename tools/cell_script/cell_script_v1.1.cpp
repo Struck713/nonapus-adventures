@@ -24,10 +24,12 @@ const string plainSand[plainSandCount] = {"0", "6"};
 const string borderSand[borderSandCount] = {"11", "12"};
 const string fillSand[fillSandCount] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
-const bool allDoorsComb[16][4] = {{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 1, 0}, {0, 1, 0, 0},
-                                  {0, 1, 0, 1}, {0, 1, 1, 0}, {0, 1, 1, 1}, {1, 0, 0, 0},
-                                  {1, 0, 0, 1}, {1, 0, 1, 0}, {1, 0, 1, 1}, {1, 1, 0, 0},
-                                  {1, 1, 0, 1}, {1, 1, 1, 0}, {1, 1, 0, 1}, {1, 1, 1, 1}};
+// All door combinations
+// This is used the loop that outputs all possible matrices
+const bool allDoorsComb[16][4] = {{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 1, 0}, {0, 0, 1, 1},
+                                  {0, 1, 0, 0}, {0, 1, 0, 1}, {0, 1, 1, 0}, {0, 1, 1, 1},
+                                  {1, 0, 0, 0}, {1, 0, 0, 1}, {1, 0, 1, 0}, {1, 0, 1, 1},
+                                  {1, 1, 0, 0}, {1, 1, 0, 1}, {1, 1, 1, 0}, {1, 1, 1, 1}};
 
 class Cell {
 public:
@@ -51,10 +53,10 @@ public:
     // Setter for doors that uses a common input.
     // Allows us to easily set and reset doors (especially in loops)
     void setDoors(const bool doorsLoc[]){
-        doors_[0] = doorsLoc[0];
-        doors_[1] = doorsLoc[1];
-        doors_[2] = doorsLoc[2];
-        doors_[3] = doorsLoc[3];
+        doors_[0] = doorsLoc[0]; // Left
+        doors_[1] = doorsLoc[1]; // Right
+        doors_[2] = doorsLoc[2]; // Top
+        doors_[3] = doorsLoc[3]; // Bottom
     }
 
     // Input: bool randFill to allow user the choice of special tile fill
@@ -66,6 +68,7 @@ public:
     // v1.1: Added door constructor function to this. Now we construct the entirety
     // of our matrices within this function!
     void matrixConstruct(bool randFill = false, int randSeed = 0) {
+        // Plain fill
         if(randFill == false) {
             for(int i = 0; i < matrixSizeN; ++i) {
                 for(int j = 0; j < matrixSizeM; ++j) {
@@ -81,6 +84,7 @@ public:
                 }
             }
         }
+        // Random special fill
         if(randFill == true) {
             for(int i = 0; i < matrixSizeN; ++i) {
                 for(int j = 0; j < matrixSizeM; ++j) {
@@ -100,20 +104,23 @@ public:
                 }
             }
         }
+        // Door construction
+        // Left and Right door is a special case because we need [ or ] in the string
+        // Top and Bottom door are internal and therefore only need a comma ", "
+        // We can actually account for both doors with one (albeit long) if statement
         for(int i = 0; i < matrixSizeN; ++i) {
             for(int j = 0; j < matrixSizeM; ++j) {
+                // Left Door
                 if (i >= (matrixSizeN / 2 - 3) && i <= (matrixSizeN / 2 + 3) && j == 0 && doors_[0])
                     matrix_[i][j] = "[" + plainSand[rand()%plainSandCount] + ", ";
                 
+                // Right Door
                 if (i >= (matrixSizeN / 2 - 3) && i <= (matrixSizeN / 2 + 3) && j == (matrixSizeM - 1) && doors_[1])
                     matrix_[i][j] = plainSand[rand()%plainSandCount] + "]";
                 
-                if(j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == 0 && doors_[2])
+                // Top || Bottom Doors
+                if((j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == 0 && doors_[2]) || (j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == (matrixSizeN - 1) && doors_[3]))
                     matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
-                
-                if(j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == (matrixSizeN - 1) && doors_[3])
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", "; 
-
             }
         }
     }
@@ -214,7 +221,7 @@ int main() {
     Cell cellMatrix;
 
     // Below is some logic for settings.
-    // I hope it mostly self explanitory.
+    // I hope it is mostly self explanitory.
 
     cout << "Default Settings:\n @ Random Fill: false\n @ Loop Iterations: 1\nSettings? [y/n]: ";
     cin >> sSelect;
@@ -240,7 +247,7 @@ int main() {
 
     // If user wants all door combinations then we pass this first if statement.
     if(allSelect == 'y'){
-        for(int i = 0; i < 16; ++i) {
+        for(int i = 1; i < 17; ++i) {
             cellMatrix.matrixConstruct(randomFill, noiseChance);
             cellMatrix.setDoors(allDoorsComb[i]);
             cellMatrix.outputToFile(outputFile);
