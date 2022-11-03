@@ -64,7 +64,7 @@ public:
     // our matrices with a border and choice of fill.
     //
     // v1.1: Added door constructor function to this. Now we construct the entirety
-    // our matrices within this function!
+    // of our matrices within this function!
     void matrixConstruct(bool randFill = false, int randSeed = 0) {
         if(randFill == false) {
             for(int i = 0; i < matrixSizeN; ++i) {
