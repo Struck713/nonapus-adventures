@@ -15,6 +15,7 @@ const int allTilesCount = 26;
 
 const int plainSandCount = 2;
 const int borderSandCount = 2;
+
 const int fillSandCount = 11;
 
 const string allTiles[allTilesCount] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16",
@@ -42,7 +43,7 @@ public:
     }
 
     // dtor
-    ~Cell(){}
+    ~Cell(){ delete[] this; }
 
     // Input: bool array for door locations
     //        ex: {1, 0, 1, 0} = Left, Top
