@@ -30,19 +30,25 @@ const bool allDoorsComb[16][4] = {{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 1, 0}, {0, 
 
 class Cell {
 public:
+    // default ctor
     Cell() {
         for(int i = 0; i < matrixSizeN; ++i) {
             for(int j = 0; j < matrixSizeM; ++j) {
                 matrix_[i][j] = plainSand[0];
             }
         }
-
         for(int i = 0; i < 4; ++i)
             doors_[i] = false;
     }
 
+    // dtor
     ~Cell(){}
 
+    // Input: bool array for door locations
+    //        ex: {1, 0, 1, 0} = Left, Top
+    //
+    // Setter for doors that uses a common input.
+    // Allows us to easily set and reset doors (especially in loops)
     void setDoors(const bool doorsLoc[]){
         doors_[0] = doorsLoc[0];
         doors_[1] = doorsLoc[1];
@@ -50,6 +56,14 @@ public:
         doors_[3] = doorsLoc[3];
     }
 
+    // Input: bool randFill to allow user the choice of special tile fill
+    //        int randSeed specifies the %chance for a tile to be special
+    //
+    // This is the function doing the heavy lifting. This will actually construct
+    // our matrices with a border and choice of fill.
+    //
+    // v1.1: Added door constructor function to this. Now we construct the entirety
+    // our matrices within this function!
     void matrixConstruct(bool randFill = false, int randSeed = 0) {
         if(randFill == false) {
             for(int i = 0; i < matrixSizeN; ++i) {
@@ -85,7 +99,26 @@ public:
                 }
             }
         }
+        for(int i = 0; i < matrixSizeN; ++i) {
+            for(int j = 0; j < matrixSizeM; ++j) {
+                if (i >= (matrixSizeN / 2 - 3) && i <= (matrixSizeN / 2 + 3) && j == 0 && doors_[0])
+                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
+                
+                if (i >= (matrixSizeN / 2 - 3) && i <= (matrixSizeN / 2 + 3) && j == (matrixSizeM - 1) && doors_[1])
+                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
+                
+                if(j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == 0 && doors_[2])
+                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
+                
+                if(j >= (matrixSizeM / 2 - 3) && j <= (matrixSizeM / 2 + 3) && i == (matrixSizeN - 1) && doors_[3])
+                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", "; 
+
+            }
+        }
     }
+
+    // This allows user door input for custom matrices.
+    // Nothing crazy, simply sets door array to user input.
     void chooseDoors(){
         char doorChar;
         cout << "Input door locations:" << endl;
@@ -119,25 +152,8 @@ public:
             doors_[3] = false;            
     }
 
-    void doorsConstruct(){
-        for(int i = 0; i < matrixSizeN; ++i) {
-            for(int j = 0; j < matrixSizeM; ++j) {
-                if ((i >= ((matrixSizeN / 2) - 3) && i <= (matrixSizeN / 2) + 3) && (j == 0 && doors_[0]))
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
-                
-                if ((i >= ((matrixSizeN / 2) - 3) && i <= (matrixSizeN / 2) + 3) && (j == (matrixSizeM - 1) && doors_[1]))
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
-                
-                if((j >= ((matrixSizeM / 2) - 3) && j <= (matrixSizeM / 2) + 3) && (i == 0 && doors_[2]))
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", ";
-                
-                if((j >= ((matrixSizeM / 2) - 3) && j <= (matrixSizeM / 2) + 3) && (i == (matrixSizeN - 1) && doors_[3]))
-                    matrix_[i][j] = plainSand[rand()%plainSandCount] + ", "; 
-
-            }
-        }
-    }
-
+    // Utility draw function allowing a us to print our matrices to console.
+    // Useful for debugging
     void draw() {
         for(int i = 0; i < matrixSizeN; ++i){
             for(int j = 0; j < matrixSizeM; ++j){
@@ -147,6 +163,10 @@ public:
         }
     }
 
+    // Input: ofstream& of the file we want to output to
+    //
+    // This isn't very advanced. Our matrix constructor does acutal building of matrices.
+    // This function just outputs the work already done.
     void outputToFile(ofstream& outputFile) {
         for(int i = 0; i < matrixSizeN; ++i){
             for(int j = 0; j < matrixSizeM; ++j){
@@ -157,28 +177,46 @@ public:
         outputFile << endl;
     }
 
-
 private:
+    // A two dimensional matrix of strings.
+    // strings are useful because the output at each index has variable size.
+    // strings allow easy concatenation
     string matrix_[matrixSizeN][matrixSizeM];
+
+    // Here be the door locations
     bool doors_[4];
 };
 
 int main() {
+    // Rand seeding.
     srand(time(0));
+
+    // We need an ofstream in order to do file i/o.
     ofstream outputFile;
     outputFile.open("output.txt");
 
-    string doorLocations[4] = {"Left, " "Right, " "Top, " "Bottom, "};
-    string doorConcat = "Doors: ";
-
+    // noiceChance is the %chance for special tiles.
+    // Used within matrixConstruct().
     int noiseChance = 0;
+
+    // Determines how many matrices the user wants.
     int loopIterations = 1;
+
+    // Characters to determine settings.
     char randFillSelect, sSelect, allSelect;
+
+    // Assume randomFill is false unless user specifies.
+    // Used within matrixConstruct()
     bool randomFill = false;
+
+    // This is an instance of our class
+    Cell cellMatrix;
+
+    // Below is some logic for settings.
+    // I hope it mostly self explanitory.
 
     cout << "Default Settings:\n @ Random Fill: false\n @ Loop Iterations: 1\nSettings? [y/n]: ";
     cin >> sSelect;
-
 
     if(sSelect == 'y') {
         cout << " @ Randomize fill? [y/n]: ";
@@ -190,39 +228,33 @@ int main() {
             cout << " @ Noise amount? [0 - 100]: ";
             cin >> noiseChance;
         }
-        cout << " @ Create all 16 matrices at once? [y/n]: ";
+        cout << " @ Create one iteration of all possible matrices at once?\n   This creates a single matrix of all 16 door variations. 16 total matrices [y/n]: ";
         cin >> allSelect;
 
         if(allSelect != 'y'){
-            cout << " @ Iterations? ";
+            cout << " @ Iterations? [1 - 100]: ";
             cin >> loopIterations;
         }
     }
-    cout << endl;
-    Cell cellMatrix;
 
+    // If user wants all door combinations then we pass this first if statement.
     if(allSelect == 'y'){
         for(int i = 0; i < 16; ++i) {
             cellMatrix.matrixConstruct(randomFill, noiseChance);
             cellMatrix.setDoors(allDoorsComb[i]);
-            cellMatrix.doorsConstruct();
             cellMatrix.outputToFile(outputFile);
         }
-
-
+    // Otherwise the create a specific matrix type.
+    // User choose amount of versions of this matrix.
     } else {
-
-    // seeding is 0-100, 100 being most noise
         cellMatrix.chooseDoors();
         for(int i = 0; i < loopIterations; ++i) {
             cellMatrix.matrixConstruct(randomFill, noiseChance);
-            cellMatrix.doorsConstruct();
             cellMatrix.outputToFile(outputFile);
         }
     }
 
-    cout << endl << "Goodbye." << endl;
-
+    cout << endl << "Output in 'output.txt'\nGoodbye." << endl;
 
     outputFile.close();
     return 0;
