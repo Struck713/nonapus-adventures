@@ -23,12 +23,11 @@ const string plainSand[plainSandCount] = {"0", "6"};
 const string borderSand[borderSandCount] = {"11", "12"};
 const string fillSand[fillSandCount] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
 
-
-const bool top[4] = {true, false, false, false};
-const bool right[4] = {false, true, false, false};
-const bool bottom[4] ={false, false, true, false};
-const bool left[4] = {false, false, false, true};
-
+const bool allDoorsComb[16][4] = {{0, 0, 0, 0}, {0, 0, 0, 1}, {0, 0, 1, 0}, {0, 1, 0, 0},
+                                  {0, 1, 0, 1}, {0, 1, 1, 0}, {0, 1, 1, 1}, {1, 0, 0, 0},
+                                  {1, 0, 0, 1}, {1, 0, 1, 0}, {1, 0, 1, 1}, {1, 1, 0, 0},
+                                  {1, 1, 0, 1}, {1, 1, 1, 0}, {1, 1, 0, 1}, {1, 1, 1, 1}
+                                 };
 
 class Cell {
 public:
@@ -45,11 +44,11 @@ public:
 
     ~Cell(){}
 
-    void setDoors(bool left, bool right, bool top, bool bottom){
-        doors_[0] = left;
-        doors_[1] = right;
-        doors_[2] = top;
-        doors_[3] = bottom;
+    void setDoors(const bool doorsLoc[]){
+        doors_[0] = doorsLoc[0];
+        doors_[1] = doorsLoc[1];
+        doors_[2] = doorsLoc[2];
+        doors_[3] = doorsLoc[3];
     }
 
     void matrixConstruct(bool randFill = false, int randSeed = 0) {
@@ -148,9 +147,7 @@ public:
         }
     }
 
-    void outputToFile(ofstream& outputFile, string matrixType) {
-        outputFile << matrixType << endl;
-
+    void outputToFile(ofstream& outputFile) {
         for(int i = 0; i < matrixSizeN; ++i){
             for(int j = 0; j < matrixSizeM; ++j){
                 outputFile << matrix_[i][j];
@@ -176,7 +173,7 @@ int main() {
 
     int noiseChance = 0;
     int loopIterations = 1;
-    char randFillSelect, sSelect;
+    char randFillSelect, sSelect, allSelect;
     bool randomFill = false;
 
     cout << "Default Settings:\n @ Random Fill: false\n @ Loop Iterations: 1\nSettings? [y/n]: ";
@@ -193,20 +190,35 @@ int main() {
             cout << " @ Noise amount? [0 - 100]: ";
             cin >> noiseChance;
         }
+        cout << " @ Create all 16 matrices at once? [y/n]: ";
+        cin >> allSelect;
 
-        cout << " @ Iterations? ";
-        cin >> loopIterations;
+        if(allSelect != 'y'){
+            cout << " @ Iterations? ";
+            cin >> loopIterations;
+        }
     }
     cout << endl;
     Cell cellMatrix;
 
+    if(allSelect == 'y'){
+        for(int i = 0; i < 16; ++i) {
+            cellMatrix.matrixConstruct(randomFill, noiseChance);
+            cellMatrix.setDoors(allDoorsComb[i]);
+            cellMatrix.doorsConstruct();
+            cellMatrix.outputToFile(outputFile);
+        }
+
+
+    } else {
+
     // seeding is 0-100, 100 being most noise
-    // cellMatrix.chooseDoors();
-    for(int i = 0; i < loopIterations; ++i) {
-        cellMatrix.matrixConstruct(randomFill, noiseChance);
-        cellMatrix.setDoors(true, true, true, false);
-        cellMatrix.doorsConstruct();
-        cellMatrix.outputToFile(outputFile, doorConcat + doorLocations[0] + doorLocations[1] + doorLocations[2] + doorLocations[3]);
+        cellMatrix.chooseDoors();
+        for(int i = 0; i < loopIterations; ++i) {
+            cellMatrix.matrixConstruct(randomFill, noiseChance);
+            cellMatrix.doorsConstruct();
+            cellMatrix.outputToFile(outputFile);
+        }
     }
 
     cout << endl << "Goodbye." << endl;
