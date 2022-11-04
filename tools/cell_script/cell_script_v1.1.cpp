@@ -8,8 +8,8 @@ using std::cout; using std::endl; using std::cin;
 using std::ofstream;
 using std::string;
 
-const int matrixSizeN = 30;
-const int matrixSizeM = 23;
+const int matrixSizeM = 30;
+const int matrixSizeN = 23;
 
 const int allTilesCount = 26;
 
@@ -125,6 +125,83 @@ public:
         }
     }
 
+    // Input: int roundingSize allows user input for rounding amount
+    //
+    // This function rounds the corners depending on user input.
+    // Currently the rounding is sharp. It will be extremely difficult to do
+    // this another way, and is probably not worth it.
+    // This function is also unoptimized and could probably run better.
+    // There are a lot of magic numbers, however I do not care.
+    void roundCorners(int roundingSize){
+        roundingSize += 1;
+
+        // Can't cover doorways
+        // This if prevents this
+        if(roundingSize > 7)
+            roundingSize = 6;
+
+        // l: variable to determine rounding from the left
+        int l = roundingSize;
+        // r: variable to determine rounding from the right
+        int r = matrixSizeM - roundingSize;
+
+        // Top half of rounding
+        // Approach matrix from top to bottom
+        for(int i = 1; i < matrixSizeN - 1; ++i) {
+            int j = 1;
+
+            if(i < matrixSizeN - 3){
+                while(j < l) {
+                    matrix_[i][j] = borderSand[rand()%borderSandCount] + ", ";
+                    ++j;
+                }
+
+                if(l > 0)
+                    --l;
+
+                while(j < matrixSizeM - 1){
+                    if(j > matrixSizeM / 2 + 3 && j >= r) {
+                        matrix_[i][j] = borderSand[rand()%borderSandCount] + ", ";
+                    }
+                    ++j;
+                }
+                ++r;
+                
+            }
+        }
+
+        l = roundingSize;
+        r = matrixSizeM - roundingSize - 1;
+
+        // Bottom half of rounding
+        // Approach matrix from bottom to top
+        //
+        // I couldn't figure out a way to print from top to bottom
+        // and get the bottom rounding working.
+        for(int i = matrixSizeN - 1; i > 1; --i){
+            int j = 1;
+
+            if(i > matrixSizeN / 2 + 3){
+                while(j <= l) {
+                    matrix_[i][j] = borderSand[rand()%borderSandCount] + ", ";
+                    ++j;
+                }
+
+                if(l > 0)
+                    --l;
+
+                while(j < matrixSizeM - 1){
+                    if(j >= matrixSizeM / 2 + 3 && j >= r) {
+                        matrix_[i][j] = borderSand[rand()%borderSandCount] + ", ";
+                    }
+                    ++j;
+                }
+                ++r;
+                
+            }
+        }
+    }
+
     // This allows user door input for custom matrices.
     // Nothing crazy, simply sets door array to user input.
     void chooseDoors(){
@@ -205,13 +282,16 @@ int main() {
 
     // noiceChance is the %chance for special tiles.
     // Used within matrixConstruct().
-    int noiseChance = 0;
+    //
+    // roundingSize is the amount of rounding done on corners.
+    // Used within roundCorners().
+    int noiseChance, roundingSize = 0;
 
     // Determines how many matrices the user wants.
     int loopIterations = 1;
 
     // Characters to determine settings.
-    char randFillSelect, sSelect, allSelect;
+    char randFillSelect, sSelect, allSelect, roundingSelect;
 
     // Assume randomFill is false unless user specifies.
     // Used within matrixConstruct()
@@ -236,6 +316,13 @@ int main() {
             cout << " @ Noise amount? [0 - 100]: ";
             cin >> noiseChance;
         }
+        cout << " @ Round Corners? [y/n]: ";
+        cin >> roundingSelect;
+        if(roundingSelect == 'y'){
+            cout << " @ Rounding amount? [1-6]: ";
+            cin >> roundingSize;
+        }
+
         cout << " @ Create one iteration of all possible matrices at once?\n   This creates a single matrix of all 16 door variations. 16 total matrices [y/n]: ";
         cin >> allSelect;
 
@@ -247,17 +334,24 @@ int main() {
 
     // If user wants all door combinations then we pass this first if statement.
     if(allSelect == 'y'){
-        for(int i = 1; i < 17; ++i) {
+        for(int i = 0; i < 16; ++i) {
             cellMatrix.matrixConstruct(randomFill, noiseChance);
             cellMatrix.setDoors(allDoorsComb[i]);
+            if(roundingSelect == 'y')
+                cellMatrix.roundCorners(roundingSize);
             cellMatrix.outputToFile(outputFile);
         }
     // Otherwise the create a specific matrix type.
-    // User choose amount of versions of this matrix.
+    // User chooses amount of iterations of this matrix.
     } else {
         cellMatrix.chooseDoors();
         for(int i = 0; i < loopIterations; ++i) {
             cellMatrix.matrixConstruct(randomFill, noiseChance);
+            cout << roundingSelect << endl;
+
+            if(roundingSelect == 'y')
+                cellMatrix.roundCorners(roundingSize);
+
             cellMatrix.outputToFile(outputFile);
         }
     }
