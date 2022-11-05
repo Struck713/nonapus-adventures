@@ -57,16 +57,16 @@ class LevelManager {
 
             switch(this.cell.direction) {
                 case Cell.UP:
-                    this.characterReference.position = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y - 50);
+                    this.characterReference.position = createVector(characterPosition.x, GameManager.CANVAS_Y - 50);
                     break;
                 case Cell.DOWN:
-                    this.characterReference.position = createVector(GameManager.CANVAS_X / 2, 50);
+                    this.characterReference.position = createVector(characterPosition.x, 50);
                     break;
                 case Cell.LEFT:
-                    this.characterReference.position = createVector(GameManager.CANVAS_X - 50, GameManager.CANVAS_Y / 2);
+                    this.characterReference.position = createVector(GameManager.CANVAS_X - 50, characterPosition.y);
                     break;
                 case Cell.RIGHT:
-                    this.characterReference.position = createVector(50, GameManager.CANVAS_Y / 2);
+                    this.characterReference.position = createVector(50, characterPosition.y);
                     break;
             }
         }
@@ -122,13 +122,10 @@ class LevelManager {
 
 class LevelLayout {
 
-    static LEVEL_WIDTH = 10;
-    static LEVEL_HEIGHT = 10;
+    static LEVEL_WIDTH = 5;
+    static LEVEL_HEIGHT = 5;
     
-    constructor(width, height) {
-        this.width = width;
-        this.height = height;
-
+    constructor() {
         this.matrix = [];
         for (let y = 0; y < LevelLayout.LEVEL_WIDTH; y++) {
             this.matrix[y] = [];
