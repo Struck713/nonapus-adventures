@@ -6,7 +6,7 @@ const spriteManager = new SpriteManager();
 
 function preload() {
   hudManager.preload();
-  spriteManager.preload([ "NonaRemaster.png", "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png" ]);
+  spriteManager.preload([ "NonaRemaster.png", "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png", "crab.png"]);
   levelManager.preload(16); // load 16 levels
 
   //loadSound('assets/sound/background.mp3', e => e.play());
@@ -22,9 +22,9 @@ function setup() {
   levelManager.useLayout(); // use it
 
   // test some enemies
-  //gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  //gameManager.queue(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  //gameManager.queue(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  gameManager.queue(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  gameManager.queue(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
   gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
   
   character = new Character(400, 400);

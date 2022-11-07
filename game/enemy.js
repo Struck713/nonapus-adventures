@@ -151,3 +151,30 @@ class Clam extends Enemy{
     }
 
 }
+
+class Crab extends Enemy{
+    constructor (x, y) {
+        super(x, y, spriteManager.get("Crab"));
+        super.collider = true;
+    }
+
+    updatePathing() {
+        //movement.setMag(3); // do something!
+    }
+
+    render () {
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(.45); //speed
+
+        this.position.add(movement);
+    }
+
+}
+
