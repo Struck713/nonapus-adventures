@@ -7,7 +7,7 @@
 class Character extends GameObject {
 
     static INK_DEFAULT_VALUE = 4; // how many shots
-    static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
+    static INK_INCREASE_SECONDS = 1000 ; // how many milliseconds to increate
 
     static HEALTH_DEFAULT_VALUE = 4; // player health starting amount
 
