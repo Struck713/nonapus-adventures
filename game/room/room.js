@@ -1,14 +1,14 @@
-class LevelManager {
+class RoomManager {
 
     static ROWS = 5;
     static COLUMNS = 5;
 
     constructor() {
-        this.levels = [];
-        for (let y = 0; y < LevelManager.COLUMNS; y++) {
-            this.levels[y] = [];
-            for (let x = 0; x < LevelManager.ROWS; x++) {
-                this.levels[y][x] = new Level(x, y);
+        this.rooms = [];
+        for (let y = 0; y < RoomManager.COLUMNS; y++) {
+            this.rooms[y] = [];
+            for (let x = 0; x < RoomManager.ROWS; x++) {
+                this.rooms[y][x] = new Room(x, y);
             }
         }
     }
@@ -16,50 +16,50 @@ class LevelManager {
     load() {
         this.generate(); // generate the wall sequence
 
-         //generate individual level layout
-        this.levels.forEach(insideLevels => {
-            insideLevels.forEach(level => level.generate());
+         //generate individual room layout
+        this.rooms.forEach(insideRooms => {
+            insideRooms.forEach(room => room.generate());
         }); 
 
 
-        this.level = this.getRandomLevel();
-        this.level.build();
-        this.level.visited = true;
+        this.room = this.getRandomRoom();
+        this.room.build();
+        this.room.visited = true;
     }
 
     render() {
-        this.level.render();
+        this.room.render();
 
         if (!this.characterReference) {
             this.characterReference = gameManager.getByTag(Character.TAG);
         }
 
         let characterPosition = this.characterReference.position;
-        let newLevel;
+        let newRoom;
         
-        if (characterPosition.y < 0) newLevel = this.getLevel(this.level.x, this.level.y - 1, Level.UP);
-        if (characterPosition.y > GameManager.CANVAS_Y) newLevel = this.getLevel(this.level.x, this.level.y + 1, Level.DOWN);
-        if (characterPosition.x < 0) newLevel = this.getLevel(this.level.x + 1, this.level.y, Level.LEFT);
-        if (characterPosition.x > GameManager.CANVAS_X) newLevel = this.getLevel(this.level.x - 1, this.level.y, Level.RIGHT);
+        if (characterPosition.y < 0) newRoom = this.getRoom(this.room.x, this.room.y - 1, Room.UP);
+        if (characterPosition.y > GameManager.CANVAS_Y) newRoom = this.getRoom(this.room.x, this.room.y + 1, Room.DOWN);
+        if (characterPosition.x < 0) newRoom = this.getRoom(this.room.x + 1, this.room.y, Room.LEFT);
+        if (characterPosition.x > GameManager.CANVAS_X) newRoom = this.getRoom(this.room.x - 1, this.room.y, Room.RIGHT);
 
-        if (newLevel) {
-            this.level.destroy();
+        if (newRoom) {
+            this.room.destroy();
 
-            this.level = newLevel;
-            this.level.build();
-            this.level.visited = true;
+            this.room = newRoom;
+            this.room.build();
+            this.room.visited = true;
 
-            switch(this.level.direction) {
-                case Level.UP:
+            switch(this.room.direction) {
+                case Room.UP:
                     this.characterReference.position = createVector(characterPosition.x, GameManager.CANVAS_Y - 50);
                     break;
-                case Level.DOWN:
+                case Room.DOWN:
                     this.characterReference.position = createVector(characterPosition.x, 50);
                     break;
-                case Level.LEFT:
+                case Room.LEFT:
                     this.characterReference.position = createVector(GameManager.CANVAS_X - 50, characterPosition.y);
                     break;
-                case Level.RIGHT:
+                case Room.RIGHT:
                     this.characterReference.position = createVector(50, characterPosition.y);
                     break;
             }
@@ -69,7 +69,7 @@ class LevelManager {
     generate() {
         let stack = [];
         
-        let initial = this.getRandomLevel();
+        let initial = this.getRandomRoom();
         initial.visited = true;
         stack.push(initial);
         
@@ -81,75 +81,75 @@ class LevelManager {
             
             stack.push(current);
             
-            let nextLevel = random(neighbors);
-            nextLevel.visited = true;
+            let nextRoom = random(neighbors);
+            nextRoom.visited = true;
             
-            let direction = nextLevel.direction;
+            let direction = nextRoom.direction;
             current.walls[direction] = false;
-            nextLevel.walls[Level.getOppositeDirection(direction)] = false;
+            nextRoom.walls[Room.getOppositeDirection(direction)] = false;
             
-            stack.push(nextLevel);
+            stack.push(nextRoom);
         }
 
         // clear cells visited property
-        this.levels.forEach(insideLevels => {
-            insideLevels.forEach(level => (level.visited = false));
+        this.rooms.forEach(insideRooms => {
+            insideRooms.forEach(room => (room.visited = false));
         })
     }
         
-    getNeighbors(level) {
+    getNeighbors(room) {
         let neighbors = [];
         
-        let up = this.getRelative(level, Level.UP);
+        let up = this.getRelative(room, Room.UP);
         if (up && !up.visited) neighbors.push(up);
         
-        let down = this.getRelative(level, Level.DOWN);
+        let down = this.getRelative(room, Room.DOWN);
         if (down && !down.visited) neighbors.push(down);
         
-        let left = this.getRelative(level, Level.LEFT);
+        let left = this.getRelative(room, Room.LEFT);
         if (left && !left.visited) neighbors.push(left);
         
-        let right = this.getRelative(level, Level.RIGHT);
+        let right = this.getRelative(room, Room.RIGHT);
         if (right && !right.visited) neighbors.push(right);
         
         return neighbors;
     }
     
-    getLevel(x, y) {
-        return this.getLevel(x, y, 0);
+    getRoom(x, y) {
+        return this.getRoom(x, y, 0);
     }
     
-    getLevel(x, y, direction) {
-        if (x >= LevelManager.ROWS || x < 0 || y >= LevelManager.COLUMNS || y < 0) return null;
+    getRoom(x, y, direction) {
+        if (x >= RoomManager.ROWS || x < 0 || y >= RoomManager.COLUMNS || y < 0) return null;
         
-        let level = this.levels[y][x];
-        level.direction = direction;
-        return level;
+        let room = this.rooms[y][x];
+        room.direction = direction;
+        return room;
     }
 
-    getRelative(level, direction) {
+    getRelative(room, direction) {
         switch (direction) {
-            case Level.UP:
-                return this.getLevel(level.x, level.y - 1, Level.UP);
-            case Level.DOWN:
-                return this.getLevel(level.x, level.y + 1, Level.DOWN);
-            case Level.LEFT:
-                return this.getLevel(level.x - 1, level.y, Level.LEFT);
-            case Level.RIGHT:
-                return this.getLevel(level.x + 1, level.y, Level.RIGHT);
+            case Room.UP:
+                return this.getRoom(room.x, room.y - 1, Room.UP);
+            case Room.DOWN:
+                return this.getRoom(room.x, room.y + 1, Room.DOWN);
+            case Room.LEFT:
+                return this.getRoom(room.x - 1, room.y, Room.LEFT);
+            case Room.RIGHT:
+                return this.getRoom(room.x + 1, room.y, Room.RIGHT);
         }
         return null;
     }
     
-    getRandomLevel() {
-        let ranX = floor(random(0, LevelManager.ROWS));
-        let ranY = floor(random(0, LevelManager.COLUMNS));
-        return this.getLevel(ranX, ranY);
+    getRandomRoom() {
+        let ranX = floor(random(0, RoomManager.ROWS));
+        let ranY = floor(random(0, RoomManager.COLUMNS));
+        return this.getRoom(ranX, ranY);
     }
 
 }
 
-class Level {
+class Room {
 
     static UP = 0;
     static DOWN = 1;
@@ -189,10 +189,10 @@ class Level {
                 tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
                 
                 if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
-                    if (!(check(row, TileManager.ROWS - 1, column, 0, Level.UP) 
-                     || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Level.DOWN)
-                     || check(column, TileManager.COLUMNS - 1, row, 0, Level.RIGHT)
-                     || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Level.LEFT))) {
+                    if (!(check(row, TileManager.ROWS - 1, column, 0, Room.UP) 
+                     || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Room.DOWN)
+                     || check(column, TileManager.COLUMNS - 1, row, 0, Room.RIGHT)
+                     || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Room.LEFT))) {
                         tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
                     }
                 }

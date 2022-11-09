@@ -140,15 +140,15 @@ class Minimap extends HUDItem {
         this.map.fill(255);
         this.map.circle(this.scale / 2, this.scale / 2, 10 * this.scale);
 
-        let level = levelManager.level;
+        let room = roomManager.room;
         this.map.fill(0, 255, 0);
         this.map.square(0, 0, this.scale);
         this.map.fill(0);
 
-        this.drawCell(level, Level.UP, 0, -10);
-        this.drawCell(level, Level.LEFT, 10, 0);
-        this.drawCell(level, Level.DOWN, 0, 10);
-        this.drawCell(level, Level.RIGHT, -10, 0);
+        this.drawCell(room, Room.UP, 0, -10);
+        this.drawCell(room, Room.LEFT, 10, 0);
+        this.drawCell(room, Room.DOWN, 0, 10);
+        this.drawCell(room, Room.RIGHT, -10, 0);
 
         image(this.map, this.x, this.y);
     }
@@ -156,7 +156,7 @@ class Minimap extends HUDItem {
     drawCell(cell, direction, x, y) {
         if (cell.walls[direction]) return;
 
-        if (levelManager.getRelative(cell, direction).visited) this.map.fill(255, 0, 0);
+        if (roomManager.getRelative(cell, direction).visited) this.map.fill(255, 0, 0);
         this.map.square(x, y, this.scale);
         this.map.fill(0);
     }

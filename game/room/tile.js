@@ -9,7 +9,7 @@ class TileManager {
     static ROWS = GameManager.CANVAS_X / 32;
     static COLUMNS = GameManager.CANVAS_Y / 32;
     static TILE_SIZE = 32;
-    static TILE_SIZE_HALF = LevelManager.TILE_SIZE / 2;
+    static TILE_SIZE_HALF = RoomManager.TILE_SIZE / 2;
 
     constructor() {
         this.tiles = [];

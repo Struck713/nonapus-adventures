@@ -1,7 +1,7 @@
 
 const gameManager = new GameManager();
 const tileManager = new TileManager();
-const levelManager = new LevelManager(tileManager);
+const roomManager = new RoomManager();
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
@@ -19,7 +19,7 @@ function setup() {
   spriteManager.load(); // load sprites
   tileManager.load();
 
-  levelManager.load(); //load levels
+  roomManager.load(); //load rooms
 
   // test some enemies
   // gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
@@ -39,7 +39,7 @@ function setup() {
 }
 
 function draw(){
-  levelManager.render();
+  roomManager.render();
   gameManager.render();
   hudManager.render();
 }
