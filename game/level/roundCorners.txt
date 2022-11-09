@@ -1,0 +1,60 @@
+   // just moved this out of the way
+   
+    /*
+        let tileType = random(TileUtil.BORDER_SAND);
+
+        let roundingAmount = 6;
+        let left = roundingAmount;
+        let right = TileManager.ROWS - roundingAmount;
+
+        for(let column = 1; column < TileManager.COLUMNS - 1; ++column){
+            let row = 1;
+
+            if(column < TileManager.COLUMNS - 3){
+                while(row < column){
+                    tileType = random(TileUtil.BORDER_SAND);
+                    ++row;
+                    this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
+                }
+
+                if(left > 0)
+                    --left;
+
+                while(row = TileManager.COLUMNS - 1){
+                    if(row > TileManager.COLUMNS / 2 + 3 && row >= right)
+                        tileType = random(TileUtil.BORDER_SAND);
+                        this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
+
+                    ++row;
+                }
+                ++right;
+            }
+        }
+
+        left = roundingAmount;
+        right = TileManger.COLUMNS - roundingAmount - 1;
+
+        for(let rows = TileManager.COLUMNS - 1; rows > 1; --rows) {
+            columns = 1;
+
+            if(rows > TileManger.COLUMNS / 2 + 3){
+                while(columns <= 1) {
+                    tileType = random(TileUtil.BORDER_SAND);
+                    this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
+                    ++columns;
+                }
+
+                if(left > 0)
+                    --left;
+
+                while(columns < TileManger.ROWS - 1) {
+                    if(columns >= TileManger.ROWS / 2 + 3 && columns >= right) {
+                        tileType = random(TileUtil.BORDER_SAND);
+                        this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
+                    }
+                    ++column;
+                }
+                ++right;
+            }
+        }
+        */

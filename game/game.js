@@ -36,8 +36,7 @@ class GameManager {
     }
 
     dequeue(gameObject) {
-        let index = this.gameObjects.indexOf(gameObject);
-        if (index > - 1) this.gameObjects.splice(index, 1)
+        Utils.remove(this.gameObjects, gameObject);
     } 
 
     getByClass(clazz) {

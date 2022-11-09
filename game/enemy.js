@@ -7,9 +7,10 @@
  */
  class Enemy extends GameObject {
 
-    constructor (x, y, sprite) {
+    constructor (x, y, health, sprite) {
         super(x, y, sprite);
         super.collider = true;
+        this.health = health;
     }
 
     calculateAngleToTarget() {
@@ -20,6 +21,15 @@
 
     updatePathing() {
         
+    }
+
+    destroy() {
+        this.health = 0;
+        super.destroy();
+    }
+
+    get dead() {
+        return (this.health <= 0);
     }
 
    /*  render () {
@@ -45,7 +55,7 @@
 class Pufferfish extends Enemy {
 
     constructor (x, y) {
-        super(x, y, spriteManager.get("Pufferfish"));
+        super(x, y, 15, spriteManager.get("Pufferfish"));
         super.collider = true;
     }
 
@@ -76,7 +86,7 @@ class Pufferfish extends Enemy {
 
 class Shark extends Enemy{
     constructor (x, y) {
-        super(x, y, spriteManager.get("Shark"));
+        super(x, y, 5, spriteManager.get("Shark"));
         super.collider = true;
     }
 
@@ -102,7 +112,7 @@ class Shark extends Enemy{
 
 class Urchin extends Enemy{
     constructor (x, y) {
-        super(x, y, spriteManager.get("Urchin"));
+        super(x, y, 1, spriteManager.get("Urchin"));
         super.collider = true;
     }
 
@@ -128,7 +138,7 @@ class Urchin extends Enemy{
 
 class Clam extends Enemy{
     constructor (x, y) {
-        super(x, y, spriteManager.get("Clam"));
+        super(x, y, 25, spriteManager.get("Clam"));
         super.collider = true;
     }
 
@@ -154,7 +164,7 @@ class Clam extends Enemy{
 
 class Crab extends Enemy{
     constructor (x, y) {
-        super(x, y, spriteManager.get("Crab"));
+        super(x, y, 15, spriteManager.get("Crab"));
         super.collider = true;
     }
 

@@ -166,7 +166,8 @@ class Level {
         this.y = y;
         this.visited = false;
         this.walls = [ true, true, true, true ];
-        this.tileMatrix = [];
+        this.tiles = [];
+        this.enemies = [];
     }
 
     generate() {
@@ -174,9 +175,9 @@ class Level {
 
         noiseSeed(random(0, 100));
 
-        this.tileMatrix = [];
+        this.tiles = [];
         for (let column = 0; column < TileManager.COLUMNS; ++column) {
-            this.tileMatrix[column] = [];
+            this.tiles[column] = [];
             for (let row = 0; row < TileManager.ROWS; ++row) {
                 
                 // m, j is column
@@ -196,100 +197,41 @@ class Level {
                     }
                 }
 
-                this.tileMatrix[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-            }
-        }
-    /*
-        let tileType = random(TileUtil.BORDER_SAND);
-
-        let roundingAmount = 6;
-        let left = roundingAmount;
-        let right = TileManager.ROWS - roundingAmount;
-
-        for(let column = 1; column < TileManager.COLUMNS - 1; ++column){
-            let row = 1;
-
-            if(column < TileManager.COLUMNS - 3){
-                while(row < column){
-                    tileType = random(TileUtil.BORDER_SAND);
-                    ++row;
-                    this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
-                }
-
-                if(left > 0)
-                    --left;
-
-                while(row = TileManager.COLUMNS - 1){
-                    if(row > TileManager.COLUMNS / 2 + 3 && row >= right)
-                        tileType = random(TileUtil.BORDER_SAND);
-                        this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
-
-                    ++row;
-                }
-                ++right;
+                this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
             }
         }
 
-        left = roundingAmount;
-        right = TileManger.COLUMNS - roundingAmount - 1;
+        this.enemies.push(new Pufferfish(200, 200));
 
-        for(let rows = TileManager.COLUMNS - 1; rows > 1; --rows) {
-            columns = 1;
-
-            if(rows > TileManger.COLUMNS / 2 + 3){
-                while(columns <= 1) {
-                    tileType = random(TileUtil.BORDER_SAND);
-                    this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
-                    ++columns;
-                }
-
-                if(left > 0)
-                    --left;
-
-                while(columns < TileManger.ROWS - 1) {
-                    if(columns >= TileManger.ROWS / 2 + 3 && columns >= right) {
-                        tileType = random(TileUtil.BORDER_SAND);
-                        this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
-                    }
-                    ++column;
-                }
-                ++right;
-            }
-        }
-        */
     }
     
     build() {
         this.graphics = createGraphics(GameManager.CANVAS_X, GameManager.CANVAS_Y);
-        this.tileMatrix.forEach(column => {
+        this.tiles.forEach(column => {
             column.forEach(item => {
                 var tile = tileManager.tiles[item.type];
                 this.graphics.image(tile, item.row * TileManager.TILE_SIZE, item.column * TileManager.TILE_SIZE);
             });
         })
+
+        this.enemies.forEach(enemy => {
+            if (enemy.dead) {
+                Utils.remove(this.enemies, enemy);
+                return;
+            }
+            gameManager.queue(enemy)
+        }); // respawn previously spawned enemies
     }
 
     destroy() {
+        this.enemies.forEach(enemy => gameManager.dequeue(enemy)); // despawn enemies for later
+
         this.graphics.remove();
         this.graphics = null;
     }
 
     render() {
         image(this.graphics, 0, 0);
-    }
-
-    getTileByXY(x, y) {
-        let row = floor(x / LevelManager.TILE_SIZE);
-        if (GameManager.ROWS <= row) return null;
-
-        let column = floor(y / LevelManager.TILE_SIZE);
-        if (GameManager.COLUMNS <= column) return null;
-
-        return this.getTileByRowColumn(row, column);
-    }
-
-    getTileByRowColumn(row, column) {
-        return this.tileMatrix[column][row];
     }
 
 }
