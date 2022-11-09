@@ -1,5 +1,11 @@
 class TileManager {
 
+    static Types = {
+        ALL_TILES: -1, 
+        SAND: 0,
+        BORDER_SAND: 3
+    }
+
     static ROWS = GameManager.CANVAS_X / 32;
     static COLUMNS = GameManager.CANVAS_Y / 32;
     static TILE_SIZE = 32;
@@ -16,14 +22,33 @@ class TileManager {
 
     load() {
         let tilesJSON = this.tilesetJSON.tiles;
+        let index = 0;
         tilesJSON.forEach(tileJSON => {
-            let tile = this.tilesetImage.get(tileJSON.x, tileJSON.y, tileJSON.width, tileJSON.height);
-            tile.collide = tileJSON.collide;
+            let position = tileJSON.position;
+            let tile = this.tilesetImage.get(position.x, position.y, position.width, position.height);
+            tile.index = index;
+            tile.properties = {
+                collide: tileJSON.collide,
+                rarity: tileJSON.rarity,
+                type: tileJSON.type
+            };
             this.tiles.push(tile);
+
+            index++;
         });
 
         delete this.tilesetImage;
         delete this.tilesetJSON;
+    }
+
+    getTilesByType(type) {
+        if (type === TileManager.Types.ALL_TILES) return this.tiles;
+        return this.tiles.filter(tile => tile.properties.type == type);
+    }
+
+    getTileByRarity(rarity) {
+        let tilesOfRarity = this.tiles.filter(tile => tile.properties.rarity >= rarity);
+        return random(tilesOfRarity);
     }
 
 }
@@ -46,15 +71,5 @@ class Tile {
     //     let distanceY = abs(this.center.y - y) - 8;
     //     return !(distanceY < LevelManager.TILE_SIZE && this.collide);
     // }
-
-}
-
-class TileUtil {
-
-    static PLAIN_SAND = [0, 6];
-    static BORDER_SAND = [11];
-    static FILL_SAND = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    static ALL_TILES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-                        14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25];
 
 }

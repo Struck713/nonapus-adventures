@@ -3,9 +3,7 @@ class LevelManager {
     static ROWS = 5;
     static COLUMNS = 5;
 
-    constructor(tileManager) {
-        this.tileManager = tileManager;
-
+    constructor() {
         this.levels = [];
         for (let y = 0; y < LevelManager.COLUMNS; y++) {
             this.levels[y] = [];
@@ -20,12 +18,12 @@ class LevelManager {
 
          //generate individual level layout
         this.levels.forEach(insideLevels => {
-            insideLevels.forEach(level => level.generate(this.tileManager.tiles));
+            insideLevels.forEach(level => level.generate());
         }); 
 
 
         this.level = this.getRandomLevel();
-        this.level.build(this.tileManager.tiles);
+        this.level.build();
         this.level.visited = true;
     }
 
@@ -46,8 +44,9 @@ class LevelManager {
 
         if (newLevel) {
             this.level.destroy();
+
             this.level = newLevel;
-            this.level.build(this.tileManager.tiles);
+            this.level.build();
             this.level.visited = true;
 
             switch(this.level.direction) {
@@ -86,8 +85,8 @@ class LevelManager {
             nextLevel.visited = true;
             
             let direction = nextLevel.direction;
-            current.remove(direction);
-            nextLevel.remove(Level.getOppositeDirection(direction));
+            current.walls[direction] = false;
+            nextLevel.walls[Level.getOppositeDirection(direction)] = false;
             
             stack.push(nextLevel);
         }
@@ -170,30 +169,34 @@ class Level {
         this.tileMatrix = [];
     }
 
-    generate(tiles) {
+    generate() {
         let check = (bound1, max1, bound2, max2, doorIndex) => (bound1 >= (max1 / 2 - 3) && bound1 <= (max1 / 2 + 3)) && (bound2 == max2) && !this.walls[doorIndex];
-        
+
+        noiseSeed(random(0, 100));
+
         this.tileMatrix = [];
         for (let column = 0; column < TileManager.COLUMNS; ++column) {
             this.tileMatrix[column] = [];
             for (let row = 0; row < TileManager.ROWS; ++row) {
-                let tileType = 0;
-
+                
                 // m, j is column
                 // n, i is rows
 
-                if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
-                    if (check(row, TileManager.ROWS - 1, column, 0, Level.UP)) tileType = random(TileUtil.PLAIN_SAND);
-                    else if (check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Level.DOWN)) tileType = random(TileUtil.PLAIN_SAND);
-                    else if (check(column, TileManager.COLUMNS - 1, row, 0, Level.RIGHT)) tileType = random(TileUtil.PLAIN_SAND);
-                    else if (check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Level.LEFT)) tileType = random(TileUtil.PLAIN_SAND);
-                    else tileType = random(TileUtil.BORDER_SAND);
-                } else {
-                    if(random(0, 100) < 5) tileType = random(TileUtil.FILL_SAND);
-                    else tileType = random(TileUtil.PLAIN_SAND);
-                }
+                let tileType;
+                let rarity = floor(noise(row * .05, column * .05) * 100);
+                let sand = tileManager.getTilesByType(TileManager.Types.SAND);
+                tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
                 
-                this.tileMatrix[column][row] = new Tile(tileType, tiles[tileType].collide, row, column);
+                if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
+                    if (!(check(row, TileManager.ROWS - 1, column, 0, Level.UP) 
+                     || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Level.DOWN)
+                     || check(column, TileManager.COLUMNS - 1, row, 0, Level.RIGHT)
+                     || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Level.LEFT))) {
+                        tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                    }
+                }
+
+                this.tileMatrix[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
             }
         }
     /*
@@ -255,11 +258,12 @@ class Level {
         }
         */
     }
-    build(tiles) {
+    
+    build() {
         this.graphics = createGraphics(GameManager.CANVAS_X, GameManager.CANVAS_Y);
         this.tileMatrix.forEach(column => {
             column.forEach(item => {
-                var tile = tiles[item.type];
+                var tile = tileManager.tiles[item.type];
                 this.graphics.image(tile, item.row * TileManager.TILE_SIZE, item.column * TileManager.TILE_SIZE);
             });
         })
@@ -286,14 +290,6 @@ class Level {
 
     getTileByRowColumn(row, column) {
         return this.tileMatrix[column][row];
-    }
-
-    has(index) {
-        return this.walls[index];
-    }
-
-    remove(index) {
-        this.walls[index] = false;
     }
 
 }

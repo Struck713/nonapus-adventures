@@ -154,7 +154,7 @@ class Minimap extends HUDItem {
     }
 
     drawCell(cell, direction, x, y) {
-        if (cell.has(direction)) return;
+        if (cell.walls[direction]) return;
 
         if (levelManager.getRelative(cell, direction).visited) this.map.fill(255, 0, 0);
         this.map.square(x, y, this.scale);

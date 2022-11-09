@@ -22,12 +22,12 @@ function setup() {
   levelManager.load(); //load levels
 
   // test some enemies
-  gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  gameManager.queue(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  gameManager.queue(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  // gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  // gameManager.queue(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  // gameManager.queue(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+  // gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
   
-  character = new Character(400, 400);
+  character = new Character(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
   gameManager.queue(character); // add our character to the render queue
 
   let canvas = createCanvas(GameManager.CANVAS_X, GameManager.CANVAS_Y);
