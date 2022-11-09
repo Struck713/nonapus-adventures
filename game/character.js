@@ -7,7 +7,7 @@
 class Character extends GameObject {
 
     static INK_DEFAULT_VALUE = 4; // how many shots
-    static INK_INCREASE_SECONDS = 1000 ; // how many milliseconds to increate
+    static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
 
     static HEALTH_DEFAULT_VALUE = 4; // player health starting amount
 
@@ -16,7 +16,7 @@ class Character extends GameObject {
     constructor (x, y) {
 
         // set super tags
-        super(x, y, spriteManager.get("NonaR"));
+        super(x, y, spriteManager.get("Nona"));
         super.collider = true;
 
         // set game object tags
@@ -134,7 +134,7 @@ class Character extends GameObject {
 class OilAttack extends GameObject {
 
     constructor (x, y, direction) {
-        super(x, y, spriteManager.get("Nona"));
+        super(x, y, spriteManager.get("Crab"));
         super.collider = true;
         this.direction = direction;
     }

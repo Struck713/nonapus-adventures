@@ -1,6 +1,6 @@
 {
-    "name": "Shark",
-    "animations": { 
+    "name": "nona-old",
+    "animations": {
         "idle": [
             {
                 "x": 0,
@@ -16,6 +16,12 @@
             },
             {
                 "x": 0,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            },
+            {
+                "x": 32,
                 "y": 32,
                 "width": 32,
                 "height": 32

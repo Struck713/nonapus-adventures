@@ -75,8 +75,7 @@ class Sprite {
             let animation = [];
             let frames = allAnimations[name];
             frames.forEach(frame => {
-                let position = frame.position;
-                let sprite = this.sprites.get(position.x, position.y, position.width, position.height);
+                let sprite = this.sprites.get(frame.x, frame.y, frame.width, frame.height);
                 animation.push(sprite);
             });
             this.animations[name] = animation;

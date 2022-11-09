@@ -3,36 +3,52 @@
     "animations": {
         "idle": [
             {
-                "position": {
-                    "x": 0,
-                    "y": 0,
-                    "width": 32,
-                    "height": 32
-                }
+                "x": 0,
+                "y": 0,
+                "width": 64,
+                "height": 64
             },
             {
-                "position": {
-                    "x": 32,
-                    "y": 0,
-                    "width": 32,
-                    "height": 32
-                }
+                "x": 64,
+                "y": 0,
+                "width": 64,
+                "height": 64
             },
             {
-                "position": {
-                    "x": 0,
-                    "y": 32,
-                    "width": 32,
-                    "height": 32
-                }
+                "x": 128,
+                "y": 0,
+                "width": 64,
+                "height": 64
             },
             {
-                "position": {
-                    "x": 32,
-                    "y": 32,
-                    "width": 32,
-                    "height": 32
-                }
+                "x": 0,
+                "y": 64,
+                "width": 64,
+                "height": 64
+            },
+            {
+                "x": 64,
+                "y": 64,
+                "width": 64,
+                "height": 64
+            },
+            {
+                "x": 128,
+                "y": 64,
+                "width": 64,
+                "height": 64
+            },
+            {
+                "x": 0,
+                "y": 128,
+                "width": 64,
+                "height": 64
+            },
+            {
+                "x": 64,
+                "y": 128,
+                "width": 64,
+                "height": 64
             }
         ]
     }
