@@ -10,8 +10,6 @@ class GameManager {
 
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
-    static ROWS = this.CANVAS_X / 32;
-    static COLUMNS = this.CANVAS_Y / 32;
 
     constructor() {
         this.gameObjects = [];

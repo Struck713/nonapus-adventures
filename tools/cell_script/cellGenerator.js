@@ -1,3 +1,7 @@
+// some kind of string
+// random integers
+// output to .json files
+
 const matrixSizeM = 30;
 const matrixSizeN = 23;
 

@@ -42,7 +42,7 @@ class Character extends GameObject {
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
 
         let movement = createVector(0, 0);
-        let collisionMatrix = levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
+        let collisionMatrix = [ true, true, true, true ]; //levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
         if ((this.movementMatrix[0]) && (collisionMatrix[0])) {
             movement.y -= 1;
         }

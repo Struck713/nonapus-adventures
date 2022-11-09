@@ -1,13 +1,14 @@
 
 const gameManager = new GameManager();
-const levelManager = new LevelManager();
+const tileManager = new TileManager();
+const levelManager = new LevelManager(tileManager);
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
 function preload() {
-  hudManager.preload();
   spriteManager.preload([ "NonaRemaster.png", "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png", "crab.png"]);
-  levelManager.preload(16); // load 16 levels
+  hudManager.preload();
+  tileManager.preload();
 
   //loadSound('assets/sound/background.mp3', e => e.play());
 
@@ -16,10 +17,9 @@ function preload() {
 let character;
 function setup() {
   spriteManager.load(); // load sprites
+  tileManager.load();
 
   levelManager.load(); //load levels
-  levelManager.generateLayout(); // build a layout
-  levelManager.useLayout(); // use it
 
   // test some enemies
   gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
