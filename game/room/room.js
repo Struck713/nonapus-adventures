@@ -201,7 +201,7 @@ class Room {
             }
         }
 
-        let roundingAmount = 6;
+        let roundingAmount = random(3, 7);
         let left = roundingAmount;
         let right = TileManager.ROWS - roundingAmount;
         
@@ -222,7 +222,6 @@ class Room {
                     if(row > TileManager.ROWS / 2 + 3 && row >= right) {
                         let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
                         this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-                        ++row;
                     }
                     ++row;
                 }
@@ -230,7 +229,7 @@ class Room {
             }
         }
         
-        left = random(2, 6);
+        left = random(3, 7);
         right = TileManager.ROWS - roundingAmount;
         
         for(let column = TileManager.COLUMNS - 1; column > 1; --column) {
