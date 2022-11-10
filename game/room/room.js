@@ -201,6 +201,61 @@ class Room {
             }
         }
 
+        let roundingAmount = 6;
+        let left = roundingAmount;
+        let right = TileManager.ROWS - roundingAmount;
+        
+        for(let column = 1; column < TileManager.COLUMNS; ++column) {
+            let row = 1;
+        
+            if(column < TileManager.COLUMNS - 3) {
+                while(row < left) {
+                    let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
+                    ++row;
+                }
+        
+                if(left > 0)
+                    --left;
+        
+                while(row < TileManager.ROWS - 1) {
+                    if(row > TileManager.ROWS / 2 + 3 && row >= right) {
+                        let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                        this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
+                        ++row;
+                    }
+                    ++row;
+                }
+                ++right;
+            }
+        }
+        
+        left = random(2, 6);
+        right = TileManager.ROWS - roundingAmount;
+        
+        for(let column = TileManager.COLUMNS - 1; column > 1; --column) {
+            let row = 1;
+        
+            if(column > TileManager.COLUMNS / 2 + 3) {
+                while(row <= left) {
+                    let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
+                    ++row;
+                }
+                if(left > 0)
+                    --left;
+        
+                while(row < TileManager.ROWS - 1) {
+                    if(row > TileManager.ROWS / 2 + 3 && row >= right) {
+                        let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                        this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
+                    }
+                    ++row;
+                }
+                ++right;
+            }
+        }
+
         this.enemies.push(new Pufferfish(200, 200));
 
     }
