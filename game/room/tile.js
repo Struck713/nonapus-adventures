@@ -3,7 +3,7 @@ class TileManager {
     static Types = {
         ALL_TILES: -1, 
         SAND: 0,
-        BORDER_SAND: 3
+        BORDER_SAND: 1
     }
 
     static ROWS = GameManager.CANVAS_X / 32;

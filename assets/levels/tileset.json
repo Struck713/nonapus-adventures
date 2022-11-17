@@ -2,110 +2,11 @@
     "tiles": [
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 90,
             "type": 0,
             "position": {
                 "x": 0,
                 "y": 0,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 35,
-            "type": 0,
-            "position": {
-                "x": 32,
-                "y": 0,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": true,
-            "rarity": 25,
-            "type": 1,
-            "position": {
-                "x": 64,
-                "y": 0,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": true,
-            "rarity": 5,
-            "type": 1,
-            "position": {
-                "x": 96,
-                "y": 0,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 30,
-            "type": 0,
-            "position": {
-                "x": 128,
-                "y": 0,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 15,
-            "type": 0,
-            "position": {
-                "x": 0,
-                "y": 32,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 100,
-            "type": 0,
-            "position": {
-                "x": 32,
-                "y": 32,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 25,
-            "type": 0,
-            "position": {
-                "x": 64,
-                "y": 32,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 25,
-            "type": 0,
-            "position": {
-                "x": 96,
-                "y": 32,
-                "width": 32,
-                "height": 32
-            }
-        },
-        {
-            "collide": false,
-            "rarity": 100,
-            "type": 0,
-            "position": {
-                "x": 128,
-                "y": 32,
                 "width": 32,
                 "height": 32
             }
@@ -115,6 +16,105 @@
             "rarity": 90,
             "type": 0,
             "position": {
+                "x": 32,
+                "y": 0,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": true,
+            "rarity": 50,
+            "type": 1,
+            "position": {
+                "x": 64,
+                "y": 0,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": true,
+            "rarity": 50,
+            "type": 1,
+            "position": {
+                "x": 96,
+                "y": 0,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 25,
+            "type": 0,
+            "position": {
+                "x": 128,
+                "y": 0,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 25,
+            "type": 0,
+            "position": {
+                "x": 0,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 25,
+            "type": 0,
+            "position": {
+                "x": 32,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 25,
+            "type": 0,
+            "position": {
+                "x": 64,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 10,
+            "type": 0,
+            "position": {
+                "x": 96,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 25,
+            "type": 0,
+            "position": {
+                "x": 128,
+                "y": 32,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": false,
+            "rarity": 25,
+            "type": 0,
+            "position": {
                 "x": 0,
                 "y": 64,
                 "width": 32,
@@ -123,7 +123,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 32,
@@ -134,7 +134,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 64,
@@ -145,7 +145,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 96,
@@ -156,7 +156,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 128,
@@ -167,7 +167,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 0,
@@ -178,7 +178,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 32,
@@ -189,7 +189,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 64,
@@ -200,7 +200,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 96,
@@ -211,7 +211,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 128,
@@ -222,7 +222,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 0,
@@ -233,7 +233,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 32,
@@ -244,7 +244,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 64,
@@ -255,7 +255,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 128,
@@ -266,7 +266,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 0,
@@ -277,7 +277,7 @@
         },
         {
             "collide": false,
-            "rarity": 100,
+            "rarity": 25,
             "type": 0,
             "position": {
                 "x": 32,
