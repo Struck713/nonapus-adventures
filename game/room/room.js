@@ -260,6 +260,7 @@ class Room {
         this.enemies.push(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         this.enemies.push(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         this.enemies.push(new Crab(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+        
     }
     
     build() {
