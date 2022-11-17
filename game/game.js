@@ -87,11 +87,12 @@ class GameObject {
     checkCollisions(other) {
         if (other === this) return;
 
-        let distanceVector = p5.Vector.sub(this.position, other.position);
-        let distanceMag = distanceVector.mag();
+        let diff = p5.Vector.sub(this.position, other.position);
+        let diffDistance = diff.mag();
 
-        if (distanceMag <= 16) {
-           other.onCollision(this);
+        if (diffDistance <= (this.sprite.width / 2) && diffDistance <= (this.sprite.height / 2)) {
+            other.onCollision(this);
+            this.onCollision(other);
         }
     }
 

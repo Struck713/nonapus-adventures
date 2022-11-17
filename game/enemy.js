@@ -7,9 +7,13 @@
  */
  class Enemy extends GameObject {
 
+    static random() {
+        let list = [ Pufferfish, Shark, Urchin, Clam, Crab ];
+        return random(list);
+    }
+
     constructor (x, y, health, sprite) {
         super(x, y, sprite);
-        super.collider = true;
         this.health = health;
     }
 
@@ -17,6 +21,11 @@
         let character = gameManager.getByTag(Character.TAG);
         this.target = createVector(character.position.x, character.position.y);
         this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
+    }
+
+    onCollision(other) {
+        if (!(other instanceof OilAttack)) return;
+        this.destroy();
     }
 
     updatePathing() {
@@ -56,7 +65,6 @@ class Pufferfish extends Enemy {
 
     constructor (x, y) {
         super(x, y, 15, spriteManager.get("Pufferfish"));
-        super.collider = true;
     }
 
     updatePathing() {
@@ -87,7 +95,6 @@ class Pufferfish extends Enemy {
 class Shark extends Enemy{
     constructor (x, y) {
         super(x, y, 5, spriteManager.get("Shark"));
-        super.collider = true;
     }
 
     updatePathing() {
@@ -113,7 +120,6 @@ class Shark extends Enemy{
 class Urchin extends Enemy{
     constructor (x, y) {
         super(x, y, 1, spriteManager.get("Urchin"));
-        super.collider = true;
     }
 
     updatePathing() {
@@ -139,7 +145,6 @@ class Urchin extends Enemy{
 class Clam extends Enemy{
     constructor (x, y) {
         super(x, y, 25, spriteManager.get("Clam"));
-        super.collider = true;
     }
 
     updatePathing() {
@@ -165,7 +170,6 @@ class Clam extends Enemy{
 class Crab extends Enemy{
     constructor (x, y) {
         super(x, y, 15, spriteManager.get("Crab"));
-        super.collider = true;
     }
 
     updatePathing() {

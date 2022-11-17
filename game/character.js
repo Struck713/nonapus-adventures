@@ -66,6 +66,7 @@ class Character extends GameObject {
 
     onCollision(other) {
         if (!(other instanceof Enemy)) return;
+        this.loseHealth();
     }
 
     fireParticle() {
@@ -77,12 +78,11 @@ class Character extends GameObject {
 
     loseHealth() {
         if(this.damageCoolDown <= 0){
-            --this.playerHealth;
+            --this.health;
             this.damageCoolDown = 120;
         }
         else
             --this.damageCoolDown;
-        console.log(this.playerHealth);
         this.tookDamage = false;
     }
 
@@ -134,13 +134,14 @@ class Character extends GameObject {
 class OilAttack extends GameObject {
 
     constructor (x, y, direction) {
-        super(x, y, spriteManager.get("Crab"));
+        super(x, y, spriteManager.get("OilAttack"));
         super.collider = true;
         this.direction = direction;
     }
 
     onCollision(other) {
-
+        if (!(other instanceof Enemy)) return;
+        this.destroy();
     }
 
     render() {

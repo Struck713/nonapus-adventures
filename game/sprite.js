@@ -67,6 +67,8 @@ class Sprite {
     
     load() {
         this.name = this.data.name;
+        this.width = this.data.width;
+        this.height = this.data.height;
 
         let allAnimations = this.data.animations;
         let allAnimationNames = Object.keys(allAnimations);
@@ -75,7 +77,7 @@ class Sprite {
             let animation = [];
             let frames = allAnimations[name];
             frames.forEach(frame => {
-                let sprite = this.sprites.get(frame.x, frame.y, frame.width, frame.height);
+                let sprite = this.sprites.get(frame.x, frame.y, this.width, this.height);
                 animation.push(sprite);
             });
             this.animations[name] = animation;
