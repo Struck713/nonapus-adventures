@@ -10,6 +10,9 @@ class Character extends GameObject {
     static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
 
     static HEALTH_DEFAULT_VALUE = 4; // player health starting amount
+    static HEALTH_BOOST_VALUE = 2;
+
+    static SPEED_DEFAULT_VALUE = 2.5;
 
     static TAG = "CHARACTER";
 
@@ -26,6 +29,12 @@ class Character extends GameObject {
         this.health = Character.HEALTH_DEFAULT_VALUE;
         this.tookDamage = false;
         this.damageCoolDown = 0;
+        this.isHealthBoosted = false;
+
+        // player speed
+        this.speed = Character.SPEED_DEFAULT_VALUE;
+        this.isSpeedBoosted = false;
+        this.boostTime = 0;
 
         // character specific traits
         this.mousePosition = createVector(0, 0);
@@ -59,7 +68,8 @@ class Character extends GameObject {
         if(this.tookDamage) this.loseHealth();
         if(this.damageCoolDown > 0) --this.damageCoolDown;
 
-        movement.setMag(2.5); //speed
+        
+        this.setSpeed(movement);
 
         this.position.add(movement);
     }
@@ -74,6 +84,18 @@ class Character extends GameObject {
         this.ink--;
 
         gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
+    }
+
+    setSpeed(movement){
+        if(this.boostTime <= 0)
+            this.isSpeedBoosted = false;
+        else
+            --this.boostTime;
+        
+        if(this.isSpeedBoosted)
+            movement.setMag(this.speed * 2);  //boosted speed
+        else
+            movement.setMag(this.speed); // normal speed
     }
 
     loseHealth() {
