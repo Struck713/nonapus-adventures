@@ -183,11 +183,12 @@ class Room {
                 // m, j is column
                 // n, i is rows
 
-                let tileType;
                 let rarity = floor(noise(row * .05, column * .05) * 100);
                 let sand = tileManager.getTilesByType(TileManager.Types.SAND);
-                tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
-                
+
+                let tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
+                if (!tileType) tileType = sand[0]; // default tilea
+
                 if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
                     if (!(check(row, TileManager.ROWS - 1, column, 0, Room.UP) 
                      || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Room.DOWN)
@@ -298,7 +299,10 @@ class Room {
     willCollide(vector) {
         let column = floor(vector.y / TileManager.TILE_SIZE);
         let row = floor(vector.x / TileManager.TILE_SIZE);
+
+        if (column < 0 || column >= TileManager.COLUMNS || row < 0 || row >= TileManager.ROWS) return false;
         let tile = this.tiles[column][row];
+        
         return tile.collide;
     }
 

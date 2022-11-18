@@ -67,9 +67,9 @@ class Character extends GameObject {
         // collison check
         let copy = this.position.copy();
         copy.add(movement);
-        
-        // if the collision will not collide, update position
-        if (!roomManager.room.willCollide(copy)) this.position = copy;
+        if (roomManager.room.willCollide(copy)) return;
+
+        this.position = copy;
     }
 
     onCollision(other) {
