@@ -154,7 +154,7 @@ class Character extends GameObject {
 class OilAttack extends GameObject {
 
     constructor (x, y, direction) {
-        super(x, y, spriteManager.get("OilAttack"));
+        super(x, y, spriteManager.get("Crab"));
         super.collider = true;
         this.direction = direction;
     }
