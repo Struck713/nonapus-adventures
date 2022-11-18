@@ -6,7 +6,7 @@ const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
 function preload() {
-  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png", "crab.png"]);
+  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png", "oil_att.png", "crab.png", "speedBoost.png", "healthBoost.png"]);
   hudManager.preload();
   tileManager.preload();
 

@@ -10,6 +10,9 @@ class Character extends GameObject {
     static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
 
     static HEALTH_DEFAULT_VALUE = 4; // player health starting amount
+    static HEALTH_BOOST_VALUE = 2;
+
+    static SPEED_DEFAULT_VALUE = 2.5;
 
     static TAG = "CHARACTER";
 
@@ -26,6 +29,12 @@ class Character extends GameObject {
         this.health = Character.HEALTH_DEFAULT_VALUE;
         this.tookDamage = false;
         this.damageCoolDown = 0;
+        this.isHealthBoosted = false;
+
+        // player speed
+        this.speed = Character.SPEED_DEFAULT_VALUE;
+        this.isSpeedBoosted = false;
+        this.boostTime = 0;
 
         // character specific traits
         this.mousePosition = createVector(0, 0);
@@ -36,32 +45,31 @@ class Character extends GameObject {
     }
 
     render () {
-        this.sprite.cycleAnimation(); // run animation
-        
+        // sprite animation and display
+        this.sprite.cycleAnimation();
+
         this.sprite.show(this.position.x, this.position.y); // show on screen
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
-
-        let movement = createVector(0, 0);
-        let collisionMatrix = [ true, true, true, true ]; //levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
-        if ((this.movementMatrix[0]) && (collisionMatrix[0])) {
-            movement.y -= 1;
-        }
-        if ((this.movementMatrix[1]) && (collisionMatrix[1])) {
-            movement.y += 1;
-        }
-        if ((this.movementMatrix[2]) && (collisionMatrix[2])) {
-            movement.x -= 1;
-        }
-        if ((this.movementMatrix[3]) && (collisionMatrix[3])) {
-            movement.x += 1;
-        }
-
+        
+        // damage management
         if(this.tookDamage) this.loseHealth();
         if(this.damageCoolDown > 0) --this.damageCoolDown;
 
-        movement.setMag(2.5); //speed
+        // movement
+        let movement = createVector(0, 0);
+        if (this.movementMatrix[0]) movement.y -= 1;
+        if (this.movementMatrix[1]) movement.y += 1;
+        if (this.movementMatrix[2]) movement.x -= 1;
+        if (this.movementMatrix[3]) movement.x += 1;
 
-        this.position.add(movement);
+        this.setSpeed(movement);
+
+        // collison check
+        let copy = this.position.copy();
+        copy.add(movement);
+        if (roomManager.room.willCollide(copy)) return;
+
+        this.position = copy;
     }
 
     onCollision(other) {
@@ -76,8 +84,20 @@ class Character extends GameObject {
         gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
     }
 
+    setSpeed(movement){
+        if(this.boostTime <= 0)
+            this.isSpeedBoosted = false;
+        else
+            --this.boostTime;
+        
+        if(this.isSpeedBoosted)
+            movement.setMag(this.speed * 2);  //boosted speed
+        else
+            movement.setMag(this.speed); // normal speed
+    }
+
     loseHealth() {
-        if(this.damageCoolDown <= 0){
+        if(this.damageCoolDown <= 0 && this.health > 0){
             --this.health;
             this.damageCoolDown = 120;
         }
@@ -134,7 +154,7 @@ class Character extends GameObject {
 class OilAttack extends GameObject {
 
     constructor (x, y, direction) {
-        super(x, y, spriteManager.get("OilAttack"));
+        super(x, y, spriteManager.get("Crab"));
         super.collider = true;
         this.direction = direction;
     }
