@@ -294,4 +294,12 @@ class Room {
         image(this.graphics, 0, 0);
     }
 
+    // check collision pre-movement
+    willCollide(vector) {
+        let column = floor(vector.y / TileManager.TILE_SIZE);
+        let row = floor(vector.x / TileManager.TILE_SIZE);
+        let tile = this.tiles[column][row];
+        return tile.collide;
+    }
+
 }

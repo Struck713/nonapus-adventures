@@ -45,33 +45,31 @@ class Character extends GameObject {
     }
 
     render () {
-        this.sprite.cycleAnimation(); // run animation
-        
+        // sprite animation and display
+        this.sprite.cycleAnimation();
+
         this.sprite.show(this.position.x, this.position.y); // show on screen
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
-
-        let movement = createVector(0, 0);
-        let collisionMatrix = [ true, true, true, true ]; //levelManager.isCollideable(this.position.x + 8, this.position.y + 8);
-        if ((this.movementMatrix[0]) && (collisionMatrix[0])) {
-            movement.y -= 1;
-        }
-        if ((this.movementMatrix[1]) && (collisionMatrix[1])) {
-            movement.y += 1;
-        }
-        if ((this.movementMatrix[2]) && (collisionMatrix[2])) {
-            movement.x -= 1;
-        }
-        if ((this.movementMatrix[3]) && (collisionMatrix[3])) {
-            movement.x += 1;
-        }
-
+        
+        // damage management
         if(this.tookDamage) this.loseHealth();
         if(this.damageCoolDown > 0) --this.damageCoolDown;
 
-        
+        // movement
+        let movement = createVector(0, 0);
+        if (this.movementMatrix[0]) movement.y -= 1;
+        if (this.movementMatrix[1]) movement.y += 1;
+        if (this.movementMatrix[2]) movement.x -= 1;
+        if (this.movementMatrix[3]) movement.x += 1;
+
         this.setSpeed(movement);
 
-        this.position.add(movement);
+        // collison check
+        let copy = this.position.copy();
+        copy.add(movement);
+        
+        // if the collision will not collide, update position
+        if (!roomManager.room.willCollide(copy)) this.position = copy;
     }
 
     onCollision(other) {
