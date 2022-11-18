@@ -97,7 +97,7 @@ class Character extends GameObject {
     }
 
     loseHealth() {
-        if(this.damageCoolDown <= 0){
+        if(this.damageCoolDown <= 0 && this.health > 0){
             --this.health;
             this.damageCoolDown = 120;
         }
