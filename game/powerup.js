@@ -86,7 +86,8 @@ class HealthBoost extends PowerUp {
     onCollision(other) {
         if (!(other instanceof Character)) return;
         other.isHealthBoosted = true;
-        other.health = Character.HEALTH_DEFAULT_VALUE + Character.HEALTH_BOOST_VALUE;
+        other.health += Character.HEALTH_BOOST_VALUE;
+        if (other.health > 6) other.health = 6;
         this.destroy();
     }
 }
