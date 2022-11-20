@@ -1,0 +1,21 @@
+{
+    "name": "laserEyeShark",
+    "width": 192,
+    "height": 192,
+    "animations": { 
+        "idle": [
+            {
+                "x": 0,
+                "y": 0
+            },
+            {
+                "x": 192,
+                "y": 0
+            },
+            {
+                "x": 0,
+                "y": 192
+            }
+        ]
+    }
+}
