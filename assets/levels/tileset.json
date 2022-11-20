@@ -2,7 +2,7 @@
     "tiles": [
         {
             "collide": false,
-            "rarity": 80,
+            "rarity": 78,
             "type": 0,
             "position": {
                 "x": 0,
@@ -13,7 +13,7 @@
         },
         {
             "collide": false,
-            "rarity": 80,
+            "rarity": 78,
             "type": 0,
             "position": {
                 "x": 32,
