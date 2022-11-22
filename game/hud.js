@@ -105,7 +105,7 @@ class Health extends HUDItem {
     preload(){
         this.fullHeart = loadImage('../assets/hud/nonaHeartFull.png');
         this.emptyHeart = loadImage("../assets/hud/nonaHeartEmpty.png");
-        this.fullInkHeart = loadImage("../assets/hud/nonaInkHeartFull.png");
+        this.fullTempHeart = loadImage("../assets/hud/nonaTempHeartFull.png");
     }
 
     render() {
@@ -119,7 +119,7 @@ class Health extends HUDItem {
         if(this.character.isHealthBoosted){
             for(let i = 0; i < Character.HEALTH_DEFAULT_VALUE + Character.HEALTH_BOOST_VALUE; ++i){
                 if((i+1) <= this.character.health)
-                    if (i >= Character.HEALTH_DEFAULT_VALUE) image(this.fullInkHeart, (this.x + 34*i), this.y);
+                    if (i >= Character.HEALTH_DEFAULT_VALUE) image(this.fullTempHeart, (this.x + 34*i), this.y);
                     else image(this.fullHeart, (this.x + 34*i), this.y);
                 else
                     image(this.emptyHeart, (this.x + 34*i), this.y);
