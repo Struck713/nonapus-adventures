@@ -1,4 +1,5 @@
 
+const menuManager = new MenuManager();
 const gameManager = new GameManager();
 const tileManager = new TileManager();
 const roomManager = new RoomManager();
@@ -39,30 +40,36 @@ function setup() {
 }
 
 function draw(){
+
+  if (menuManager.active) {
+    menuManager.render();
+    return;
+  }
+
   roomManager.render();
   gameManager.render();
   hudManager.render();
 }
 
-/**
- * Key Events
- */
+// Key Events
 function keyPressed() {
+  if (menuManager.active) return;
   character.keyPressed(key, true);
 }
 
 function keyReleased() {
+  if (menuManager.active) return;
   character.keyPressed(key, false);
 }
 
-/**
- * Mouse Events
- */
+// Mouse Events
 function mouseMoved() {
+  if (menuManager.active) return;
   character.mouseMovement(mouseX, mouseY);
 }
 
 function mousePressed(event) {
+  if (menuManager.active) return;
   character.mouseClicked(event.button);
 }
 
