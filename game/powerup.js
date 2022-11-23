@@ -2,6 +2,8 @@ class PowerUp extends GameObject {
 
     constructor (x, y, sprite) {
         super(x, y, sprite);
+        this.index = 0;
+        this.frames = 0;
     }
 
     calculateAngleToTarget() {
@@ -15,7 +17,13 @@ class PowerUp extends GameObject {
     }
 
     render () {
-      
+        if (this.index >= WaveUtils.POINTS_25.length) this.index = 0;
+        this.sprite.show(this.position.x, this.position.y + (3 * WaveUtils.POINTS_25[this.index])); // show on screen
+        if (this.frames >= 5) {
+            this.index++;
+            this.frames = 0;
+        }
+        this.frames++;
     }
 
     destroy() {
@@ -38,20 +46,6 @@ class SpeedBoost extends PowerUp {
 
     }
 
-    render () {
-        // this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        //if (!this.target) this.calculateAngleToTarget();
-
-        // let movement = p5.Vector.fromAngle(this.angle);
-        // if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
-
-        // movement.setMag(.5); //speed
-
-        // this.position.add(movement);
-    }
-
     onCollision(other) {
         if (!(other instanceof Character)) return;
         other.isSpeedBoosted = true;
@@ -67,20 +61,6 @@ class HealthBoost extends PowerUp {
 
     updatePathing() {
 
-    }
-
-    render () {
-        // this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        //if (!this.target) this.calculateAngleToTarget();
-
-        // let movement = p5.Vector.fromAngle(this.angle);
-        // if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
-
-        // movement.setMag(.5); //speed
-
-        // this.position.add(movement);
     }
 
     onCollision(other) {
