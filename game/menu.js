@@ -1,7 +1,7 @@
 class MenuManager {
 
     constructor () {
-        this.active = true;
+        this.active = false;
         this.menus = [
             new Menu([ new MenuButton(15, 15, 150, 50, "Play") ])
         ];
