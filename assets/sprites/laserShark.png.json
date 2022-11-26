@@ -1,5 +1,5 @@
 {
-    "name": "laserEyeShark",
+    "name": "laserShark",
     "width": 192,
     "height": 192,
     "animations": { 
@@ -14,6 +14,10 @@
             },
             {
                 "x": 0,
+                "y": 192
+            },
+            {
+                "x": 192,
                 "y": 192
             }
         ]
