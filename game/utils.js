@@ -16,6 +16,10 @@ class Utils {
         if (index > - 1) array.splice(index, 1);
     }
 
+    static inBounds(x, y, x1, y1, width, height) {
+        return x >= x1 && x <= (x1 + width) && y >= y1 && y <= (y1 + height)
+    }
+
 }
 
 class WaveUtils {

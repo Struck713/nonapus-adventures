@@ -7,8 +7,10 @@ const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
 function preload() {
-  spriteManager.preload([ "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png",
-  "oil_att.png", "crab.png", "speedBoost.png", "healthBoost.png", "laserShark.png"
+  spriteManager.preload([ 
+    "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png",
+    "oil_att.png", "crab.png", "speedBoost.png", "healthBoost.png", 
+    "laserShark.png"
   ]);
   hudManager.preload();
   tileManager.preload();
@@ -45,6 +47,7 @@ function draw(){
 
   if (menuManager.active) {
     menuManager.render();
+    
     return;
   }
 
@@ -67,12 +70,12 @@ function keyReleased() {
 // Mouse Events
 function mouseMoved() {
   if (menuManager.active) menuManager.mouseMoved(mouseX, mouseY);
-  else character.mouseMovement(mouseX, mouseY);
+  else character.mouseMoved(mouseX, mouseY);
 }
 
 function mousePressed(event) {
-  if (menuManager.active) return;
-  character.mouseClicked(event.button);
+  if (menuManager.active) menuManager.mouseClicked(mouseX, mouseY);
+  else character.mouseClicked(event.button);
 }
 
 

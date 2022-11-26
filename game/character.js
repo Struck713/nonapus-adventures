@@ -133,7 +133,7 @@ class Character extends GameObject {
         }
     }
    
-    mouseMovement(x, y) {
+    mouseMoved(x, y) {
         this.mousePosition.x = x;
         this.mousePosition.y = y;
     }
