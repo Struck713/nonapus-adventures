@@ -64,8 +64,8 @@ function keyReleased() {
 
 // Mouse Events
 function mouseMoved() {
-  if (menuManager.active) return;
-  character.mouseMovement(mouseX, mouseY);
+  if (menuManager.active) menuManager.mouseMoved(mouseX, mouseY);
+  else character.mouseMovement(mouseX, mouseY);
 }
 
 function mousePressed(event) {
