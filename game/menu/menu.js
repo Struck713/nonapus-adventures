@@ -5,7 +5,7 @@ class MenuManager {
         this.menus = [
             new Menu([ 
                 new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2), 150, 50, "Play", () => (this.active = false)),
-                new MenuText((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2) - 100, "NONAPUS OATMILK\nYAAAAAAAAAASSSSS\nSIMULATOR", 100) 
+                new MenuText((GameManager.CANVAS_X / 2) - 30, (GameManager.CANVAS_Y / 2) - 100, "NONAPUS OATMILK\nYAAAAAAAASSSSS\nSIMULATOR", 100) 
             ])
         ];
         this.current = this.menus[0];
