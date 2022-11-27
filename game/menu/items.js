@@ -65,3 +65,12 @@ class MenuText extends MenuItem {
     }
 
 }
+
+class MenuImage extends MenuItem {
+
+    constructor(x, y, name) {
+        super(x, y);
+        this.name = name;
+    }
+
+}
