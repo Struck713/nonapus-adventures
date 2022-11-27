@@ -3,7 +3,6 @@ class MenuManager {
     constructor () {
         this.active = true;
         this.menus = [
-            new LoadingMenu(),
             new MainMenu()
         ];
         this.current = this.menus[0];

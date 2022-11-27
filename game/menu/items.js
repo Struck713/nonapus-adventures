@@ -57,7 +57,7 @@ class MenuText extends MenuItem {
 
     render() {
         push();
-        textAlign(CENTER);
+        textAlign(CENTER, CENTER);
         textSize(this.size);
         translate(this.x - (this.size / 2), this.y - (this.size / 2));
         text(this.text, this.size, this.size);
