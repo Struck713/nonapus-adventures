@@ -91,7 +91,7 @@ class Pufferfish extends Enemy {
 
 }
 
-class Shark extends Enemy{
+class Shark extends Enemy {
     constructor (x, y) {
         super(x, y, 5, spriteManager.get("Shark"));
     }
