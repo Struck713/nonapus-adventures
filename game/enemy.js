@@ -24,8 +24,7 @@
     }
 
     onCollision(other) {
-        if (!(other instanceof OilAttack)) return;
-        this.destroy();
+        if (other instanceof OilAttack) this.destroy();
     }
 
     updatePathing() {
@@ -86,8 +85,8 @@ class Pufferfish extends Enemy {
     }
 
     onCollision(other) {
-        if (!(other instanceof Character)) return;
-        this.sprite.swapAnimation("explode", () => this.destroy(), false);
+        super.onCollision(other);
+        if (other instanceof Character) this.sprite.swapAnimation("explode", () => this.destroy(), false);
     }
 
 }
