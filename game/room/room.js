@@ -258,7 +258,6 @@ class Room {
             }
         }
 
-        console.log(this.weight);
         this.enemies.push(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         this.enemies.push(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         this.enemies.push(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));

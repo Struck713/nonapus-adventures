@@ -2,7 +2,7 @@ class HUDManager {
 
     constructor() {
         this.hudItems = [
-            new Minimap(GameManager.CANVAS_X - 75, 5),
+            new Minimap(GameManager.CANVAS_X - 80, 10),
             new Ink(15, 10),
             new Health(15, 40)
         ];
@@ -50,26 +50,6 @@ class TextItem extends HUDItem {
     }
 
 }
-
-// class Ink extends HUDItem {
-
-//     constructor(x, y) {
-//         super(x, y);
-//     }
-
-//     render() {
-    
-//         if (!this.character) {
-//             this.character = gameManager.getByTag(Character.TAG);
-//         }
-
-//         fill(0);
-//         rect(this.x, this.y, 100, 25)
-//         fill(161, 33, 240);
-//         rect(this.x, this.y, this.character.inkLeft * (100 / Character.INK_DEFAULT_VALUE), 25);
-//     }
-
-// }
 
 class Ink extends HUDItem {
 
@@ -152,7 +132,7 @@ class Minimap extends HUDItem {
             this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
             this.map.background(0, 0, 0, 0);
         }
-        this.map.fill(255);
+        this.map.noFill();
         this.map.circle(this.scale / 2, this.scale / 2, 10 * this.scale);
 
         let room = roomManager.room;

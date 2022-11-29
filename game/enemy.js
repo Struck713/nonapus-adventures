@@ -7,6 +7,10 @@
  */
  class Enemy extends GameObject {
 
+    static HEALTH_BAR_OFFSET = 25;
+    static HEALTH_BAR_WIDTH = 20;
+    static HEALTH_BAR_HEIGHT = 5;
+
     static random() {
         let list = [ Pufferfish, Shark, Urchin, Clam, Crab ];
         return random(list);
@@ -15,6 +19,8 @@
     constructor (x, y, health, sprite) {
         super(x, y, sprite);
         this.health = health;
+        this.maxHealth = health;
+        this.displayHealth = false;
     }
 
     calculateAngleToTarget() {
@@ -22,10 +28,22 @@
         this.target = createVector(character.position.x, character.position.y);
     }
 
+    render() {
+        if (this.displayHealth) {
+            
+            noFill();
+            rect(this.position.x - (Enemy.HEALTH_BAR_WIDTH / 2), this.position.y - Enemy.HEALTH_BAR_OFFSET, Enemy.HEALTH_BAR_WIDTH, Enemy.HEALTH_BAR_HEIGHT)
+            
+            fill(161, 33, 240);
+            rect(this.position.x - (Enemy.HEALTH_BAR_WIDTH / 2), this.position.y - Enemy.HEALTH_BAR_OFFSET, this.health * (Enemy.HEALTH_BAR_WIDTH / this.maxHealth), Enemy.HEALTH_BAR_HEIGHT);
+        }
+    }
+
     onCollision(other) {
         if (other instanceof OilAttack) {
-            if (this.health <= 0) this.destroy();
+            if (this.dead) this.destroy();
             this.health--;
+            this.displayHealth = true;
         }
     }
 
@@ -47,6 +65,8 @@ class Pufferfish extends Enemy {
     }
 
     render () {
+        super.render();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
@@ -78,6 +98,8 @@ class Shark extends Enemy {
     }
 
     render () {
+        super.render();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.angle = this.angle + (3 * Math.PI / 2);
         this.sprite.show(this.position.x, this.position.y); // show on screen
@@ -100,6 +122,8 @@ class Urchin extends Enemy{
     }
 
     render () {
+        super.render();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
@@ -120,6 +144,8 @@ class Clam extends Enemy{
     }
 
     render () {
+        super.render();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
@@ -141,6 +167,8 @@ class Crab extends Enemy {
     }
 
     render () {
+        super.render();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 

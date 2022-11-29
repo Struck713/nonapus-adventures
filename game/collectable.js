@@ -4,6 +4,7 @@ class Collectable extends GameObject {
         super(x, y, sprite);
         this.index = 0;
         this.frames = 0;
+        this.dead = false;
     }
 
     calculateAngleToTarget() {
@@ -53,11 +54,14 @@ class SpeedBoost extends Collectable {
         if (!(other instanceof Character)) return;
         other.isSpeedBoosted = true;
         other.boostTime = 500;
+
+        this.dead = true;
         this.destroy();
     }
 }
 
 class HealthBoost extends Collectable {
+
     constructor (x, y) {
         super(x, y, spriteManager.get("HeartFish"));
     }
@@ -71,6 +75,16 @@ class HealthBoost extends Collectable {
         other.isHealthBoosted = true;
         other.health += Character.HEALTH_BOOST_VALUE;
         if (other.health > 6) other.health = 6;
+
+        this.dead = true;
         this.destroy();
     }
+}
+
+class Coin extends Collectable {
+
+    constructor(x, y) {
+        super(x, y, spriteManager.get("Coin"));
+    }
+
 }

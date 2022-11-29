@@ -9,7 +9,7 @@ const spriteManager = new SpriteManager();
 function preload() {
   spriteManager.preload([ 
     "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png",
-    "oil_att.png", "crab.png", "speedBoost.png", "heartFish.png", 
+    "oil_att.png", "crab.png", "speedBoost.png", "heartFish.png", "coin.png",
     "laserShark.png"
   ]);
   hudManager.preload();
