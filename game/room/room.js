@@ -258,13 +258,8 @@ class Room {
             }
         }
 
-        this.enemies.push(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(new Crab(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(new SpeedBoost(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(new HealthBoost(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+        this.enemies.push(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+        this.enemies.push(Collectable.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         
     }
     

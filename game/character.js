@@ -39,6 +39,7 @@ class Character extends GameObject {
         // character specific traits
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
+        this.coins = 0;
 
         this.ink = Character.INK_DEFAULT_VALUE;
         setInterval(() => { if (this.ink < Character.INK_DEFAULT_VALUE) this.ink++ }, Character.INK_INCREASE_SECONDS);

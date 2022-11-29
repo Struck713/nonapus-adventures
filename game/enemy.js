@@ -11,9 +11,10 @@
     static HEALTH_BAR_WIDTH = 20;
     static HEALTH_BAR_HEIGHT = 5;
 
-    static random() {
-        let list = [ Pufferfish, Shark, Urchin, Clam, Crab ];
-        return random(list);
+    static random(x, y) {
+        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab ];
+        let enemy = random(enemies);
+        return new enemy(x, y);
     }
 
     constructor (x, y, health, sprite) {
@@ -30,10 +31,8 @@
 
     render() {
         if (this.displayHealth) {
-            
             noFill();
             rect(this.position.x - (Enemy.HEALTH_BAR_WIDTH / 2), this.position.y - Enemy.HEALTH_BAR_OFFSET, Enemy.HEALTH_BAR_WIDTH, Enemy.HEALTH_BAR_HEIGHT)
-            
             fill(161, 33, 240);
             rect(this.position.x - (Enemy.HEALTH_BAR_WIDTH / 2), this.position.y - Enemy.HEALTH_BAR_OFFSET, this.health * (Enemy.HEALTH_BAR_WIDTH / this.maxHealth), Enemy.HEALTH_BAR_HEIGHT);
         }
@@ -94,7 +93,7 @@ class Shark extends Enemy {
 
     calculateAngleToTarget() {
         super.calculateAngleToTarget();
-        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x)
+        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
     }
 
     render () {

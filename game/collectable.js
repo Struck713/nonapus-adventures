@@ -1,20 +1,16 @@
 class Collectable extends GameObject {
 
+    static random(x, y) {
+        let collectables = [ SpeedBoost, HealthBoost, Coin ];
+        let rand = random(collectables);
+        return new rand(x, y);
+    }
+
     constructor (x, y, sprite) {
         super(x, y, sprite);
         this.index = 0;
         this.frames = 0;
         this.dead = false;
-    }
-
-    calculateAngleToTarget() {
-        let character = gameManager.getByTag(Character.TAG);
-        this.target = createVector(character.position.x, character.position.y);
-        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
-    }
-
-    updatePathing() {
-
     }
 
     render () {
@@ -46,10 +42,6 @@ class SpeedBoost extends Collectable {
         super(x, y, spriteManager.get("SpeedBoost"));
     }
 
-    updatePathing() {
-
-    }
-
     onCollision(other) {
         if (!(other instanceof Character)) return;
         other.isSpeedBoosted = true;
@@ -64,10 +56,6 @@ class HealthBoost extends Collectable {
 
     constructor (x, y) {
         super(x, y, spriteManager.get("HeartFish"));
-    }
-
-    updatePathing() {
-
     }
 
     onCollision(other) {
@@ -85,6 +73,12 @@ class Coin extends Collectable {
 
     constructor(x, y) {
         super(x, y, spriteManager.get("Coin"));
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Character)) return;
+        other.coins++;
+        this.destroy();
     }
 
 }
