@@ -20,15 +20,13 @@
     calculateAngleToTarget() {
         let character = gameManager.getByTag(Character.TAG);
         this.target = createVector(character.position.x, character.position.y);
-        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
     }
 
     onCollision(other) {
-        if (other instanceof OilAttack) this.destroy();
-    }
-
-    updatePathing() {
-        
+        if (other instanceof OilAttack) {
+            if (this.health <= 0) this.destroy();
+            this.health--;
+        }
     }
 
     destroy() {
@@ -40,34 +38,12 @@
         return (this.health <= 0);
     }
 
-   /*  render () {
-        this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        if (!this.target) this.calculateAngleToTarget();
-
-        let movement = p5.Vector.fromAngle(this.angle);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
-
-        movement.setMag(1); //speed
-
-        this.position.add(movement);
-    } */
-
-    // onCollision(other) {
-    //     console.log(`${other.sprite.fileName} collied with ${this.sprite.fileName}`);
-    // }
-
 }
 
 class Pufferfish extends Enemy {
 
     constructor (x, y) {
-        super(x, y, 15, spriteManager.get("Pufferfish"));
-    }
-
-    updatePathing() {
-        //movement.setMag(3); // do something!
+        super(x, y, 5, spriteManager.get("Pufferfish"));
     }
 
     render () {
@@ -76,11 +52,10 @@ class Pufferfish extends Enemy {
 
         if (!this.target) this.calculateAngleToTarget();
 
-        let movement = p5.Vector.fromAngle(this.angle);
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
         movement.setMag(.5); //speed
-
         this.position.add(movement);
     }
 
@@ -92,16 +67,19 @@ class Pufferfish extends Enemy {
 }
 
 class Shark extends Enemy {
+
     constructor (x, y) {
-        super(x, y, 5, spriteManager.get("Shark"));
+        super(x, y, 2, spriteManager.get("Shark"));
     }
 
-    updatePathing() {
-        //movement.setMag(3); // do something!
+    calculateAngleToTarget() {
+        super.calculateAngleToTarget();
+        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x)
     }
 
     render () {
         this.sprite.cycleAnimation(); // run animation
+        this.sprite.angle = this.angle + (3 * Math.PI / 2);
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
         if (!this.target) this.calculateAngleToTarget();
@@ -118,11 +96,7 @@ class Shark extends Enemy {
 
 class Urchin extends Enemy{
     constructor (x, y) {
-        super(x, y, 1, spriteManager.get("Urchin"));
-    }
-
-    updatePathing() {
-        //movement.setMag(3); // do something!
+        super(x, y, 10, spriteManager.get("Urchin"));
     }
 
     render () {
@@ -131,11 +105,10 @@ class Urchin extends Enemy{
 
         if (!this.target) this.calculateAngleToTarget();
 
-        let movement = p5.Vector.fromAngle(this.angle);
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
         movement.setMag(.2); //speed
-
         this.position.add(movement);
     }
 
@@ -143,11 +116,7 @@ class Urchin extends Enemy{
 
 class Clam extends Enemy{
     constructor (x, y) {
-        super(x, y, 25, spriteManager.get("Clam"));
-    }
-
-    updatePathing() {
-        //movement.setMag(3); // do something!
+        super(x, y, 6, spriteManager.get("Clam"));
     }
 
     render () {
@@ -156,23 +125,19 @@ class Clam extends Enemy{
 
         if (!this.target) this.calculateAngleToTarget();
 
-        let movement = p5.Vector.fromAngle(this.angle);
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
         movement.setMag(.3); //speed
-
         this.position.add(movement);
     }
 
 }
 
-class Crab extends Enemy{
-    constructor (x, y) {
-        super(x, y, 15, spriteManager.get("Crab"));
-    }
+class Crab extends Enemy {
 
-    updatePathing() {
-        //movement.setMag(3); // do something!
+    constructor (x, y) {
+        super(x, y, 3, spriteManager.get("Crab"));
     }
 
     render () {
@@ -181,11 +146,10 @@ class Crab extends Enemy{
 
         if (!this.target) this.calculateAngleToTarget();
 
-        let movement = p5.Vector.fromAngle(this.angle);
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
         movement.setMag(.45); //speed
-
         this.position.add(movement);
     }
 
