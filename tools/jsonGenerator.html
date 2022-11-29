@@ -54,6 +54,8 @@
 
         var outputJSON = { 
           name: name,
+          width: spriteWidth,
+          height: spriteHeight,
           animations: {
             idle: []
           }
@@ -62,12 +64,8 @@
         for (var i = 0; i < ySprites; ++i) {
           for (var j = 0; j < xSprites; ++j) {
             outputJSON.animations.idle.push({
-              "position": {
-                x: j * spriteWidth,
-                y: i * spriteHeight,
-                width: spriteWidth,
-                height: spriteHeight
-              }
+              x: j * spriteWidth,
+              y: i * spriteHeight,
             });
           }
         }

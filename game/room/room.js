@@ -168,12 +168,14 @@ class Room {
         this.walls = [ true, true, true, true ];
         this.tiles = [];
         this.enemies = [];
+        this.weight = 0;
     }
 
     generate() {
         let check = (bound1, max1, bound2, max2, doorIndex) => (bound1 >= (max1 / 2 - 3) && bound1 <= (max1 / 2 + 3)) && (bound2 == max2) && !this.walls[doorIndex];
 
         noiseSeed(random(0, 100));
+        this.weight = floor(noise(this.x, this.y) * 100);
 
         this.tiles = [];
         for (let column = 0; column < TileManager.COLUMNS; ++column) {
@@ -256,6 +258,7 @@ class Room {
             }
         }
 
+        console.log(this.weight);
         this.enemies.push(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         this.enemies.push(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
         this.enemies.push(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));

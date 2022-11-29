@@ -1,4 +1,4 @@
-class PowerUp extends GameObject {
+class Collectable extends GameObject {
 
     constructor (x, y, sprite) {
         super(x, y, sprite);
@@ -18,7 +18,10 @@ class PowerUp extends GameObject {
 
     render () {
         if (this.index >= WaveUtils.POINTS_25.length) this.index = 0;
+        
+        this.sprite.cycleAnimation();
         this.sprite.show(this.position.x, this.position.y + (3 * WaveUtils.POINTS_25[this.index])); // show on screen
+        
         if (this.frames >= 5) {
             this.index++;
             this.frames = 0;
@@ -37,7 +40,7 @@ class PowerUp extends GameObject {
 
 }
 
-class SpeedBoost extends PowerUp {
+class SpeedBoost extends Collectable {
     constructor (x, y) {
         super(x, y, spriteManager.get("SpeedBoost"));
     }
@@ -54,9 +57,9 @@ class SpeedBoost extends PowerUp {
     }
 }
 
-class HealthBoost extends PowerUp {
+class HealthBoost extends Collectable {
     constructor (x, y) {
-        super(x, y, spriteManager.get("HealthBoost"));
+        super(x, y, spriteManager.get("HeartFish"));
     }
 
     updatePathing() {
