@@ -4,7 +4,8 @@ class HUDManager {
         this.hudItems = [
             new Minimap(GameManager.CANVAS_X - 80, 10),
             new Ink(15, 10),
-            new Health(15, 40)
+            new Health(15, 45),
+            new Coins(15, 80)
         ];
     }
 
@@ -35,22 +36,6 @@ class HUDItem {
 
 }
 
-class TextItem extends HUDItem {
-
-    constructor(x, y, text, size) {
-        super(x, y);
-        this.text = text;
-        this.size = size;
-    } 
-
-    render() {
-        textSize(this.size);
-        fill(255);
-        text(this.text, this.x, this.y);
-    }
-
-}
-
 class Ink extends HUDItem {
 
     constructor(x, y) {
@@ -63,9 +48,7 @@ class Ink extends HUDItem {
     }
 
     render() {
-        if (!this.character) {
-            this.character = gameManager.getByTag(Character.TAG);
-        }
+        if (!this.character) this.character = gameManager.getByTag(Character.TAG);
 
         for(let i = 0; i < Character.INK_DEFAULT_VALUE; ++i){
             if((i+1) <= this.character.ink)
@@ -89,9 +72,7 @@ class Health extends HUDItem {
     }
 
     render() {
-        if (!this.character) {
-            this.character = gameManager.getByTag(Character.TAG);
-        }
+        if (!this.character) this.character = gameManager.getByTag(Character.TAG);
 
         if(this.character.health <= Character.HEALTH_DEFAULT_VALUE)
             this.character.isHealthBoosted = false;
@@ -116,6 +97,30 @@ class Health extends HUDItem {
     }
 }
 
+class Coins extends HUDItem {
+
+    constructor(x, y) {
+        super(x, y);
+    }
+
+    preload(){
+        this.coin = loadImage('../assets/hud/coin.png');
+    }
+
+    render() {
+
+        if (!this.character) this.character = gameManager.getByTag(Character.TAG);
+
+        // fix later
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(0);
+        image(this.coin, this.x, this.y);
+        text(this.character.coins, this.x + 16, this.y + 18);
+    }
+
+}
+
 class Minimap extends HUDItem {
 
     constructor(x, y) {
@@ -132,6 +137,7 @@ class Minimap extends HUDItem {
             this.map.translate((this.map.width / 2) - halfScale, (this.map.height / 2) - halfScale);
             this.map.background(0, 0, 0, 0);
         }
+
         this.map.noFill();
         this.map.circle(this.scale / 2, this.scale / 2, 10 * this.scale);
 
