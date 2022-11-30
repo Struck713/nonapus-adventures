@@ -138,10 +138,16 @@ class Minimap extends HUDItem {
             this.map.background(0, 0, 0, 0);
         }
 
+        image(this.map, this.x, this.y);
+
+        let room = roomManager.room;
+        if (room == this.oldRoom) return; // dont draw!
+        this.oldRoom = room;
+
+        this.map.clear();
         this.map.noFill();
         this.map.circle(this.scale / 2, this.scale / 2, 10 * this.scale);
 
-        let room = roomManager.room;
         this.map.fill(0, 255, 0);
         this.map.square(0, 0, this.scale);
         this.map.fill(0);
@@ -150,8 +156,6 @@ class Minimap extends HUDItem {
         this.drawCell(room, Room.LEFT, 10, 0);
         this.drawCell(room, Room.DOWN, 0, 10);
         this.drawCell(room, Room.RIGHT, -10, 0);
-
-        image(this.map, this.x, this.y);
     }
 
     drawCell(cell, direction, x, y) {
