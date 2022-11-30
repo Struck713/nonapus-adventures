@@ -6,6 +6,8 @@ const roomManager = new RoomManager();
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
+let font;
+
 function preload() {
   spriteManager.preload([ 
     "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png",
@@ -16,11 +18,15 @@ function preload() {
   tileManager.preload();
 
   //loadSound('assets/sound/background.mp3', e => e.play());
+  font = loadFont('assets/fonts/franxurter.ttf'); // load font
 
 }
 
 let character;
 function setup() {
+
+  textFont(font); // set font
+
   spriteManager.load(); // load sprites
   tileManager.load();
 
