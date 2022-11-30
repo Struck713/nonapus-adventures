@@ -2,9 +2,7 @@ class MenuManager {
 
     constructor () {
         this.active = true;
-        this.menus = [
-            new MainMenu()
-        ];
+        this.menus = [new MainMenu()];
         this.current = this.menus[0];
     }
 
