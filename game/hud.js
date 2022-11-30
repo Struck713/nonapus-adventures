@@ -43,8 +43,8 @@ class Ink extends HUDItem {
     }
 
     preload() {
-        this.fullInk = loadImage('../assets/hud/ink_full.png');
-        this.emptyInk = loadImage("../assets/hud/ink_empty.png");
+        this.fullInk = loadImage('../assets/hud/inkFull.png');
+        this.emptyInk = loadImage("../assets/hud/inkEmpty.png");
     }
 
     render() {
