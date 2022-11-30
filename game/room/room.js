@@ -258,7 +258,11 @@ class Room {
             }
         }
 
+        let i = 0;
+        while(i < random(1,6)){
         this.spawn(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
+        ++i;
+        }
         this.spawn(Collectable.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
         
     }

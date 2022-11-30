@@ -83,7 +83,7 @@ class Pufferfish extends Enemy {
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
-        movement.setMag(.5); //speed
+        movement.setMag(1); //speed
         this.position.add(movement);
     }
 
@@ -117,7 +117,7 @@ class Shark extends Enemy {
         let movement = p5.Vector.fromAngle(this.angle);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
-        movement.setMag(1); //speed
+        movement.setMag(1.5); //speed
 
         this.position.add(movement);
     }
@@ -140,7 +140,7 @@ class Urchin extends Enemy{
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
-        movement.setMag(.2); //speed
+        movement.setMag(.9); //speed
         this.position.add(movement);
     }
 
@@ -162,7 +162,7 @@ class Clam extends Enemy{
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
-        movement.setMag(.3); //speed
+        movement.setMag(.85); //speed
         this.position.add(movement);
     }
 
@@ -185,7 +185,7 @@ class Crab extends Enemy {
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
-        movement.setMag(.45); //speed
+        movement.setMag(.95); //speed
         this.position.add(movement);
     }
 
