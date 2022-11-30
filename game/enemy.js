@@ -48,7 +48,16 @@
 
     destroy() {
         this.health = 0;
+        this.dropLoot();
         super.destroy();
+    }
+
+    dropLoot() {
+        for (let amount = 0; amount < random(0, 3); amount++) {
+            let coin = new Coin(this.position.x, this.position.y);
+            coin.position.x += (amount * coin.sprite.width);
+            roomManager.room.spawn(coin);
+        }
     }
 
     get dead() {

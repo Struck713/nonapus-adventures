@@ -167,7 +167,7 @@ class Room {
         this.visited = false;
         this.walls = [ true, true, true, true ];
         this.tiles = [];
-        this.enemies = [];
+        this.objects = [];
         this.weight = 0;
     }
 
@@ -258,8 +258,8 @@ class Room {
             }
         }
 
-        this.enemies.push(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-        this.enemies.push(Collectable.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
+        this.spawn(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
+        this.spawn(Collectable.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
         
     }
     
@@ -272,17 +272,17 @@ class Room {
             });
         })
 
-        this.enemies.forEach(enemy => {
-            if (enemy.dead) {
-                Utils.remove(this.enemies, enemy);
+        this.objects.forEach(object => {
+            if (object.dead) {
+                Utils.remove(this.objects, object);
                 return;
             }
-            gameManager.queue(enemy)
+            gameManager.queue(object)
         }); // respawn previously spawned enemies
     }
 
     destroy() {
-        this.enemies.forEach(enemy => gameManager.dequeue(enemy)); // despawn enemies for later
+        this.objects.forEach(enemy => gameManager.dequeue(enemy)); // despawn enemies for later
 
         this.graphics.remove();
         this.graphics = null;
@@ -301,6 +301,11 @@ class Room {
         let tile = this.tiles[column][row];
         
         return tile.collide;
+    }
+
+    spawn(object, needsQueued=true) {
+        this.objects.push(object);
+        if (needsQueued) gameManager.queue(object);
     }
 
 }

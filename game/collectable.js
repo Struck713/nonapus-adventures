@@ -27,12 +27,12 @@ class Collectable extends GameObject {
     }
 
     destroy() {
+        this.dead = true;
         gameManager.dequeue(this);
         delete this;
     }
 
     onCollision(other) {
-        
     }
 
 }
@@ -46,8 +46,6 @@ class SpeedBoost extends Collectable {
         if (!(other instanceof Character)) return;
         other.isSpeedBoosted = true;
         other.boostTime = 500;
-
-        this.dead = true;
         this.destroy();
     }
 }
@@ -63,8 +61,6 @@ class HealthBoost extends Collectable {
         other.isHealthBoosted = true;
         other.health += Character.HEALTH_BOOST_VALUE;
         if (other.health > 6) other.health = 6;
-
-        this.dead = true;
         this.destroy();
     }
 }
