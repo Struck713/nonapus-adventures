@@ -10,9 +10,13 @@ let font;
 
 function preload() {
   spriteManager.preload([ 
-    "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png",
-    "oil_att.png", "crab.png", "speedBoost.png", "heartFish.png", "coin.png",
-    "laserShark.png", "anglerFish.png"
+    "nona.png", 
+    "shark.png", "urchin.png", "clam.png", "pufferfish.png",
+    "crab.png", "speedBoost.png", "heartFish.png", "anglerFish.png", 
+    "electricEel.png",
+    "coin.png",
+    "laserShark.png", 
+    "inkProjectile.png", "boltProjectile.png"
   ]);
   hudManager.preload();
   tileManager.preload();

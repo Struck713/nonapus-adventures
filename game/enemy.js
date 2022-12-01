@@ -12,7 +12,7 @@
     static HEALTH_BAR_HEIGHT = 5;
 
     static random(x, y) {
-        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab, AnglerFish ];
+        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab, AnglerFish, ElectricEel ];
         let enemy = random(enemies);
         return new enemy(x, y);
     }
@@ -216,8 +216,46 @@ class AnglerFish extends Enemy {
 
 class ElectricEel extends Enemy {
 
+    constructor (x, y) {
+        super(x, y, 2, spriteManager.get("AnglerFish"));
+    }
+
+    render () {
+        super.render();
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(2); //speed
+        this.position.add(movement);
+    }
+
 }
 
-class ElectricProjectile extends Projectile {
+class BoltProjectile extends Projectile {
+
+    constructor (x, y, direction) {
+        super(x, y, spriteManager.get("BoltProjectile"));
+        super.collider = true;
+        this.direction = direction;
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Enemy)) return;
+        this.destroy();
+    }
+
+    render() {
+        this.sprite.show(this.position.x, this.position.y);
+
+        let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));
+        angleVector.setMag(3.5); //speed
+        this.position.add(angleVector);
+    }
 
 }

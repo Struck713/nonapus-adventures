@@ -155,7 +155,7 @@ class Character extends GameObject {
 class InkProjectile extends Projectile {
 
     constructor (x, y, direction) {
-        super(x, y, spriteManager.get("OilAttack"));
+        super(x, y, spriteManager.get("InkProjectile"));
         super.collider = true;
         this.direction = direction;
     }
