@@ -6,7 +6,8 @@ const roomManager = new RoomManager();
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
-let font;
+let titleFont;
+let otherFont;
 
 function preload() {
   spriteManager.preload([ 
@@ -22,14 +23,14 @@ function preload() {
   tileManager.preload();
 
   //loadSound('assets/sound/background.mp3', e => e.play());
-  font = loadFont('assets/fonts/franxurter.ttf'); // load font
-
+  titleFont = loadFont('assets/fonts/Confarreatio.otf'); // load font
+  otherFont = loadFont('assets/fonts/franxurter.ttf');
 }
 
 let character;
 function setup() {
 
-  textFont(font); // set font
+  textFont(titleFont); // set font
 
   spriteManager.load(); // load sprites
   tileManager.load();
