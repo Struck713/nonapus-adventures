@@ -12,11 +12,15 @@ let otherFont;
 function preload() {
   spriteManager.preload([ 
     "nona.png", 
+
     "shark.png", "urchin.png", "clam.png", "pufferfish.png",
     "crab.png", "speedBoost.png", "heartFish.png", "anglerFish.png", 
     "electricEel.png",
-    "coin.png",
+
+    "coin.png", "chest.png",
+
     "laserShark.png", 
+    
     "inkProjectile.png", "boltProjectile.png"
   ]);
   hudManager.preload();

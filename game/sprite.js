@@ -111,8 +111,8 @@ class Sprite {
         this.delay = 0;
         this.index++;
         if (this.index >= this.animations[this.animation].length) {
-            if (this.resetOnFinish) this.swapAnimation("idle", false);
             if (this.callback) { this.callback(); delete this.callback; }
+            if (this.resetOnFinish) this.swapAnimation("idle", false);
 
             this.index = 0;
         }

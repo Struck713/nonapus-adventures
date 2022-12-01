@@ -78,35 +78,7 @@ class Character extends GameObject {
         this.loseHealth();
     }
 
-    fireParticle() {
-        if (this.ink <= 0) return;
-        this.ink--;
-
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
-    }
-
-    setSpeed(movement){
-        if(this.boostTime <= 0)
-            this.isSpeedBoosted = false;
-        else
-            --this.boostTime;
-        
-        if(this.isSpeedBoosted)
-            movement.setMag(this.speed * 2);  //boosted speed
-        else
-            movement.setMag(this.speed); // normal speed
-    }
-
-    loseHealth() {
-        if(this.damageCoolDown <= 0 && this.health > 0){
-            --this.health;
-            this.damageCoolDown = 120;
-        }
-        else
-            --this.damageCoolDown;
-        this.tookDamage = false;
-    }
-
+    
     // event stuff
     keyPressed(code, pressed) {
         switch (code.toUpperCase()) {
@@ -142,16 +114,53 @@ class Character extends GameObject {
     mouseClicked(type) {
         switch (type) {
             case 0:
-                this.fireParticle();
+                this.fire();
                 break;
             case 1:
                 // middle click
                 break;
             case 2:
-                this.damageCoolDown = 60;
-                this.sprite.swapAnimation("attack", true);
+                this.sprite.swapAnimation("attack", true, () => this.fireBurst());
                 break;
         }
+    }
+
+    fire() {
+        if (this.ink <= 0) return;
+        this.ink--;
+
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
+    }
+
+    fireBurst() {
+        if ((this.ink - 2) < 0) return;
+        this.ink -= 2;
+
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 12)));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 12)));
+    }
+
+    setSpeed(movement){
+        if(this.boostTime <= 0)
+            this.isSpeedBoosted = false;
+        else
+            --this.boostTime;
+        
+        if(this.isSpeedBoosted)
+            movement.setMag(this.speed * 2);  //boosted speed
+        else
+            movement.setMag(this.speed); // normal speed
+    }
+
+    loseHealth() {
+        if(this.damageCoolDown <= 0 && this.health > 0){
+            --this.health;
+            this.damageCoolDown = 120;
+        }
+        else
+            --this.damageCoolDown;
+        this.tookDamage = false;
     }
 
 }
@@ -170,6 +179,7 @@ class InkProjectile extends Projectile {
     }
 
     render() {
+        this.sprite.angle = this.direction;
         this.sprite.show(this.position.x, this.position.y);
 
         let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));

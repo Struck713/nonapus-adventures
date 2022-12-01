@@ -1,7 +1,7 @@
 class Collectable extends GameObject {
 
     static random(x, y) {
-        let collectables = [ SpeedBoost, HealthBoost, Coin ];
+        let collectables = [ SpeedBoost, HealthBoost, Coin, Chest ];
         let rand = random(collectables);
         return new rand(x, y);
     }
@@ -74,6 +74,24 @@ class Coin extends Collectable {
         if (!(other instanceof Character)) return;
         other.coins++;
         this.destroy();
+    }
+
+}
+
+class Chest extends Collectable {
+
+    constructor(x, y) {
+        super(x, y, spriteManager.get("Chest"));
+    }
+
+    render() {
+        this.sprite.cycleAnimation();
+        this.sprite.show(this.position.x, this.position.y);
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Character)) return;
+        this.sprite.swapAnimation("opening", false, () => this.sprite.swapAnimation("opened", false));
     }
 
 }
