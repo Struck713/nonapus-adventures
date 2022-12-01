@@ -104,7 +104,7 @@ class Coins extends HUDItem {
     }
 
     preload(){
-        this.coin = loadImage('../assets/hud/coin.png');
+        this.coin = loadImage('../assets/hud/bigCoin.png');
     }
 
     render() {
@@ -116,7 +116,7 @@ class Coins extends HUDItem {
         textSize(16);
         fill(0);
         image(this.coin, this.x, this.y);
-        text(this.character.coins, this.x + 16, this.y + 18);
+        text(this.character.coins, this.x + 15, this.y + 15);
     }
 
 }
