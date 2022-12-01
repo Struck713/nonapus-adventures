@@ -12,7 +12,7 @@
     static HEALTH_BAR_HEIGHT = 5;
 
     static random(x, y) {
-        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab ];
+        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab, AnglerFish ];
         let enemy = random(enemies);
         return new enemy(x, y);
     }
@@ -186,6 +186,29 @@ class Crab extends Enemy {
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
         movement.setMag(.95); //speed
+        this.position.add(movement);
+    }
+
+}
+
+class AnglerFish extends Enemy {
+
+    constructor (x, y) {
+        super(x, y, 2, spriteManager.get("AnglerFish"));
+    }
+
+    render () {
+        super.render();
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.calculateAngleToTarget();
+
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+
+        movement.setMag(2); //speed
         this.position.add(movement);
     }
 
