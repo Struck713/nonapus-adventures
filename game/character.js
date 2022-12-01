@@ -143,10 +143,14 @@ class Character extends GameObject {
         switch (type) {
             case 0:
                 this.fireParticle();
+                break;
             case 1:
                 // middle click
+                break;
             case 2:
-                // right click
+                this.damageCoolDown = 60;
+                this.sprite.swapAnimation("attack", true);
+                break;
         }
     }
 
