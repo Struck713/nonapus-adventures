@@ -11,7 +11,8 @@ class Boss extends Enemy {
     static TAG = "LASER_SHARK_BOSS"
 
     constructor(x, y) {
-        super(x, y, 250, spriteManager.get("laserShark"));
+        super(x, y, 500, spriteManager.get("laserShark"));
+        super.collider = true;
         this.tag = Boss.TAG;
         this.showBar = false;
         this.invincible = true;
@@ -193,7 +194,7 @@ class LaserProjectile extends Projectile {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
-        //this.destroy();
+        this.destroy();
     }
 
     render() {
