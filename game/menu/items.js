@@ -22,9 +22,7 @@ class MenuButton extends MenuItem {
         this.action = action;
     }
 
-    click() {
-        this.action();
-    }
+    click() { this.action(); }
 
     render() {
         push();
