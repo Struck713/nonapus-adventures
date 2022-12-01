@@ -187,8 +187,10 @@ class BossBar extends HUDItem {
         }
 
         if (!this.boss.showBar) return;
+
         push();
         image(this.bossIcon, (GameManager.CANVAS_X / 2) - (Boss.HEALTH_BAR_WIDTH / 2) - 36, Boss.HEALTH_BAR_OFFSET);
+        //image(this.bossIcon, (((GameManager.CANVAS_X / 2) - (Boss.HEALTH_BAR_WIDTH / 2)) + this.boss.health * (Boss.HEALTH_BAR_WIDTH / this.boss.maxHealth)), Boss.HEALTH_BAR_OFFSET);
         noFill();
         stroke(0);
         rect((GameManager.CANVAS_X / 2) - (Boss.HEALTH_BAR_WIDTH / 2), Boss.HEALTH_BAR_OFFSET, Boss.HEALTH_BAR_WIDTH, Boss.HEALTH_BAR_HEIGHT)

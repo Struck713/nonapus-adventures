@@ -140,6 +140,8 @@ class Boss extends Enemy {
     onCollision(other) {
         if (this.invincible) return;
         if (other instanceof InkProjectile) --this.health;
+        console.log(this.sprite.width);
+        console.log(this.sprite.height);
     }
 
     displayDialog(dialog, transitionTime) {
