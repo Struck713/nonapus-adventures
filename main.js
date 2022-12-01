@@ -21,7 +21,7 @@ function preload() {
 
     "laserShark.png", 
 
-    "inkProjectile.png", "boltProjectile.png"
+    "inkProjectile.png", "boltProjectile.png", "laserProjectile.png"
   ]);
   hudManager.preload();
   tileManager.preload();
