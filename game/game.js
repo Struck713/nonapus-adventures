@@ -11,9 +11,7 @@ class GameManager {
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
 
-    constructor() {
-        this.gameObjects = [];
-    }
+    constructor() { this.gameObjects = []; }
 
     render() {
         // render
@@ -23,25 +21,16 @@ class GameManager {
             if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other));
 
             // check if still on screen (object cleanup)
-            if (!gameObject.isRenderable()) {
-                gameObject.destroy();
-            }
-
+            if (!gameObject.isRenderable()) gameObject.destroy();
             gameObject.render()
         });
     }
 
-    queue(gameObject) {
-        this.gameObjects.push(gameObject);
-    }
+    queue(gameObject)   { this.gameObjects.push(gameObject); }
 
-    dequeue(gameObject) {
-        Utils.remove(this.gameObjects, gameObject);
-    } 
+    dequeue(gameObject) { Utils.remove(this.gameObjects, gameObject); } 
 
-    getByClass(clazz) {
-        return this.gameObjects.filter(gameObject => gameObject instanceof clazz);
-    }
+    getByClass(clazz)   { return this.gameObjects.filter(gameObject => gameObject instanceof clazz);}
 
     getByTag(tag) {
         return this.gameObjects.find(gameObject => {
@@ -58,13 +47,14 @@ class GameManager {
 
 }
 
-/**
+/*
  * GameObject
  * 
  * This class should be inherited by anything that is going to be
  * rendered to the screen. That includes playable characters, enemies
  * and anything else. 
  */
+
 class GameObject {
 
     constructor (x, y, sprite) {
@@ -75,9 +65,7 @@ class GameObject {
         if (!this.sprite.loaded) this.sprite.load();
     }
 
-    render() {
-        // to be overwritten
-    }
+    render() {} // to be overwritten
 
     destroy() {
         gameManager.dequeue(this);
@@ -96,9 +84,7 @@ class GameObject {
         }
     }
 
-    onCollision(other) {
-        // upon colliding
-    }
+    onCollision(other) {} // upon colliding
 
     isRenderable() {
         if (this.tag) return true;
@@ -106,14 +92,6 @@ class GameObject {
         let y = this.position.y;
         return (x > 0 && y > 0 && x < GameManager.CANVAS_X && y < GameManager.CANVAS_Y);
     }
-
-
 }
 
-class Projectile extends GameObject {
-
-    constructor(x, y, sprite) {
-        super(x, y, sprite)
-    }
-
-}
+class Projectile extends GameObject { constructor(x, y, sprite) { super(x, y, sprite) } }
