@@ -12,7 +12,7 @@ function preload() {
   spriteManager.preload([ 
     "nona.png", "shark.png", "urchin.png", "clam.png", "pufferfish.png",
     "oil_att.png", "crab.png", "speedBoost.png", "heartFish.png", "coin.png",
-    "laserShark.png"
+    "laserShark.png", "anglerFish.png"
   ]);
   hudManager.preload();
   tileManager.preload();
