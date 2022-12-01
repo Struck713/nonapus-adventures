@@ -8,7 +8,7 @@
  */
 class GameManager {
 
-    static DEBUG = true;
+    static DEBUG = false;
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
 
@@ -90,7 +90,7 @@ class GameObject {
         let diff = p5.Vector.sub(this.position, other.position);
         let diffDistance = diff.mag();
 
-        if (diffDistance <= (this.sprite.width / 4) && diffDistance <= (this.sprite.height / 4)) {
+        if (diffDistance <= (this.sprite.width / 2) && diffDistance <= (this.sprite.height / 2)) {
             other.onCollision(this);
             this.onCollision(other);
         }
