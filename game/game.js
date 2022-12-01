@@ -108,4 +108,12 @@ class GameObject {
     }
 
 
-} 
+}
+
+class Projectile extends GameObject {
+
+    constructor(x, y, sprite) {
+        super(x, y, sprite)
+    }
+
+}

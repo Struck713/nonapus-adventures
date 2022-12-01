@@ -82,7 +82,7 @@ class Character extends GameObject {
         if (this.ink <= 0) return;
         this.ink--;
 
-        gameManager.queue(new OilAttack(this.position.x, this.position.y, this.sprite.angle));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
     }
 
     setSpeed(movement){
@@ -152,7 +152,7 @@ class Character extends GameObject {
 
 }
 
-class OilAttack extends GameObject {
+class InkProjectile extends Projectile {
 
     constructor (x, y, direction) {
         super(x, y, spriteManager.get("OilAttack"));

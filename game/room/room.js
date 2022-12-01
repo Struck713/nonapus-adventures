@@ -287,6 +287,7 @@ class Room {
 
     destroy() {
         this.objects.forEach(enemy => gameManager.dequeue(enemy)); // despawn enemies for later
+        gameManager.getByClass(Projectile).forEach(projectile => projectile.destroy()); // destroy projectiles
 
         this.graphics.remove();
         this.graphics = null;

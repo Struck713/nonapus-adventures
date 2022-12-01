@@ -39,7 +39,7 @@
     }
 
     onCollision(other) {
-        if (other instanceof OilAttack) {
+        if (other instanceof InkProjectile) {
             if (this.dead) this.destroy();
             this.health--;
             this.displayHealth = true;
@@ -211,5 +211,13 @@ class AnglerFish extends Enemy {
         movement.setMag(2); //speed
         this.position.add(movement);
     }
+
+}
+
+class ElectricEel extends Enemy {
+
+}
+
+class ElectricProjectile extends Projectile {
 
 }
