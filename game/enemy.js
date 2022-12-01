@@ -41,7 +41,7 @@
     onCollision(other) {
         if (other instanceof InkProjectile) {
             if (this.dead) this.destroy();
-            this.health--;
+            --this.health;
             this.displayHealth = true;
         }
     }
@@ -59,18 +59,12 @@
             roomManager.room.spawn(coin);
         }
     }
-
-    get dead() {
-        return (this.health <= 0);
-    }
-
+    get dead() { return (this.health <= 0); }
 }
 
 class Pufferfish extends Enemy {
 
-    constructor (x, y) {
-        super(x, y, 5, spriteManager.get("Pufferfish"));
-    }
+    constructor (x, y) { super(x, y, 5, spriteManager.get("Pufferfish")); }
 
     render () {
         super.render();
@@ -96,9 +90,7 @@ class Pufferfish extends Enemy {
 
 class Shark extends Enemy {
 
-    constructor (x, y) {
-        super(x, y, 2, spriteManager.get("Shark"));
-    }
+    constructor (x, y) { super(x, y, 2, spriteManager.get("Shark")); }
 
     calculateAngleToTarget() {
         super.calculateAngleToTarget();
@@ -125,9 +117,7 @@ class Shark extends Enemy {
 }
 
 class Urchin extends Enemy{
-    constructor (x, y) {
-        super(x, y, 10, spriteManager.get("Urchin"));
-    }
+    constructor (x, y) { super(x, y, 10, spriteManager.get("Urchin")); }
 
     render () {
         super.render();
@@ -147,9 +137,7 @@ class Urchin extends Enemy{
 }
 
 class Clam extends Enemy{
-    constructor (x, y) {
-        super(x, y, 6, spriteManager.get("Clam"));
-    }
+    constructor (x, y) { super(x, y, 6, spriteManager.get("Clam")); }
 
     render () {
         super.render();
@@ -170,9 +158,7 @@ class Clam extends Enemy{
 
 class Crab extends Enemy {
 
-    constructor (x, y) {
-        super(x, y, 3, spriteManager.get("Crab"));
-    }
+    constructor (x, y) { super(x, y, 3, spriteManager.get("Crab")); }
 
     render () {
         super.render();
@@ -193,9 +179,7 @@ class Crab extends Enemy {
 
 class AnglerFish extends Enemy {
 
-    constructor (x, y) {
-        super(x, y, 2, spriteManager.get("AnglerFish"));
-    }
+    constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
 
     render () {
         super.render();
@@ -216,9 +200,7 @@ class AnglerFish extends Enemy {
 
 class ElectricEel extends Enemy {
 
-    constructor (x, y) {
-        super(x, y, 2, spriteManager.get("AnglerFish"));
-    }
+    constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
 
     render () {
         super.render();

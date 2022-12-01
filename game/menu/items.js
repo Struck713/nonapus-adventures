@@ -35,7 +35,7 @@ class MenuButton extends MenuItem {
         rect(0, 0, this.width, this.height);
         
         if (this.hovered) fill(255);
-        text(this.text, (this.width / 2), (this.height / 2));
+        text(this.text, (this.width / 2), (this.height / 2)+5);
         pop();
     }
 

@@ -32,8 +32,7 @@ class Collectable extends GameObject {
         delete this;
     }
 
-    onCollision(other) {
-    }
+    onCollision(other) {}
 
 }
 
