@@ -90,7 +90,6 @@ class RoomManager {
             
             stack.push(nextRoom);
         }
-
         // clear cells visited property
         this.rooms.forEach(insideRooms => {
             insideRooms.forEach(room => (room.visited = false));
@@ -115,9 +114,7 @@ class RoomManager {
         return neighbors;
     }
     
-    getRoom(x, y) {
-        return this.getRoom(x, y, 0);
-    }
+    getRoom(x, y) { return this.getRoom(x, y, 0); }
     
     getRoom(x, y, direction) {
         if (x >= RoomManager.ROWS || x < 0 || y >= RoomManager.COLUMNS || y < 0) return null;
@@ -146,7 +143,6 @@ class RoomManager {
         let ranY = floor(random(0, RoomManager.COLUMNS));
         return this.getRoom(ranX, ranY);
     }
-
 }
 
 class Room {
@@ -173,7 +169,8 @@ class Room {
     }
 
     generate() {
-        let check = (bound1, max1, bound2, max2, doorIndex) => (bound1 >= (max1 / 2 - 3) && bound1 <= (max1 / 2 + 3)) && (bound2 == max2) && !this.walls[doorIndex];
+        let check = (bound1, max1, bound2, max2, doorIndex) => 
+        (bound1 >= (max1 / 2 - 3) && bound1 <= (max1 / 2 + 3)) && (bound2 == max2) && !this.walls[doorIndex];
 
         noiseSeed(random(0, 100));
         this.weight = floor(noise(this.x, this.y) * 100);
@@ -194,13 +191,12 @@ class Room {
 
                 if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
                     if (!(check(row, TileManager.ROWS - 1, column, 0, Room.UP) 
-                     || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Room.DOWN)
-                     || check(column, TileManager.COLUMNS - 1, row, 0, Room.RIGHT)
-                     || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Room.LEFT))) {
+                       || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Room.DOWN)
+                       || check(column, TileManager.COLUMNS - 1, row, 0, Room.RIGHT)
+                       || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Room.LEFT))) {
                         tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
                     }
                 }
-
                 this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
             }
         }
@@ -219,8 +215,7 @@ class Room {
                     ++row;
                 }
         
-                if(left > 0)
-                    --left;
+                if(left > 0) --left;
         
                 while(row < TileManager.ROWS - 1) {
                     if(row > TileManager.ROWS / 2 + 3 && row >= right) {
@@ -245,8 +240,8 @@ class Room {
                     this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
                     ++row;
                 }
-                if(left > 0)
-                    --left;
+
+                if(left > 0) --left;
         
                 while(row < TileManager.ROWS - 1) {
                     if(row > TileManager.ROWS / 2 + 3 && row >= right) {
@@ -298,9 +293,7 @@ class Room {
         this.graphics = null;
     }
 
-    render() {
-        image(this.graphics, 0, 0);
-    }
+    render() { image(this.graphics, 0, 0); }
 
     // check collision pre-movement
     willCollide(vector) {
@@ -317,5 +310,4 @@ class Room {
         this.objects.push(object);
         if (needsQueued) gameManager.queue(object);
     }
-
 }
