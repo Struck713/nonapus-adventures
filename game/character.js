@@ -136,9 +136,10 @@ class Character extends GameObject {
         if ((this.ink - 2) < 0) return;
         this.ink -= 2;
 
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 12)));
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 12)));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 18)));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 36)));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 36)));
+        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 18)));
     }
 
     setSpeed(movement){
