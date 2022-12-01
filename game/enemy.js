@@ -66,13 +66,18 @@ class Pufferfish extends Enemy {
 
     constructor (x, y) { super(x, y, 5, spriteManager.get("Pufferfish")); }
 
+    calculateAngleToTarget() {
+        super.calculateAngleToTarget();
+        this.sprite.flipped = this.target.x - this.position.x >= 0;
+    }
+
     render () {
         super.render();
 
+        if (!this.target) this.calculateAngleToTarget();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        if (!this.target) this.calculateAngleToTarget();
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
@@ -122,10 +127,10 @@ class Urchin extends Enemy{
     render () {
         super.render();
 
+        if (!this.target) this.calculateAngleToTarget();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        if (!this.target) this.calculateAngleToTarget();
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
@@ -142,10 +147,11 @@ class Clam extends Enemy{
     render () {
         super.render();
 
+        if (!this.target) this.calculateAngleToTarget();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
-        if (!this.target) this.calculateAngleToTarget();
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
@@ -163,11 +169,11 @@ class Crab extends Enemy {
     render () {
         super.render();
 
-        this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
-
         if (!this.target) this.calculateAngleToTarget();
 
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+        
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
 
@@ -181,13 +187,18 @@ class AnglerFish extends Enemy {
 
     constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
 
+    calculateAngleToTarget() {
+        super.calculateAngleToTarget();
+        this.sprite.flipped = this.target.x - this.position.x >= 0;
+    }
+
     render () {
         super.render();
 
+        if (!this.target) this.calculateAngleToTarget();
+
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        if (!this.target) this.calculateAngleToTarget();
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
@@ -202,13 +213,18 @@ class ElectricEel extends Enemy {
 
     constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
 
+    calculateAngleToTarget() {
+        super.calculateAngleToTarget();
+        this.sprite.flipped = this.target.x - this.position.x >= 0;
+    }
+
     render () {
         super.render();
 
-        this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
-
         if (!this.target) this.calculateAngleToTarget();
+
+        this.sprite.cycleAnimation();
+        this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();

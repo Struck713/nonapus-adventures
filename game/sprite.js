@@ -91,7 +91,8 @@ class Sprite {
     show(x, y) {
         push();
         translate(x, y);
-        rotate(this.angle);
+        if (this.flipped) scale(-1, 1); // flip over vertical axis
+        rotate(this.angle); // rotate against angle
 
         let frame = this.animations[this.animation][this.index];
         image(frame, -(frame.width / 2), -(frame.height / 2));
