@@ -169,6 +169,7 @@ class Room {
         this.tiles = [];
         this.objects = [];
         this.weight = 0;
+        this.boss = false;
     }
 
     generate() {
@@ -258,11 +259,15 @@ class Room {
             }
         }
 
-        let i = 0;
-        while(i < random(1,6)){
-        this.spawn(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
-        ++i;
+        if (this.boss) {
+            this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
+            return;
         }
+        
+        for (let i = 0; i < random(1,6); ++i){
+            this.spawn(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
+        }
+
         this.spawn(Collectable.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
         
     }
@@ -281,7 +286,7 @@ class Room {
                 Utils.remove(this.objects, object);
                 return;
             }
-            gameManager.queue(object)
+            gameManager.queue(object);
         }); // respawn previously spawned enemies
     }
 
