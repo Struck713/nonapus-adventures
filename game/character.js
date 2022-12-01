@@ -127,7 +127,7 @@ class Character extends GameObject {
 
     fire() {
         if (this.ink <= 0) return;
-        this.ink--;
+        //this.ink--;
 
         gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
     }

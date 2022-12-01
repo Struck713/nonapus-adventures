@@ -66,8 +66,26 @@ class HealthBoost extends Collectable {
 
 class Coin extends Collectable {
 
+    static COIN_DROP_SCALAR = 50;
+
     constructor(x, y) {
         super(x, y, spriteManager.get("Coin"));
+        this.spawnAnimation = 0;
+    }
+
+    render() {
+        super.render();
+
+        let direction = random([-1, 1]);
+        if (this.spawnAnimation <= Coin.COIN_DROP_SCALAR) {
+            let offset = -Coin.COIN_DROP_SCALAR * cos(Math.PI * (this.spawnAnimation / Coin.COIN_DROP_SCALAR));
+
+            let movement = createVector(direction * this.spawnAnimation, offset);
+            movement.setMag(1);
+
+            this.position.add(movement);
+            this.spawnAnimation++;
+        }
     }
 
     onCollision(other) {
