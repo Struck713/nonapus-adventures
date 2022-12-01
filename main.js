@@ -30,7 +30,7 @@ function preload() {
 let character;
 function setup() {
 
-  textFont(titleFont); // set font
+  textFont(otherFont); // set font
 
   spriteManager.load(); // load sprites
   tileManager.load();
