@@ -154,12 +154,11 @@ class Character extends GameObject {
     }
 
     loseHealth() {
-        if(this.damageCoolDown <= 0 && this.health > 0){
+        if(this.damageCoolDown <= 0) {
+            if (this.health < 0) menuManager.set("End");
             --this.health;
             this.damageCoolDown = 120;
-        }
-        else
-            --this.damageCoolDown;
+        } else --this.damageCoolDown;
         this.tookDamage = false;
     }
 

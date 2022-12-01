@@ -20,7 +20,7 @@ function preload() {
     "coin.png", "chest.png",
 
     "laserShark.png", 
-    
+
     "inkProjectile.png", "boltProjectile.png"
   ]);
   hudManager.preload();
@@ -62,7 +62,6 @@ function draw(){
 
   if (menuManager.active) {
     menuManager.render();
-    
     return;
   }
 
