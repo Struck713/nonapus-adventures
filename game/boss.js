@@ -11,7 +11,8 @@ class Boss extends Enemy {
     static TAG = "LASER_SHARK_BOSS"
 
     constructor(x, y) {
-        super(x, y, 250, spriteManager.get("laserShark"));
+        super(x, y, 500, spriteManager.get("laserShark"));
+        super.collider = true;
         this.tag = Boss.TAG;
         this.showBar = false;
         this.invincible = true;
@@ -78,10 +79,16 @@ class Boss extends Enemy {
             if (!this.wait) this.wait = 0;
             this.wait++;
 
-            if (this.wait % 10) this.health++;
-            if (this.health >= this.maxHealth) {
-                this.phase++;
-                delete this.wait;
+            this.sprite.swapAnimation("charging", false);
+
+            if (this.wait % 10) {
+                if (this.health >= this.maxHealth) {
+                    this.sprite.callback = () => {
+                        this.sprite.swapAnimation("idle", false);
+                        this.phase++;
+                        delete this.wait;
+                    }
+                } else this.health++;
             }
         }
 
@@ -122,17 +129,12 @@ class Boss extends Enemy {
         // if (this.phase == 3) {
         //     this.moveToTarget(5);
             
-
         //     if(p5.Vector.sub(this.target, this.position).mag() <= 0) this.phase++;
         // }
 
         // if (this.phase == 4) {
         //     if (!this.wait) this.wait = 0;
-
         //     this.wait++;
-        //     if (this.wait % 10 == 0) {
-                
-        //     }
         // }
 
     }
@@ -184,7 +186,7 @@ class Boss extends Enemy {
 class LaserProjectile extends Projectile {
 
     constructor (x, y, direction, flipped) {
-        super(x, y, spriteManager.get("InkProjectile"));
+        super(x, y, spriteManager.get("laserProjectile"));
         super.collider = true;
         this.direction = direction;
         this.flipped = flipped;
@@ -192,15 +194,17 @@ class LaserProjectile extends Projectile {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
-        //this.destroy();
+        this.destroy();
     }
 
     render() {
+        this.sprite.cycleAnimation();
+
         push();
-        fill(255, 0, 0);
         translate(this.position.x, this.position.y);
         rotate(this.direction);
-        rect(40, (this.flipped ? -21 : 10), 30, 10);
+        this.sprite.flipped = !this.flipped;
+        this.sprite.show(50, (this.flipped ? -16 : 16));
         pop();
 
         let angleVector = p5.Vector.fromAngle(this.direction);

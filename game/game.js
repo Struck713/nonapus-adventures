@@ -8,6 +8,7 @@
  */
 class GameManager {
 
+    static DEBUG = false;
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
 
@@ -19,10 +20,12 @@ class GameManager {
             
             // check collisions
             if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other));
-
             // check if still on screen (object cleanup)
             if (!gameObject.isRenderable()) gameObject.destroy();
-            gameObject.render()
+
+            // draw hitboxes
+            if (GameManager.DEBUG) this.drawHitbox(gameObject);
+            gameObject.render();
         });
     }
 
@@ -43,6 +46,15 @@ class GameManager {
     getById(id) {
         if (this.gameObjects.length <= id) return null;
         return this.gameObjects[id];
+    }
+
+    drawHitbox(gameObject) {
+        push();
+        translate(gameObject.position.x, gameObject.position.y);
+        rectMode(CENTER);
+        noFill();
+        rect(0, 0, (gameObject.sprite.width / 2), (gameObject.sprite.height / 2))
+        pop();
     }
 
 }
