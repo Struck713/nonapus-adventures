@@ -5,7 +5,8 @@ class HUDManager {
             new Minimap(GameManager.CANVAS_X - 80, 10),
             new Ink(15, 10),
             new Health(15, 45),
-            new Coins(15, 80)
+            new Coins(15, 80),
+            new BossBar()
         ];
     }
 
@@ -166,4 +167,34 @@ class Minimap extends HUDItem {
         this.map.fill(0);
     }
 
+}
+
+class BossBar extends HUDItem {
+
+    constructor() {
+        super(0, 0);
+    }
+
+    preload() {
+        this.bossIcon = loadImage('../assets/hud/bossIcon.png');
+    }
+
+    render() {
+        if (!this.boss) {
+            let boss = gameManager.getByTag(Boss.TAG);
+            if (!boss) return;
+            this.boss = boss;
+        }
+
+        if (!this.boss.showBar) return;
+        push();
+        image(this.bossIcon, (GameManager.CANVAS_X / 2) - (Boss.HEALTH_BAR_WIDTH / 2) - 36, Boss.HEALTH_BAR_OFFSET);
+        noFill();
+        stroke(0);
+        rect((GameManager.CANVAS_X / 2) - (Boss.HEALTH_BAR_WIDTH / 2), Boss.HEALTH_BAR_OFFSET, Boss.HEALTH_BAR_WIDTH, Boss.HEALTH_BAR_HEIGHT)
+        fill(255, 0, 0);
+        noStroke();
+        rect((GameManager.CANVAS_X / 2) - (Boss.HEALTH_BAR_WIDTH / 2), Boss.HEALTH_BAR_OFFSET, this.boss.health * (Boss.HEALTH_BAR_WIDTH / this.boss.maxHealth), Boss.HEALTH_BAR_HEIGHT);
+        pop();
+    }
 }

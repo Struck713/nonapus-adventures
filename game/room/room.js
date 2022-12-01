@@ -169,7 +169,7 @@ class Room {
         this.tiles = [];
         this.objects = [];
         this.weight = 0;
-        this.boss = false;
+        this.boss = true;
     }
 
     generate() {

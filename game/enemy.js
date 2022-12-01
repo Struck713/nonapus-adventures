@@ -19,12 +19,12 @@
 
     constructor (x, y, health, sprite) {
         super(x, y, sprite);
-        this.health = health;
         this.maxHealth = health;
+        this.health = this.maxHealth;
         this.displayHealth = false;
     }
 
-    calculateAngleToTarget() {
+    findTarget() {
         let character = gameManager.getByTag(Character.TAG);
         this.target = createVector(character.position.x, character.position.y);
     }
@@ -66,21 +66,21 @@ class Pufferfish extends Enemy {
 
     constructor (x, y) { super(x, y, 5, spriteManager.get("Pufferfish")); }
 
-    calculateAngleToTarget() {
-        super.calculateAngleToTarget();
+    findTarget() {
+        super.findTarget();
         this.sprite.flipped = this.target.x - this.position.x >= 0;
     }
 
     render () {
         super.render();
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(1); //speed
         this.position.add(movement);
@@ -97,8 +97,8 @@ class Shark extends Enemy {
 
     constructor (x, y) { super(x, y, 2, spriteManager.get("Shark")); }
 
-    calculateAngleToTarget() {
-        super.calculateAngleToTarget();
+    findTarget() {
+        super.findTarget();
         this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
     }
 
@@ -109,10 +109,10 @@ class Shark extends Enemy {
         this.sprite.angle = this.angle + (3 * Math.PI / 2);
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         let movement = p5.Vector.fromAngle(this.angle);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(1.5); //speed
 
@@ -121,19 +121,19 @@ class Shark extends Enemy {
 
 }
 
-class Urchin extends Enemy{
+class Urchin extends Enemy {
     constructor (x, y) { super(x, y, 10, spriteManager.get("Urchin")); }
 
     render () {
         super.render();
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(.9); //speed
         this.position.add(movement);
@@ -147,14 +147,14 @@ class Clam extends Enemy{
     render () {
         super.render();
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(.85); //speed
         this.position.add(movement);
@@ -169,13 +169,13 @@ class Crab extends Enemy {
     render () {
         super.render();
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
         
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(.95); //speed
         this.position.add(movement);
@@ -187,21 +187,21 @@ class AnglerFish extends Enemy {
 
     constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
 
-    calculateAngleToTarget() {
-        super.calculateAngleToTarget();
+    findTarget() {
+        super.findTarget();
         this.sprite.flipped = this.target.x - this.position.x >= 0;
     }
 
     render () {
         super.render();
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(2); //speed
         this.position.add(movement);
@@ -213,21 +213,21 @@ class ElectricEel extends Enemy {
 
     constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
 
-    calculateAngleToTarget() {
-        super.calculateAngleToTarget();
+    findTarget() {
+        super.findTarget();
         this.sprite.flipped = this.target.x - this.position.x >= 0;
     }
 
     render () {
         super.render();
 
-        if (!this.target) this.calculateAngleToTarget();
+        if (!this.target) this.findTarget();
 
         this.sprite.cycleAnimation();
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.calculateAngleToTarget();
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
         movement.setMag(2); //speed
         this.position.add(movement);
