@@ -165,7 +165,7 @@ class Room {
         this.tiles = [];
         this.objects = [];
         this.weight = 0;
-        this.boss = false; // BOSS
+        this.boss = true; // BOSS
     }
 
     generate() {
@@ -200,7 +200,18 @@ class Room {
                         tileType = random(tileManager.getTilesByType(borderType));
                     }
                 }
+
+                // If edge row / column and boss battle
+                if((row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) && this.boss == true) {
+                    // Top / bottom door
+                    if((row == 0 || row == TileManager.ROWS - 1) && (column == 12 || column == 17))
+                        tileType = (column == 12) ? 5 : 4;
+                    if((column == 0 || row == TileManager.COLUMNS - 1) && (row == 8 || row == 14))
+                        tileType = (row == 8) ? 7 : 6;
+                }
+
                 this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
+
             }
         }
 
