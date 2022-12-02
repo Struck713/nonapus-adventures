@@ -9,7 +9,6 @@ class MenuItem {
     click() {}
     render() {}
     inBounds() { return false; }
-
 }
 
 class MenuButton extends MenuItem {
@@ -42,7 +41,6 @@ class MenuButton extends MenuItem {
     inBounds(x, y) {
         return Utils.inBounds(x, y, this.x - (this.width / 2), this.y - (this.height / 2), this.width, this.height);
     }
-
 }
 
 class MenuText extends MenuItem {
@@ -61,7 +59,6 @@ class MenuText extends MenuItem {
         text(this.text, this.size, this.size);
         pop();
     }
-
 }
 
 class MenuImage extends MenuItem {
@@ -70,5 +67,4 @@ class MenuImage extends MenuItem {
         super(x, y);
         this.name = name;
     }
-
 }
