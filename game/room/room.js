@@ -166,6 +166,7 @@ class Room {
         this.objects = [];
         this.weight = 0;
         this.boss = true; // BOSS
+        this.isBorder = false;
     }
 
     generate() {
@@ -177,7 +178,6 @@ class Room {
 
         let borderType = this.boss ? TileManager.Types.BORDER_METAL : TileManager.Types.BORDER_SAND;
         let regularType = this.boss ? TileManager.Types.METAL : TileManager.Types.SAND;
-        let doorType = TileManager.Types.LASER_METAL;
 
         this.tiles = [];
         for (let column = 0; column < TileManager.COLUMNS; ++column) {
@@ -213,17 +213,44 @@ class Room {
                     }
                     if(this.boss) {
                         if((row == 0 || row == TileManager.ROWS - 1) && (column == 8 || column == 14)) {
-                            //tileType = (column == 12) ? 5 : 4;
-                            if(column == 8)
-                                tileType = tileManager.getTilesByType(TileManager.Types.TOP_LASER)[0];
-                            if(column == 14)
-                                tileType = tileManager.getTilesByType(TileManager.Types.BOTTOM_LASER)[0];
+                            if(row == 0 && !this.walls[2]){
+                                if(column == 8)                            
+                                    tileType = tileManager.getTilesByType(TileManager.Types.TOP_LASER)[0];
+                                if(column == 14)
+                                    tileType = tileManager.getTilesByType(TileManager.Types.BOTTOM_LASER)[0];
+                            }
+                            else if(row == TileManager.ROWS - 1 && !this.walls[3]){
+                                if(column == 8)                            
+                                    tileType = tileManager.getTilesByType(TileManager.Types.TOP_LASER)[0];
+                                if(column == 14)
+                                    tileType = tileManager.getTilesByType(TileManager.Types.BOTTOM_LASER)[0];
+                            }                                                      
                         }
                         if((column == 0 || column == TileManager.COLUMNS - 1) && (row == 12 || row == 17)) {
-                            if(row = 12)
+                            if(column == 0 && !this.walls[0]){
+                                //not sure why this doesn't work
+                                //------------------------------------------------------------------------------
+                                // if(row = 12)
+                                //     tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];                                   
+                                // if(row = 17)
+                                //     tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];
+                                //------------------------------------------------------------------------------
+                                
+                                //just using this as a stand in
                                 tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];
-                            if(row = 17)
-                                tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];
+                            }
+                            else if(column == TileManager.COLUMNS - 1 && !this.walls[1]){
+                                //not sure why this doesn't work
+                                //------------------------------------------------------------------------------
+                                // if(row = 12)
+                                //     tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];
+                                // if(row = 17)
+                                //     tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];
+                                //------------------------------------------------------------------------------
+                                
+                                //just using this as a stand in
+                                tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];                               
+                            }                        
                         }
                     }
                 }
