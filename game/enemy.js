@@ -257,17 +257,36 @@ class AnglerFish extends Enemy {
 
 class ElectricEel extends Enemy {
 
-    constructor (x, y) { super(x, y, 2, spriteManager.get("electricEel")); }
+    constructor (x, y) { 
+        super(x, y, 2, spriteManager.get("electricEel"));
+        this.wait = 500;
+    }
 
     findTarget() {
         super.findTarget();
+        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x) + (3 * Math.PI / 2);
+    }
+
+    findRandomTarget() {
+        this.target = roomManager.room.randomPosition();
         this.sprite.flipped = this.target.x - this.position.x >= 0;
     }
 
     render () {
         super.render();
 
-        if (!this.target) this.findTarget();
+        if (!this.target) this.findRandomTarget();
+
+        this.wait--;
+        if (this.wait <= 0) {
+            this.sprite.swapAnimation("attack", true, () => {
+                this.findTarget();
+                console.log(this.target);
+                gameManager.queue(new BoltProjectile(this.position.x, this.position.y, this.angle));
+                this.findRandomTarget();
+                this.wait = 500;
+            });
+        }
 
         this.sprite.cycleAnimation();
         this.sprite.show(this.position.x, this.position.y); // show on screen
@@ -275,7 +294,7 @@ class ElectricEel extends Enemy {
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
-        movement.setMag(2); //speed
+        movement.setMag(.25); //speed
         this.position.add(movement);
     }
 
@@ -290,7 +309,7 @@ class BoltProjectile extends Projectile {
     }
 
     onCollision(other) {
-        if (!(other instanceof Enemy)) return;
+        if (!(other instanceof Character)) return;
         this.destroy();
     }
 

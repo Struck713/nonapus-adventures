@@ -260,21 +260,23 @@ class Room {
         }
 
         // let randPosition = this.randomPosition();
-        // this.spawn(new Crab(randPosition.x, randPosition.y), false);
+        // this.spawn(new ElectricEel(randPosition.x, randPosition.y), false);
 
-        let scale = 150;
-        for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
-            let adjustmentPosition = WaveUtils.CIRCLE_12[i];
-            this.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
-        }
-
-        // for (let i = 0; i < random(5,10); ++i){
-        //     let randPosition = this.randomPosition();
-        //     this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
+        // let scale = 150;
+        // for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
+        //     let adjustmentPosition = WaveUtils.CIRCLE_12[i];
+        //     this.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
         // }
 
-        // let randPosition = this.randomPosition();
-        // this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
+        for (let i = 0; i < random(1, 5); ++i){
+            let randPosition = this.randomPosition();
+            this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
+        }
+
+        for (let i = 0; i < random(1, 3); ++i){
+            let randPosition = this.randomPosition();
+            this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
+        }
         
     }
     
