@@ -176,7 +176,8 @@ class Room {
         this.weight = floor(noise(this.x, this.y) * 100);
 
         let borderType = this.boss ? TileManager.Types.BORDER_METAL : TileManager.Types.BORDER_SAND;
-        let regularType = this.boss ? TileManager.Types.METAL : TileManager.Types.SAND
+        let regularType = this.boss ? TileManager.Types.METAL : TileManager.Types.SAND;
+        let doorType = TileManager.Types.LASER_METAL;
 
         this.tiles = [];
         for (let column = 0; column < TileManager.COLUMNS; ++column) {
@@ -211,25 +212,24 @@ class Room {
                         tileType = random(tileManager.getTilesByType(borderType));
                     }
                     if(this.boss) {
-                        if((row == 0 || row == TileManager.ROWS - 1) && (column == 12 || column == 17)) {
+                        if((row == 0 || row == TileManager.ROWS - 1) && (column == 8 || column == 14)) {
                             //tileType = (column == 12) ? 5 : 4;
-                            if(column == 12)
-                                tileType = 5;
-                            if(column == 17)
-                                tileType = 4;
+                            if(column == 8)
+                                tileType = tileManager.getTilesByType(TileManager.Types.TOP_LASER)[0];
+                            if(column == 14)
+                                tileType = tileManager.getTilesByType(TileManager.Types.BOTTOM_LASER)[0];
                         }
-                        if((column == 0 || row == TileManager.COLUMNS - 1) && (row == 8 || row == 14)) {
-                            if(row = 8)
-                                tileType = 7;
-                            if(row = 14)
-                                tileType = 6;
-
+                        if((column == 0 || column == TileManager.COLUMNS - 1) && (row == 12 || row == 17)) {
+                            if(row = 12)
+                                tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];
+                            if(row = 17)
+                                tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];
                         }
                     }
                 }
 
                 if(this.boss)
-                    this.tiles[column][row] = new Tile(tileType, tileType.properties.collide, row, column);
+                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
                 else
                     this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
 

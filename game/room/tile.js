@@ -6,7 +6,10 @@ class TileManager {
         BORDER_SAND: 1,
         METAL: 2,
         BORDER_METAL: 3,
-        LASER_METAL: 4,
+        RIGHT_LASER: 4,
+        LEFT_LASER: 5,
+        BOTTOM_LASER: 6,
+        TOP_LASER: 7
     }
 
     static ROWS = GameManager.CANVAS_X / 32;
