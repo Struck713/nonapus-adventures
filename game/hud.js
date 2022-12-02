@@ -10,38 +10,22 @@ class HUDManager {
         ];
     }
 
-    preload() {
-        this.hudItems.forEach(hudItem => hudItem.preload());
-    }
-
-    render() {
-        this.hudItems.forEach(hudItem => hudItem.render());
-    }
-
+    preload() { this.hudItems.forEach(hudItem => hudItem.preload()); }
+    render () { this.hudItems.forEach(hudItem => hudItem.render()); }
 }
 
 class HUDItem {
 
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+    constructor(x, y) { this.x = x; this.y = y; }
 
-    preload() {
-
-    }
-
-    render() {
-
-    }
+    preload() {}
+    render () {}
 
 }
 
 class Ink extends HUDItem {
 
-    constructor(x, y) {
-        super(x, y);
-    }
+    constructor(x, y) { super(x, y); }
 
     preload() {
         this.fullInk = loadImage('../assets/hud/inkFull.png');
@@ -62,9 +46,7 @@ class Ink extends HUDItem {
 
 class Health extends HUDItem {
 
-    constructor(x, y) {
-        super(x, y);
-    }
+    constructor(x, y) { super(x, y); }
 
     preload(){
         this.fullHeart = loadImage('../assets/hud/nonaHeartFull.png');
@@ -87,7 +69,7 @@ class Health extends HUDItem {
                     image(this.emptyHeart, (this.x + 34*i), this.y);
             }
         }
-        else{
+        else {
             for(let i = 0; i < Character.HEALTH_DEFAULT_VALUE; ++i){
                 if((i+1) <= this.character.health)
                     image(this.fullHeart, (this.x + 34*i), this.y);
@@ -100,13 +82,9 @@ class Health extends HUDItem {
 
 class Coins extends HUDItem {
 
-    constructor(x, y) {
-        super(x, y);
-    }
+    constructor(x, y) { super(x, y); }
 
-    preload(){
-        this.coin = loadImage('../assets/hud/bigCoin.png');
-    }
+    preload() { this.coin = loadImage('../assets/hud/bigCoin.png'); }
 
     render() {
 
@@ -124,9 +102,7 @@ class Coins extends HUDItem {
 
 class Minimap extends HUDItem {
 
-    constructor(x, y) {
-        super(x, y)
-    }
+    constructor(x, y) { super(x, y) }
 
     render() {
 
@@ -171,13 +147,9 @@ class Minimap extends HUDItem {
 
 class BossBar extends HUDItem {
 
-    constructor() {
-        super(0, 0);
-    }
+    constructor() { super(0, 0); }
 
-    preload() {
-        this.bossIcon = loadImage('../assets/hud/bossIcon.png');
-    }
+    preload() { this.bossIcon = loadImage('../assets/hud/bossIcon.png'); }
 
     render() {
         if (!this.boss) {
