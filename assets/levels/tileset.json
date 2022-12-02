@@ -575,7 +575,7 @@
         {
             "collide": false,
             "rarity": 15,
-            "type": 7,
+            "type": 2,
             "position": {
                 "x": 32,
                 "y": 256,
@@ -586,7 +586,7 @@
         {
             "collide": true,
             "rarity": 15,
-            "type": 6,
+            "type": 3,
             "position": {
                 "x": 64,
                 "y": 256,
@@ -597,7 +597,7 @@
         {
             "collide": true,
             "rarity": 15,
-            "type": 5,
+            "type": 3,
             "position": {
                 "x": 0,
                 "y": 288,
@@ -608,10 +608,43 @@
         {
             "collide": true,
             "rarity": 15,
-            "type": 4,
+            "type": 7,
             "position": {
                 "x": 32,
                 "y": 288,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": true,
+            "rarity": 15,
+            "type": 6,
+            "position": {
+                "x": 64,
+                "y": 288,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": true,
+            "rarity": 15,
+            "type": 5,
+            "position": {
+                "x": 0,
+                "y": 320,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "collide": true,
+            "rarity": 15,
+            "type": 4,
+            "position": {
+                "x": 32,
+                "y": 320,
                 "width": 32,
                 "height": 32
             }

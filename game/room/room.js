@@ -189,8 +189,19 @@ class Room {
                 let rarity = floor(noise(row * .05, column * .05) * 100);
                 let sand = tileManager.getTilesByType(regularType);
 
+                // If I had to guess the problem is in this code here
+                // Either the above lines or the below lines
+                // tileType is set to be some kind of sand, but we need to make an exception for the lasers
+                // I assume tileType is an integer based on the types within tile.js TileManager
+                // Below I try to manually set the tiletype to the integer of the appropriate
+                // I try to pass that integer into the Tile constructor based on if we are in a boss battle or not
+                // I am aware this is hacky, but it doesn't even work
+                // - Gert
+
                 let tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
-                if (!tileType) tileType = sand[0]; // default tilea
+                if (!tileType) tileType = sand[0]; // default tiles
+
+
 
                 if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
                     if (!(check(row, TileManager.ROWS - 1, column, 0, Room.UP) 
@@ -199,18 +210,28 @@ class Room {
                        || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Room.LEFT))) {
                         tileType = random(tileManager.getTilesByType(borderType));
                     }
+                    if(this.boss) {
+                        if((row == 0 || row == TileManager.ROWS - 1) && (column == 12 || column == 17)) {
+                            //tileType = (column == 12) ? 5 : 4;
+                            if(column == 12)
+                                tileType = 5;
+                            if(column == 17)
+                                tileType = 4;
+                        }
+                        if((column == 0 || row == TileManager.COLUMNS - 1) && (row == 8 || row == 14)) {
+                            if(row = 8)
+                                tileType = 7;
+                            if(row = 14)
+                                tileType = 6;
+
+                        }
+                    }
                 }
 
-                // If edge row / column and boss battle
-                if((row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) && this.boss == true) {
-                    // Top / bottom door
-                    if((row == 0 || row == TileManager.ROWS - 1) && (column == 12 || column == 17))
-                        tileType = (column == 12) ? 5 : 4;
-                    if((column == 0 || row == TileManager.COLUMNS - 1) && (row == 8 || row == 14))
-                        tileType = (row == 8) ? 7 : 6;
-                }
-
-                this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
+                if(this.boss)
+                    this.tiles[column][row] = new Tile(tileType, tileType.properties.collide, row, column);
+                else
+                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
 
             }
         }
