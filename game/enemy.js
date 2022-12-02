@@ -141,23 +141,58 @@ class Urchin extends Enemy {
 
 }
 
-class Clam extends Enemy{
-    constructor (x, y) { super(x, y, 6, spriteManager.get("Clam")); }
+class Clam extends Enemy {
+
+    static DEFAULT_TARGETTING_TIME = 150;
+    static DEFAULT_COOLDOWN_TIME = 100;
+
+    constructor (x, y) { 
+        super(x, y, 6, spriteManager.get("Clam"));
+        this.targetting = false;
+        this.targettingTime = Clam.DEFAULT_TARGETTING_TIME;
+        this.cooldownTime = Clam.DEFAULT_COOLDOWN_TIME;
+    }
+
+    onCollision(other) {
+        if (!this.targetting) return;
+        super.onCollision(other);
+    }
 
     render () {
         super.render();
 
-        if (!this.target) this.findTarget();
-
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
+        if (!this.targetting) {
+            if (this.cooldownTime >= 0) {
+                this.cooldownTime--;
+                return;
+            }
+
+            this.findTarget();
+            let targetVector = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+            if (targetVector.mag() <= 100) {
+                this.sprite.swapAnimation("attack", false);
+                this.targetting = true;
+            }
+            return;
+        }
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
-        movement.setMag(.85); //speed
+        movement.setMag(2); //speed
         this.position.add(movement);
+        
+        this.targettingTime--;
+        if (this.targettingTime <= 0) {
+            this.targetting = false;
+            this.cooldownTime = Clam.DEFAULT_COOLDOWN_TIME;
+            this.targettingTime = Clam.DEFAULT_TARGETTING_TIME;
+            this.sprite.swapAnimation("idle", false);
+            this.displayHealth = false;
+        }
     }
 
 }
@@ -214,7 +249,7 @@ class AnglerFish extends Enemy {
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
-        movement.setMag(2); //speed
+        movement.setMag(1.5); //speed
         this.position.add(movement);
     }
 
@@ -222,7 +257,7 @@ class AnglerFish extends Enemy {
 
 class ElectricEel extends Enemy {
 
-    constructor (x, y) { super(x, y, 2, spriteManager.get("AnglerFish")); }
+    constructor (x, y) { super(x, y, 2, spriteManager.get("electricEel")); }
 
     findTarget() {
         super.findTarget();

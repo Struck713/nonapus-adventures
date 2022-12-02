@@ -258,9 +258,15 @@ class Room {
             this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
             return;
         }
-    
-        let randPosition = this.randomPosition();
-        this.spawn(new Crab(randPosition.x, randPosition.y), false);
+
+        // let randPosition = this.randomPosition();
+        // this.spawn(new Crab(randPosition.x, randPosition.y), false);
+
+        let scale = 150;
+        for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
+            let adjustmentPosition = WaveUtils.CIRCLE_12[i];
+            this.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
+        }
 
         // for (let i = 0; i < random(5,10); ++i){
         //     let randPosition = this.randomPosition();
