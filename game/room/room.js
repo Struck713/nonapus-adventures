@@ -260,10 +260,12 @@ class Room {
         }
         
         for (let i = 0; i < random(5,10); ++i){
-            this.spawn(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
+            let randPosition = this.randomPosition();
+            this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
         }
 
-        this.spawn(Collectable.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
+        let randPosition = this.randomPosition();
+        this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
         
     }
     
@@ -304,6 +306,15 @@ class Room {
         let tile = this.tiles[column][row];
         
         return tile.collide;
+    }
+
+    // returns a random vector that is not within a tile
+    randomPosition() {
+        let column = floor(random(1, TileManager.COLUMNS - 1));
+        let rows = this.tiles[column];
+        let nonCollideableRows = rows.filter(row => (row.collide == false));
+        let tile = random(nonCollideableRows);
+        return createVector(tile.row * TileManager.TILE_SIZE, tile.column * TileManager.TILE_SIZE);
     }
 
     spawn(object, needsQueued=true) {
