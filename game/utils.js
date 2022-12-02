@@ -20,6 +20,11 @@ class Utils {
         return x >= x1 && x <= (x1 + width) && y >= y1 && y <= (y1 + height)
     }
 
+    static deepCopy(object) {
+        let clone = Object.assign(Object.create(Object.getPrototypeOf(object)), object);
+        return clone;
+    }
+
 }
 
 class WaveUtils {
