@@ -164,8 +164,17 @@ class Clam extends Enemy{
 
 class Crab extends Enemy {
 
-    constructor (x, y) { super(x, y, 3, spriteManager.get("Crab")); }
+    constructor (x, y) { 
+        super(x, y, 3, spriteManager.get("Crab"));
+        this.vertical = true;
+    }
 
+    findTarget() {
+        super.findTarget();
+        this.vertical = true;
+    }
+
+    // the crab will never move on a diagonal
     render () {
         super.render();
 
@@ -173,11 +182,13 @@ class Crab extends Enemy {
 
         this.sprite.cycleAnimation(); // run animation
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        
-        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
+    
+        // avi rathod loves the ternary operator
+        let movement = createVector((this.vertical ? 0 : this.target.x - this.position.x), (this.vertical ? this.target.y - this.position.y : 0));
+        if(abs(this.target.y - this.position.y) < 1) this.vertical = false;
+        if(abs(this.target.x - this.position.x) < 1) this.findTarget();
 
-        movement.setMag(.95); //speed
+        movement.setMag(.97); //speed
         this.position.add(movement);
     }
 

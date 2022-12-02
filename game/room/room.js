@@ -258,14 +258,17 @@ class Room {
             this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
             return;
         }
-        
-        for (let i = 0; i < random(5,10); ++i){
-            let randPosition = this.randomPosition();
-            this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
-        }
-
+    
         let randPosition = this.randomPosition();
-        this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
+        this.spawn(new Crab(randPosition.x, randPosition.y), false);
+
+        // for (let i = 0; i < random(5,10); ++i){
+        //     let randPosition = this.randomPosition();
+        //     this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
+        // }
+
+        // let randPosition = this.randomPosition();
+        // this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
         
     }
     
