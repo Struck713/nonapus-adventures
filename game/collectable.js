@@ -100,6 +100,7 @@ class Chest extends Collectable {
 
     constructor(x, y) {
         super(x, y, spriteManager.get("Chest"));
+        this.opened = false;
     }
 
     render() {
@@ -107,9 +108,22 @@ class Chest extends Collectable {
         this.sprite.show(this.position.x, this.position.y);
     }
 
+    dropLoot() {
+        for (let amount = 0; amount < random(0, 3); amount++) {
+            let coin = new Coin(this.position.x, this.position.y);
+            coin.position.x += (amount * coin.sprite.width);
+            roomManager.room.spawn(coin);
+        }
+    }
+
     onCollision(other) {
         if (!(other instanceof Character)) return;
-        this.sprite.swapAnimation("opening", false, () => this.sprite.swapAnimation("opened", false));
+        if (this.opened) return;
+        this.sprite.swapAnimation("opening", false, () => {
+            this.sprite.swapAnimation("opened", false);
+            this.opened = true;
+            this.dropLoot();
+        });
     }
 
 }

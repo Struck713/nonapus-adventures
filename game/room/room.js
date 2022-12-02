@@ -175,6 +175,9 @@ class Room {
         noiseSeed(random(0, 100));
         this.weight = floor(noise(this.x, this.y) * 100);
 
+        let borderType = this.boss ? TileManager.Types.BORDER_METAL : TileManager.Types.BORDER_SAND;
+        let regularType = this.boss ? TileManager.Types.METAL : TileManager.Types.SAND
+
         this.tiles = [];
         for (let column = 0; column < TileManager.COLUMNS; ++column) {
             this.tiles[column] = [];
@@ -184,7 +187,7 @@ class Room {
                 // n, i is rows
 
                 let rarity = floor(noise(row * .05, column * .05) * 100);
-                let sand = tileManager.getTilesByType(TileManager.Types.SAND);
+                let sand = tileManager.getTilesByType(regularType);
 
                 let tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
                 if (!tileType) tileType = sand[0]; // default tilea
@@ -194,7 +197,7 @@ class Room {
                        || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Room.DOWN)
                        || check(column, TileManager.COLUMNS - 1, row, 0, Room.RIGHT)
                        || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Room.LEFT))) {
-                        tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                        tileType = random(tileManager.getTilesByType(borderType));
                     }
                 }
                 this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
@@ -210,7 +213,7 @@ class Room {
         
             if(column < TileManager.COLUMNS - 3) {
                 while(row < left) {
-                    let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                    let tileType = random(tileManager.getTilesByType(borderType));
                     this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
                     ++row;
                 }
@@ -219,7 +222,7 @@ class Room {
         
                 while(row < TileManager.ROWS - 1) {
                     if(row > TileManager.ROWS / 2 + 3 && row >= right) {
-                        let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                        let tileType = random(tileManager.getTilesByType(borderType));
                         this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
                     }
                     ++row;
@@ -236,7 +239,7 @@ class Room {
         
             if(column > TileManager.COLUMNS / 2 + 3) {
                 while(row <= left) {
-                    let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                    let tileType = random(tileManager.getTilesByType(borderType));
                     this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
                     ++row;
                 }
@@ -245,7 +248,7 @@ class Room {
         
                 while(row < TileManager.ROWS - 1) {
                     if(row > TileManager.ROWS / 2 + 3 && row >= right) {
-                        let tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
+                        let tileType = random(tileManager.getTilesByType(borderType));
                         this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
                     }
                     ++row;

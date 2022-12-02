@@ -132,12 +132,12 @@ class Boss extends Enemy {
             }
         }
 
-        if (this.phase == 5) {
+        if (this.phase == 4) {
             this.moveToTarget(1);
             if(p5.Vector.sub(this.target, this.position).mag() <= 0) this.phase++;
         }
         
-        if (this.phase == 6) {
+        if (this.phase == 5) {
             return;
         }
 

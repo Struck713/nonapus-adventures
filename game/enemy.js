@@ -59,6 +59,7 @@
             roomManager.room.spawn(coin);
         }
     }
+
     get dead() { return (this.health <= 0); }
 }
 
@@ -257,9 +258,11 @@ class AnglerFish extends Enemy {
 
 class ElectricEel extends Enemy {
 
+    static WAIT = 100;
+
     constructor (x, y) { 
         super(x, y, 2, spriteManager.get("electricEel"));
-        this.wait = 500;
+        this.wait = ElectricEel.WAIT;
     }
 
     findTarget() {
@@ -281,10 +284,9 @@ class ElectricEel extends Enemy {
         if (this.wait <= 0) {
             this.sprite.swapAnimation("attack", true, () => {
                 this.findTarget();
-                console.log(this.target);
                 gameManager.queue(new BoltProjectile(this.position.x, this.position.y, this.angle));
                 this.findRandomTarget();
-                this.wait = 500;
+                this.wait = ElectricEel.WAIT;
             });
         }
 
