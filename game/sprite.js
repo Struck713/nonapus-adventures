@@ -15,8 +15,12 @@ class SpriteManager {
     }
 
     get(spriteName) {
+
         for (let i = 0; i < this.sprites.length; i++) {
-            if (this.sprites[i].name === spriteName) return this.sprites[i];
+            if (this.sprites[i].name === spriteName) {
+                let sprite = this.sprites[i];
+                return Utils.deepCopy(sprite);
+            }
         }
         return null;
     }

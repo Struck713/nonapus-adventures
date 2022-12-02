@@ -11,7 +11,7 @@ class Boss extends Enemy {
     static TAG = "LASER_SHARK_BOSS"
 
     constructor(x, y) {
-        super(x, y, 500, spriteManager.get("laserShark"));
+        super(x, y, 50, spriteManager.get("laserShark"));
         super.collider = true;
         this.tag = Boss.TAG;
         this.showBar = false;
@@ -94,6 +94,13 @@ class Boss extends Enemy {
 
         // dash and basic attacks
         if (this.phase == 3) {
+            if (this.health <= (this.maxHealth / 2)) {
+                this.target = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+                this.invincible = true;
+                this.phase++;
+                return;
+            }
+
             if (!this.movements) this.movements = 0;
             if (this.movements >= 9) {
                 if (!this.wait) {
@@ -123,6 +130,15 @@ class Boss extends Enemy {
                 this.findTarget();
                 this.movements++;
             }
+        }
+
+        if (this.phase == 5) {
+            this.moveToTarget(1);
+            if(p5.Vector.sub(this.target, this.position).mag() <= 0) this.phase++;
+        }
+        
+        if (this.phase == 6) {
+            return;
         }
 
         // testing

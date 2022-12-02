@@ -20,6 +20,11 @@ class Utils {
         return x >= x1 && x <= (x1 + width) && y >= y1 && y <= (y1 + height)
     }
 
+    static deepCopy(object) {
+        let clone = Object.assign(Object.create(Object.getPrototypeOf(object)), object);
+        return clone;
+    }
+
 }
 
 class WaveUtils {
@@ -27,11 +32,23 @@ class WaveUtils {
     // generates a list of points along a sine wave
     static pointsAlongWave(amount) {
         let stack = [];
-        var inc = (2 * Math.PI) / amount;
-        for (var x = 0; x < (2 * Math.PI); x += inc) stack.push(Math.sin(x));
+        let inc = (2 * Math.PI) / amount;
+        for (let x = 0; x < (2 * Math.PI); x += inc) stack.push(Math.sin(x));
         return stack;
     }
-    
+
+    static pointsAlongCircle(amount) {
+        let stack = [];
+        let inc = (2 * Math.PI) / amount;
+        for (let i = 0; i < (2 * Math.PI); i += inc) {
+            let x = Math.cos(i);
+            let y = Math.sin(i);
+            stack.push({ x, y });
+        }
+        return stack;
+    }
+
     static POINTS_25 = WaveUtils.pointsAlongWave(25);
+    static CIRCLE_12 = WaveUtils.pointsAlongCircle(12);
 
 }
