@@ -52,7 +52,7 @@ class SpeedBoost extends Collectable {
 class HealthBoost extends Collectable {
 
     constructor (x, y) {
-        super(x, y, spriteManager.get("HeartFish"));
+        super(x, y, spriteManager.get("HealthPotion"));
     }
 
     onCollision(other) {

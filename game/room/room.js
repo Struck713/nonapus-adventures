@@ -259,7 +259,7 @@ class Room {
             return;
         }
         
-        for (let i = 0; i < random(1,6); ++i){
+        for (let i = 0; i < random(5,10); ++i){
             this.spawn(Enemy.random(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)), false);
         }
 

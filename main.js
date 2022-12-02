@@ -14,7 +14,7 @@ function preload() {
     "nona.png", 
 
     "shark.png", "urchin.png", "clam.png", "pufferfish.png",
-    "crab.png", "speedBoost.png", "heartFish.png", "anglerFish.png", 
+    "crab.png", "speedBoost.png", "healthPotion.png", "anglerFish.png", 
     "electricEel.png",
 
     "coin.png", "chest.png",
