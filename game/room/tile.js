@@ -22,8 +22,8 @@ class TileManager {
     }
 
     preload() {
-        this.tilesetImage = loadImage('../assets/levels/tileset.png'); //load tileset
-        this.tilesetJSON = loadJSON('../assets/levels/tileset.json');
+        this.tilesetImage = loadImage('assets/levels/tileset.png'); //load tileset
+        this.tilesetJSON = loadJSON('assets/levels/tileset.json');
     }
 
     load() {
