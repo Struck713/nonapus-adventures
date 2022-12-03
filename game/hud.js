@@ -149,7 +149,7 @@ class BossBar extends HUDItem {
 
     constructor() { super(0, 0); }
 
-    preload() { this.bossIcon = loadImage('../assets/hud/bossIcon.png'); }
+    preload() { this.bossIcon = loadImage('./assets/hud/bossIcon.png'); }
 
     render() {
         if (!this.boss) {
