@@ -18,7 +18,7 @@ class RoomManager {
 
          //generate individual room layout
         this.rooms.forEach(insideRooms => {
-            insideRooms.forEach(room => room.generate());
+            insideRooms.forEach(room => room.initialize());
         }); 
 
 
@@ -162,159 +162,26 @@ class Room {
         this.y = y;
         this.visited = false;
         this.walls = [ true, true, true, true ];
-        this.tiles = [];
         this.objects = [];
-        this.weight = 0;
-        this.boss = true; // BOSS
-        this.isBorder = false;
+        this.tiles = [];
     }
 
-    generate() {
-        let check = (bound1, max1, bound2, max2, doorIndex) => 
-        (bound1 >= (max1 / 2 - 3) && bound1 <= (max1 / 2 + 3)) && (bound2 == max2) && !this.walls[doorIndex];
-
+    initialize() {
         noiseSeed(random(0, 100));
         this.weight = floor(noise(this.x, this.y) * 100);
 
-        let borderType = this.boss ? TileManager.Types.BORDER_METAL : TileManager.Types.BORDER_SAND;
-        let regularType = this.boss ? TileManager.Types.METAL : TileManager.Types.SAND;
+        RoomGenerators.BOSS.generate(this);
+        this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
 
-        this.tiles = [];
-        for (let column = 0; column < TileManager.COLUMNS; ++column) {
-            this.tiles[column] = [];
-            for (let row = 0; row < TileManager.ROWS; ++row) {
-                
-                // m, j is column
-                // n, i is rows
+        // for (let i = 0; i < random(1, 5); ++i){
+        //     let randPosition = this.randomPosition();
+        //     this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
+        // }
 
-                let rarity = floor(noise(row * .05, column * .05) * 100);
-                let sand = tileManager.getTilesByType(regularType);
-
-                // If I had to guess the problem is in this code here
-                // Either the above lines or the below lines
-                // tileType is set to be some kind of sand, but we need to make an exception for the lasers
-                // I assume tileType is an integer based on the types within tile.js TileManager
-                // Below I try to manually set the tiletype to the integer of the appropriate
-                // I try to pass that integer into the Tile constructor based on if we are in a boss battle or not
-                // I am aware this is hacky, but it doesn't even work
-                // - Gert
-
-                let tileType = random(sand.filter(tile => (tile.properties.rarity >= rarity)));
-                if (!tileType) tileType = sand[0]; // default tiles
-
-
-
-                if(row == 0 || column == 0 || row == TileManager.ROWS-1 || column == TileManager.COLUMNS-1) {
-                    if (!(check(row, TileManager.ROWS - 1, column, 0, Room.UP) 
-                       || check(row, TileManager.ROWS - 1, column, TileManager.COLUMNS - 1, Room.DOWN)
-                       || check(column, TileManager.COLUMNS - 1, row, 0, Room.RIGHT)
-                       || check(column, TileManager.COLUMNS - 1, row, TileManager.ROWS - 1, Room.LEFT))) {
-                        tileType = random(tileManager.getTilesByType(borderType));
-                    }
-                    if(this.boss) {
-                        if((row == 0 || row == TileManager.ROWS - 1) && (column == 8 || column == 14)) {
-                            if(row == 0 && !this.walls[2]){
-                                if(column == 8)                            
-                                    tileType = tileManager.getTilesByType(TileManager.Types.TOP_LASER)[0];
-                                if(column == 14)
-                                    tileType = tileManager.getTilesByType(TileManager.Types.BOTTOM_LASER)[0];
-                            }
-                            else if(row == TileManager.ROWS - 1 && !this.walls[3]){
-                                if(column == 8)                            
-                                    tileType = tileManager.getTilesByType(TileManager.Types.TOP_LASER)[0];
-                                if(column == 14)
-                                    tileType = tileManager.getTilesByType(TileManager.Types.BOTTOM_LASER)[0];
-                            }                                                      
-                        }
-                        if((column == 0 || column == TileManager.COLUMNS - 1) && (row == 12 || row == 17)) {
-                            if(column == 0 && !this.walls[0]){
-                                //not sure why this doesn't work
-                                //------------------------------------------------------------------------------
-                                // if(row = 12)
-                                //     tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];                                   
-                                // if(row = 17)
-                                //     tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];
-                                //------------------------------------------------------------------------------
-                                
-                                //just using this as a stand in
-                                tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];
-                            }
-                            else if(column == TileManager.COLUMNS - 1 && !this.walls[1]){
-                                //not sure why this doesn't work
-                                //------------------------------------------------------------------------------
-                                // if(row = 12)
-                                //     tileType = tileManager.getTilesByType(TileManager.Types.LEFT_LASER)[0];
-                                // if(row = 17)
-                                //     tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];
-                                //------------------------------------------------------------------------------
-                                
-                                //just using this as a stand in
-                                tileType = tileManager.getTilesByType(TileManager.Types.RIGHT_LASER)[0];                               
-                            }                        
-                        }
-                    }
-                }
-
-                if(this.boss)
-                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-                else
-                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-
-            }
-        }
-
-        let roundingAmount = random(3, 7);
-        let left = roundingAmount;
-        let right = TileManager.ROWS - roundingAmount;
-        
-        for(let column = 1; column < TileManager.COLUMNS; ++column) {
-            let row = 1;
-        
-            if(column < TileManager.COLUMNS - 3) {
-                while(row < left) {
-                    let tileType = random(tileManager.getTilesByType(borderType));
-                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-                    ++row;
-                }
-        
-                if(left > 0) --left;
-        
-                while(row < TileManager.ROWS - 1) {
-                    if(row > TileManager.ROWS / 2 + 3 && row >= right) {
-                        let tileType = random(tileManager.getTilesByType(borderType));
-                        this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-                    }
-                    ++row;
-                }
-                ++right;
-            }
-        }
-        
-        left = random(3, 7);
-        right = TileManager.ROWS - roundingAmount;
-        
-        for(let column = TileManager.COLUMNS - 1; column > 1; --column) {
-            let row = 1;
-        
-            if(column > TileManager.COLUMNS / 2 + 3) {
-                while(row <= left) {
-                    let tileType = random(tileManager.getTilesByType(borderType));
-                    this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-                    ++row;
-                }
-
-                if(left > 0) --left;
-        
-                while(row < TileManager.ROWS - 1) {
-                    if(row > TileManager.ROWS / 2 + 3 && row >= right) {
-                        let tileType = random(tileManager.getTilesByType(borderType));
-                        this.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-                    }
-                    ++row;
-                }
-                ++right;
-            }
-        }
+        // for (let i = 0; i < random(1, 3); ++i){
+        //     let randPosition = this.randomPosition();
+        //     this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
+        // }
 
         if (this.boss) {
             this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
@@ -329,16 +196,6 @@ class Room {
         //     let adjustmentPosition = WaveUtils.CIRCLE_12[i];
         //     this.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
         // }
-
-        for (let i = 0; i < random(1, 5); ++i){
-            let randPosition = this.randomPosition();
-            this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
-        }
-
-        for (let i = 0; i < random(1, 3); ++i){
-            let randPosition = this.randomPosition();
-            this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
-        }
         
     }
     
