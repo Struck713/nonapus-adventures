@@ -123,7 +123,25 @@ class Shark extends Enemy {
 }
 
 class Urchin extends Enemy {
-    constructor (x, y) { super(x, y, 10, spriteManager.get("Urchin")); }
+    constructor (x, y, child=false) { 
+        super(x, y, 10, spriteManager.get("Urchin"));
+        this.child = child;
+    }
+
+    onCollision(other) {
+        super.onCollision(other);
+        if (this.child) return; // children cannot replicate
+
+        // replicate
+        if (this.health <= (this.maxHealth / 2)) {
+            if (random(0, 100) <= 25) {
+                let randX = random(-this.sprite.width, this.sprite.width);
+                let randY = random(-this.sprite.height, this.sprite.height);
+                let clone = new Urchin(this.position.x + randX, this.position.y + randY, true);
+                roomManager.room.spawn(clone);
+            }
+        }
+    }
 
     render () {
         super.render();
