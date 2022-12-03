@@ -34,7 +34,7 @@ class Boss extends Enemy {
         // roll out phase
         if (this.phase == 0) {
             this.moveToTarget(1);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 0) this.phase++;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1) this.phase++;
         }
 
         // dialog phase
@@ -98,6 +98,9 @@ class Boss extends Enemy {
                 this.target = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
                 this.invincible = true;
                 this.phase++;
+
+                delete this.wait;
+                delete this.movements;
                 return;
             }
 
@@ -134,10 +137,39 @@ class Boss extends Enemy {
 
         if (this.phase == 4) {
             this.moveToTarget(1);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 0) this.phase++;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1) this.phase++;
         }
         
+        // dialog phase 2
         if (this.phase == 5) {
+            console.log(this.phase);
+            if (!this.dialogPhase) this.dialogPhase = 0;
+            if (!this.wait) this.wait = 0;
+
+            if (this.dialogPhase == 0) this.displayDialog("OUCH.", 200);
+            if (this.dialogPhase == 1) this.displayDialog("You think this is some kind of game?", 250);
+            if (this.dialogPhase == 2) this.displayDialog("Well.. it is a game.", 50);
+            if (this.dialogPhase == 3) this.displayDialog("ANYWAYS...", 150);
+            if (this.dialogPhase == 4) this.displayDialog("I am done playing around.", 150);
+            
+            this.wait++;
+            if (this.wait >= this.transitionTime) {
+                if (this.dialogPhase < 4) {
+                    this.dialogPhase++;
+                    this.wait = 0;
+                    return;
+                }
+
+                this.phase++;
+                this.invincible = false;
+
+                delete this.wait;
+                delete this.dialogPhase;
+                delete this.transitionTime;
+            }
+        }
+
+        if (this.phase == 6) {
             return;
         }
 
