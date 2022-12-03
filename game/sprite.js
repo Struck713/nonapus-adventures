@@ -27,7 +27,7 @@ class SpriteManager {
 
     preload(toLoad) {
         toLoad.forEach(spriteName => {
-            let spriteFile = `./assets/sprites/${spriteName}`;
+            let spriteFile = `assets/sprites/${spriteName}`;
             let sprite = new Sprite(spriteFile);
             sprite.preload();
             

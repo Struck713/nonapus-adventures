@@ -28,8 +28,8 @@ class Ink extends HUDItem {
     constructor(x, y) { super(x, y); }
 
     preload() {
-        this.fullInk = loadImage('../assets/hud/inkFull.png');
-        this.emptyInk = loadImage("../assets/hud/inkEmpty.png");
+        this.fullInk = loadImage('assets/hud/inkFull.png');
+        this.emptyInk = loadImage("assets/hud/inkEmpty.png");
     }
 
     render() {
@@ -49,9 +49,9 @@ class Health extends HUDItem {
     constructor(x, y) { super(x, y); }
 
     preload(){
-        this.fullHeart = loadImage('../assets/hud/nonaHeartFull.png');
-        this.emptyHeart = loadImage("../assets/hud/nonaHeartEmpty.png");
-        this.fullTempHeart = loadImage("../assets/hud/nonaTempHeartFull.png");
+        this.fullHeart = loadImage('assets/hud/nonaHeartFull.png');
+        this.emptyHeart = loadImage("assets/hud/nonaHeartEmpty.png");
+        this.fullTempHeart = loadImage("assets/hud/nonaTempHeartFull.png");
     }
 
     render() {
@@ -84,7 +84,7 @@ class Coins extends HUDItem {
 
     constructor(x, y) { super(x, y); }
 
-    preload() { this.coin = loadImage('../assets/hud/bigCoin.png'); }
+    preload() { this.coin = loadImage('assets/hud/bigCoin.png'); }
 
     render() {
 
@@ -149,7 +149,7 @@ class BossBar extends HUDItem {
 
     constructor() { super(0, 0); }
 
-    preload() { this.bossIcon = loadImage('./assets/hud/bossIcon.png'); }
+    preload() { this.bossIcon = loadImage('assets/hud/bossIcon.png'); }
 
     render() {
         if (!this.boss) {
