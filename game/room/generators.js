@@ -1,8 +1,6 @@
-class RoomGenerator {
+// Room generator
 
-    generate() {}
-
-}
+class RoomGenerator { generate() {} }
 
 class BasicRoomGenerator extends RoomGenerator {
 
@@ -31,9 +29,7 @@ class BasicRoomGenerator extends RoomGenerator {
                         tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_SAND));
                     }
                 }
-
                 room.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
-
             }
         }
 
@@ -114,18 +110,13 @@ class BossRoomGenerator extends RoomGenerator {
                     // if (!(check(row, TileManager.ROWS - 1, column, 0, Room.UP)
                     tileType = random(tileManager.getTilesByType(TileManager.Types.BORDER_METAL));
                 }
-
                 room.tiles[column][row] = new Tile(tileType.index, tileType.properties.collide, row, column);
             }
         }
-
     }
-
 }
 
 class RoomGenerators {
-
     static BASIC = new BasicRoomGenerator();
-    static BOSS = new BossRoomGenerator();
-
+    static BOSS  = new BossRoomGenerator();
 }
