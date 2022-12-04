@@ -16,7 +16,7 @@ class Boss extends Enemy {
         this.tag = Boss.TAG;
         this.showBar = false;
         this.invincible = true;
-        this.phase = 3;
+        this.phase = 0;
     }
 
     findTarget() {
@@ -128,7 +128,7 @@ class Boss extends Enemy {
             if (this.movements % 3 == 0)  this.moveToTarget(5);
             else this.moveToTarget(1);
 
-            if(p5.Vector.sub(this.target, this.position).mag() < 5) {
+            if(p5.Vector.sub(this.target, this.position).mag() < 10) {
                 this.sprite.swapAnimation("bite", true, () => {
                     this.findTarget();
                     this.movements++;
@@ -225,7 +225,8 @@ class Boss extends Enemy {
 
         // angle math
         let angleToTarget = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
-        this.sprite.angle = (this.sprite.flipped ? -angleToTarget : angleToTarget + Math.PI);
+        //this.sprite.angle = (this.sprite.flipped ? -angleToTarget : angleToTarget + Math.PI);
+        this.sprite.angle = (this.sprite.flipped = -angleToTarget);
 
         // spawn projectile
         gameManager.queue(new LaserProjectile(this.position.x, this.position.y, angleToTarget, this.sprite.flipped));
