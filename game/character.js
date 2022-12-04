@@ -6,6 +6,8 @@
  */
 class Character extends GameObject {
 
+    static IDLING_THRESHOLD = 5;
+
     static INK_DEFAULT_VALUE = 4; // how many shots
     static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
 
@@ -40,9 +42,14 @@ class Character extends GameObject {
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
         this.coins = 0;
+        this.idling = 0;
 
         this.ink = Character.INK_DEFAULT_VALUE;
         setInterval(() => { if (this.ink < Character.INK_DEFAULT_VALUE) this.ink++ }, Character.INK_INCREASE_SECONDS);
+        setInterval(() => { 
+            if (this.idling <= Character.IDLING_THRESHOLD) this.idling++;
+            else this.sprite.swapAnimation("yawn", true, () => (this.idling = 0));
+        }, 1000);
     }
 
     render () {
@@ -80,6 +87,7 @@ class Character extends GameObject {
     
     // event stuff
     keyPressed(code, pressed) {
+        this.idling = 0;
         switch (code.toUpperCase()) {
             case 'W':
             case 'ARROWUP':
@@ -126,7 +134,7 @@ class Character extends GameObject {
 
     fire() {
         if (this.ink <= 0) return;
-        //this.ink--;
+        this.ink--;
 
         gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
     }
