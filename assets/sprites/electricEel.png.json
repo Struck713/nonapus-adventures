@@ -1,5 +1,5 @@
 {
-    "name": "electricEel.png",
+    "name": "electricEel",
     "width": 64,
     "height": 64,
     "animations": {
@@ -92,18 +92,6 @@
             },
             {
                 "x": 64,
-                "y": 256
-            },
-            {
-                "x": 128,
-                "y": 256
-            },
-            {
-                "x": 192,
-                "y": 256
-            },
-            {
-                "x": 256,
                 "y": 256
             }
         ]
