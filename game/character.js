@@ -98,7 +98,7 @@ class Character extends GameObject {
                 this.movementMatrix[3] = pressed;
                 break;
             case 'R':
-                this.tookDamage = true;
+                ++this.health;
                 break;
             default:
                 break;
