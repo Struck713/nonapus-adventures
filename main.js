@@ -39,7 +39,8 @@ function setup() {
   spriteManager.load(); // load sprites
   tileManager.load();
   roomManager.load(); //load rooms
-  
+  menuManager.load();
+
   character = new Character(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
   gameManager.queue(character); // add our character to the render queue
 

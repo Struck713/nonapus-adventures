@@ -45,9 +45,10 @@ class MenuButton extends MenuItem {
 
 class MenuText extends MenuItem {
 
-    constructor(x, y, text, size) {
+    constructor(x, y, text, font, size) {
         super(x, y);
         this.text = text;
+        this.font = font;
         this.size = size;
     }
 
@@ -55,6 +56,7 @@ class MenuText extends MenuItem {
         push();
         textAlign(CENTER, CENTER);
         textSize(this.size);
+        textFont(this.font);
         translate(this.x - (this.size / 2), this.y - (this.size / 2));
         text(this.text, this.size, this.size);
         pop();
