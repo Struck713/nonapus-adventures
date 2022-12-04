@@ -1,4 +1,4 @@
-/**
+/*
  * Character
  * 
  * This is the main character class, it contains character controller
@@ -16,7 +16,7 @@ class Character extends GameObject {
 
     static TAG = "CHARACTER";
 
-    constructor (x, y) {
+    constructor(x, y) {
 
         // set super tags
         super(x, y, spriteManager.get("Nona"));
@@ -53,8 +53,8 @@ class Character extends GameObject {
         this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
         
         // damage management
-        if(this.tookDamage) this.loseHealth();
-        if(this.damageCoolDown > 0) --this.damageCoolDown;
+        if (this.tookDamage) this.loseHealth();
+        if (this.damageCoolDown > 0) --this.damageCoolDown;
 
         // movement
         let movement = createVector(0, 0);
@@ -77,7 +77,6 @@ class Character extends GameObject {
         if (!(other instanceof Enemy)) return;
         this.loseHealth();
     }
-
     
     // event stuff
     keyPressed(code, pressed) {
@@ -99,7 +98,7 @@ class Character extends GameObject {
                 this.movementMatrix[3] = pressed;
                 break;
             case 'R':
-                this.tookDamage = true;
+                ++this.health;
                 break;
             default:
                 break;
@@ -143,12 +142,12 @@ class Character extends GameObject {
     }
 
     setSpeed(movement){
-        if(this.boostTime <= 0)
+        if (this.boostTime <= 0)
             this.isSpeedBoosted = false;
         else
             --this.boostTime;
         
-        if(this.isSpeedBoosted)
+        if (this.isSpeedBoosted)
             movement.setMag(this.speed * 2);  //boosted speed
         else
             movement.setMag(this.speed); // normal speed
@@ -162,7 +161,6 @@ class Character extends GameObject {
         } else --this.damageCoolDown;
         this.tookDamage = false;
     }
-
 }
 
 class InkProjectile extends Projectile {
@@ -186,5 +184,4 @@ class InkProjectile extends Projectile {
         angleVector.setMag(3.5); //speed
         this.position.add(angleVector);
     }
-    
 }

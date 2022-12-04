@@ -37,11 +37,11 @@ class Boss extends Enemy {
             if(p5.Vector.sub(this.target, this.position).mag() <= 1) this.phase++;
         }
 
+
         // dialog phase
         if (this.phase == 1) {
             if (!this.dialogPhase) this.dialogPhase = 0;
             if (!this.wait) this.wait = 0;
-
             if (this.dialogPhase == 0) this.displayDialog("Hello, Nona. I have been expecting you.", 200);
             if (this.dialogPhase == 1) this.displayDialog("I've actually been expecting you for a long... long... time.", 250);
             if (this.dialogPhase == 2) this.displayDialog("If you actually believe you can defeat the great...", 150);
@@ -54,7 +54,6 @@ class Boss extends Enemy {
             if (this.dialogPhase == 9) this.displayDialog("Be that way.", 100);
             if (this.dialogPhase == 10) this.displayDialog(" ", 200);
             if (this.dialogPhase == 11) this.displayDialog("Jerk.", 100);
-            
             this.wait++;
             if (this.wait >= this.transitionTime) {
                 if (this.dialogPhase < 11) {
@@ -72,7 +71,7 @@ class Boss extends Enemy {
                 delete this.dialogPhase;
                 delete this.transitionTime;
             }
-        }
+        }      
 
         // charge up phase
         if (this.phase == 2) {
@@ -126,12 +125,14 @@ class Boss extends Enemy {
                 return;
             }
 
-            if (this.movements % 3 == 0) this.moveToTarget(5);
+            if (this.movements % 3 == 0)  this.moveToTarget(5);
             else this.moveToTarget(1);
 
-            if(p5.Vector.sub(this.target, this.position).mag() < 5) {
-                this.findTarget();
-                this.movements++;
+            if(p5.Vector.sub(this.target, this.position).mag() < 10) {
+                this.sprite.swapAnimation("bite", true, () => {
+                    this.findTarget();
+                    this.movements++;
+                });
             }
         }
 
@@ -142,6 +143,7 @@ class Boss extends Enemy {
         
         // dialog phase 2
         if (this.phase == 5) {
+            this.sprite.swapAnimation("charging", false);
             console.log(this.phase);
             if (!this.dialogPhase) this.dialogPhase = 0;
             if (!this.wait) this.wait = 0;
@@ -223,7 +225,8 @@ class Boss extends Enemy {
 
         // angle math
         let angleToTarget = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
-        this.sprite.angle = (this.sprite.flipped ? -angleToTarget : angleToTarget + Math.PI);
+        //this.sprite.angle = (this.sprite.flipped ? -angleToTarget : angleToTarget + Math.PI);
+        this.sprite.angle = (this.sprite.flipped = -angleToTarget);
 
         // spawn projectile
         gameManager.queue(new LaserProjectile(this.position.x, this.position.y, angleToTarget, this.sprite.flipped));

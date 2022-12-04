@@ -17,9 +17,7 @@ class TileManager {
     static TILE_SIZE = 32;
     static TILE_SIZE_HALF = RoomManager.TILE_SIZE / 2;
 
-    constructor() {
-        this.tiles = [];
-    }
+    constructor() { this.tiles = []; }
 
     preload() {
         this.tilesetImage = loadImage('assets/levels/tileset.png'); //load tileset
@@ -39,10 +37,8 @@ class TileManager {
                 type: tileJSON.type
             };
             this.tiles.push(tile);
-
             index++;
         });
-
         delete this.tilesetImage;
         delete this.tilesetJSON;
     }
@@ -56,7 +52,6 @@ class TileManager {
         let tilesOfRarity = this.tiles.filter(tile => tile.properties.rarity >= rarity);
         return random(tilesOfRarity);
     }
-
 }
 
 class Tile {
