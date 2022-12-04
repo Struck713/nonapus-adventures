@@ -170,8 +170,10 @@ class Room {
         noiseSeed(random(0, 100));
         this.weight = floor(noise(this.x, this.y) * 100);
 
-        RoomGenerators.BASIC.generate(this);
-        //this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
+        RoomGenerators.BOSS.generate(this);
+        
+        // Boss battle comment out = off
+        this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
 
         // for (let i = 0; i < random(1, 5); ++i){
         //     let randPosition = this.randomPosition();
@@ -184,7 +186,7 @@ class Room {
         // }
 
         let randPosition = this.randomPosition();
-        this.spawn(new Urchin(randPosition.x, randPosition.y), false);
+        //this.spawn(new Urchin(randPosition.x, randPosition.y), false);
 
         // let scale = 150;
         // for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
