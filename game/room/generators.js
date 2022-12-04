@@ -1,6 +1,9 @@
 // Room generator
 
-class RoomGenerator { generate() {} }
+class RoomGenerator { 
+    generate(room) {}
+    spawn(room) {}
+}
 
 class BasicRoomGenerator extends RoomGenerator {
 
@@ -87,6 +90,61 @@ class BasicRoomGenerator extends RoomGenerator {
         }
     }
 
+    spawn(room) {
+
+        room.objects = [];
+
+        let weight = room.weight;
+        if (weight >= 10 && weight <= 25) {
+            this.multiply(room, Crab, Utils.randomInt(1, 10));
+        } else if (weight > 25 && weight <= 30) {
+            this.multiply(room, AnglerFish, Utils.randomInt(1, 3));
+            this.multiply(room, Clam, 4);
+        } else if (weight > 30 && weight <= 50) {
+            this.multiply(room, Clam, Utils.randomInt(0, 1));
+            this.multiply(room, Crab, Utils.randomInt(1, 2));
+            this.multiply(room, AnglerFish, Utils.randomInt(0, 1));
+            this.multiply(room, Pufferfish, Utils.randomInt(1, 3));
+            this.multiply(room, Shark, Utils.randomInt(1, 2));
+            this.multiply(room, Chest, Utils.randomInt(0, 2));
+            this.multiply(room, Coin, Utils.randomInt(0, 5));
+        } else if (weight > 50 && weight <= 65) {
+            this.multiply(room, Clam, 1);
+            this.multiply(room, Crab, Utils.randomInt(1, 3));
+            this.multiply(room, AnglerFish, Utils.randomInt(1, 3));
+            this.multiply(room, ElectricEel, Utils.randomInt(1, 3));
+            this.multiply(room, Chest, Utils.randomInt(1, 3));
+        } else if (weight > 65 && weight <= 75) {
+            this.multiply(room, Chest, Utils.randomInt(2, 5));
+        } else if (weight > 75 && weight <= 80) {
+            room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
+
+            let scale = 150;
+            for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
+                let adjustmentPosition = WaveUtils.CIRCLE_12[i];
+                room.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
+            }
+        } else if (weight > 80 && weight <= 90) {
+            this.multiply(room, Clam, 2);
+            room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
+            
+            let scale = 150;
+            for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
+                let adjustmentPosition = WaveUtils.CIRCLE_12[i];
+                room.spawn(new Coin((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
+            }
+        }
+
+        console.log(`${room.x}, ${room.y}: ${room.objects.length} objects`);
+    }
+
+    multiply(room, clazz, amount) {
+        for (let i = 0; i < amount; ++i) {
+            let rand = room.randomPosition();
+            room.spawn(new clazz(rand.x, rand.y), false);
+        }
+    }
+
 }
 
 class BossRoomGenerator extends RoomGenerator {
@@ -114,6 +172,11 @@ class BossRoomGenerator extends RoomGenerator {
             }
         }
     }
+
+    spawn(room) {
+        room.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
+    }
+
 }
 
 class RoomGenerators {

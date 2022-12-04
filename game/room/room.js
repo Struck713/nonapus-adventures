@@ -162,18 +162,20 @@ class Room {
         this.y = y;
         this.visited = false;
         this.walls = [ true, true, true, true ];
-        this.objects = [];
         this.tiles = [];
     }
 
     initialize() {
         noiseSeed(random(0, 100));
-        this.weight = floor(noise(this.x, this.y) * 100);
 
-        RoomGenerators.BOSS.generate(this);
+        this.objects = [];
+        this.weight = Utils.randomInt(0, 100);
+
+        RoomGenerators.BASIC.generate(this);
+        RoomGenerators.BASIC.spawn(this);
         
         // Boss battle comment out = off
-        this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
+        //this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
 
         // for (let i = 0; i < random(1, 5); ++i){
         //     let randPosition = this.randomPosition();
@@ -185,7 +187,7 @@ class Room {
         //     this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
         // }
 
-        let randPosition = this.randomPosition();
+        //let randPosition = this.randomPosition();
         //this.spawn(new Urchin(randPosition.x, randPosition.y), false);
 
         // let scale = 150;
@@ -237,7 +239,7 @@ class Room {
 
     // returns a random vector that is not within a tile
     randomPosition() {
-        let column = floor(random(1, TileManager.COLUMNS - 1));
+        let column = Utils.randomInt(1, TileManager.COLUMNS - 1);
         let rows = this.tiles[column];
         let nonCollideableRows = rows.filter(row => (row.collide == false));
         let tile = random(nonCollideableRows);

@@ -25,6 +25,10 @@ class Utils {
         return clone;
     }
 
+    static randomInt(min, max) {
+        return floor(random(min, max));
+    }
+
 }
 
 class WaveUtils {

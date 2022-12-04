@@ -55,6 +55,7 @@ function setup() {
 function draw(){
 
   if (menuManager.active) {
+    roomManager.render();
     menuManager.render();
     return;
   }
