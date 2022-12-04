@@ -50,10 +50,10 @@ class GameManager {
 
     drawHitbox(gameObject) {
         push();
-        translate(gameObject.position.x, gameObject.position.y);
-        rectMode(CENTER);
+        translate(gameObject.position.x - (gameObject.sprite.width / 2) + gameObject.sprite.min.x, gameObject.position.y - (gameObject.sprite.height / 2) + gameObject.sprite.min.y);
+        //rectMode(CENTER);
         noFill();
-        rect(0, 0, (gameObject.sprite.width / 2), (gameObject.sprite.height / 2))
+        rect(0, 0, gameObject.sprite.max.x, gameObject.sprite.max.y);
         pop();
     }
 
@@ -87,13 +87,20 @@ class GameObject {
     checkCollisions(other) {
         if (other === this) return;
 
-        let diff = p5.Vector.sub(this.position, other.position);
-        let diffDistance = diff.mag();
-
-        if (diffDistance <= (this.sprite.width / 2) && diffDistance <= (this.sprite.height / 2)) {
-            other.onCollision(this);
-            this.onCollision(other);
+        let axesToTest = [new p5.Vector(0, 1), new p5.Vector(1, 0)];
+        for (let i = 0; i < axesToTest.length; ++i) {
+            if (!this.checkAxis(other, axesToTest[i])) return false;
         }
+
+        other.onCollision(this);
+        this.onCollision(other);
+        // let diff = p5.Vector.sub(this.position, other.position);
+        // let diffDistance = diff.mag();
+
+        // if (diffDistance <= (this.sprite.width / 2) && diffDistance <= (this.sprite.height / 2)) {
+        //     other.onCollision(this);
+        //     this.onCollision(other);
+        // }
     }
 
     onCollision(other) {} // upon colliding
@@ -104,6 +111,36 @@ class GameObject {
         let y = this.position.y;
         return (x > 0 && y > 0 && x < GameManager.CANVAS_X && y < GameManager.CANVAS_Y);
     }
+
+    checkAxis(other, axis) {
+        let interval1 = this.getProjection(axis);
+        let interval2 = other.getProjection(axis);
+        return ((interval2.x <= interval1.y) && (interval1.x <= interval2.y));
+    }
+
+    getProjection(axis) {
+        let result = new p5.Vector(0, 0);
+        let corner = new p5.Vector(this.position.x - (this.sprite.width / 2), this.position.y - (this.sprite.height / 2));
+        let min = new p5.Vector(corner.x + this.sprite.min.x, corner.y + this.sprite.min.y);
+        let max = new p5.Vector(corner.x + this.sprite.max.x, corner.y + this.sprite.max.y);
+
+        let vertex = [
+            new p5.Vector(min.x, min.y), new p5.Vector(min.x, max.y),
+            new p5.Vector(max.x, min.y), new p5.Vector(max.x, max.y)
+        ];
+
+        result.x = axis.dot(vertex[0]);
+        result.y = result.x;
+
+        for (let i = 0; i < vertex.length; i++) {
+            let projection = axis.dot(vertex[i]);
+            if (projection < result.x) result.x = projection;
+            if (projection > result.y) result.y = projection;
+        }
+
+        return result;
+    }
+
 }
 
 class Projectile extends GameObject { constructor(x, y, sprite) { super(x, y, sprite) } }

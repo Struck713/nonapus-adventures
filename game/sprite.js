@@ -74,6 +74,12 @@ class Sprite {
         this.width = this.data.width;
         this.height = this.data.height;
 
+        this.min = { x: 0, y: 0 };
+        this.max = { x: this.width, y: this.height };
+
+        if (this.data.min) this.min = this.data.min;
+        if (this.data.max) this.max = this.data.max;
+
         let allAnimations = this.data.animations;
         let allAnimationNames = Object.keys(allAnimations);
 

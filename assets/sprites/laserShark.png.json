@@ -2,6 +2,8 @@
     "name": "laserShark",
     "width": 192,
     "height": 192,
+    "min": { "x": 20, "y": 45 },
+    "max": { "x": 150, "y": 110 },
     "animations": {
         "idle": [
             { "x": 0,    "y": 0 },

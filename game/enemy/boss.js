@@ -148,7 +148,7 @@ class Boss extends Enemy {
 
             if (this.dialogPhase == 0) this.displayDialog("OUCH.", 200);
             if (this.dialogPhase == 1) this.displayDialog("You think this is some kind of game?", 250);
-            if (this.dialogPhase == 2) this.displayDialog("Well.. it is a game.", 50);
+            if (this.dialogPhase == 2) this.displayDialog("Well.. it is a game.", 100);
             if (this.dialogPhase == 3) this.displayDialog("ANYWAYS...", 150);
             if (this.dialogPhase == 4) this.displayDialog("I am done playing around.", 150);
             

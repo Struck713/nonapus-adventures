@@ -38,14 +38,7 @@ function setup() {
 
   spriteManager.load(); // load sprites
   tileManager.load();
-
   roomManager.load(); //load rooms
-
-  // test some enemies
-  // gameManager.queue(new Shark(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  // gameManager.queue(new Urchin(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  // gameManager.queue(new Clam(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
-  // gameManager.queue(new Pufferfish(random(0, GameManager.CANVAS_X), random(0, GameManager.CANVAS_Y)));
   
   character = new Character(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
   gameManager.queue(character); // add our character to the render queue

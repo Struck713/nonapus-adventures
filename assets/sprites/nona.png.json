@@ -2,6 +2,8 @@
     "name": "Nona",
     "width": 64,
     "height": 64,
+    "min": { "x": 7, "y": 10 },
+    "max": { "x": 52, "y": 57 },
     "animations": {
         "idle": [
             { "x": 0,   "y": 0 },
