@@ -175,26 +175,25 @@ class Room {
         RoomGenerators.BASIC.spawn(this);
         
         // Boss battle comment out = off
-        //this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
+        this.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
 
-        // for (let i = 0; i < random(1, 5); ++i){
-        //     let randPosition = this.randomPosition();
-        //     this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
-        // }
+    //    for (let i = 0; i < random(1, 5); ++i){
+    //         let randPosition = this.randomPosition();
+    //         this.spawn(Enemy.random(randPosition.x, randPosition.y), false);
+    //    }
 
-        // for (let i = 0; i < random(1, 3); ++i){
-        //     let randPosition = this.randomPosition();
-        //     this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
-        // }
+    //    for (let i = 0; i < random(1, 3); ++i){
+    //         let randPosition = this.randomPosition();
+    //         this.spawn(Collectable.random(randPosition.x, randPosition.y), false);
+    //    }
 
-        //let randPosition = this.randomPosition();
+        let randPosition = this.randomPosition();
         //this.spawn(new Urchin(randPosition.x, randPosition.y), false);
 
-        // let scale = 150;
-        // for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
-        //     let adjustmentPosition = WaveUtils.CIRCLE_12[i];
-        //     this.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
-        // }
+    //    for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
+    //         let adjustmentPosition = WaveUtils.CIRCLE_12[i];
+    //         this.spawn(new Clam((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
+    //    }
         
     }
     
