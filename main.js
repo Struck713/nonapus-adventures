@@ -27,14 +27,14 @@ function preload() {
   tileManager.preload();
 
   //loadSound('assets/sound/background.mp3', e => e.play());
-  titleFont = loadFont('assets/fonts/Confarreatio.otf'); // load font
-  otherFont = loadFont('assets/fonts/franxurter.ttf');
+  fontConfa = loadFont('assets/fonts/Confarreatio.otf'); // load font
+  fontFranx = loadFont('assets/fonts/franxurter.ttf');
 }
 
 let character;
 function setup() {
 
-  textFont(otherFont); // set font
+  textFont(fontFranx); // set font
 
   spriteManager.load(); // load sprites
   tileManager.load();
