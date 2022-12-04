@@ -90,6 +90,7 @@ class Coin extends Collectable {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
+        if (this.spawnAnimation <= Coin.COIN_DROP_SCALAR) return;
         other.coins++;
         this.destroy();
     }
@@ -109,9 +110,18 @@ class Chest extends Collectable {
     }
 
     dropLoot() {
-        for (let amount = 0; amount < random(0, 3); amount++) {
+        let amount = random(0, 5);
+        if (amount <= 0) {
+            for (let x = 0; x < 10; x++) {
+                let rand = roomManager.room.randomPosition();
+                roomManager.room.spawn(new Urchin(rand.x, rand.y, true));
+            }
+            return;
+        }
+
+        for (let x = 0; x < amount; x++) {
             let coin = new Coin(this.position.x, this.position.y);
-            coin.position.x += (amount * coin.sprite.width);
+            coin.position.x += (x * coin.sprite.width);
             roomManager.room.spawn(coin);
         }
     }

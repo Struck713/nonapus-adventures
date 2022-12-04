@@ -16,7 +16,7 @@ class GameManager {
 
     render() {
         // render
-        this.gameObjects.forEach(gameObject => {
+        this.gameObjects.slice().reverse().forEach(gameObject => {
             
             // check collisions
             if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other));
@@ -30,8 +30,13 @@ class GameManager {
     }
 
     queue(gameObject)   { this.gameObjects.push(gameObject); }
-
     dequeue(gameObject) { Utils.remove(this.gameObjects, gameObject); } 
+    
+    reset() { 
+        this.gameObjects = [];
+        character = new Character(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+        this.queue(character);
+    }
 
     getByClass(clazz)   { return this.gameObjects.filter(gameObject => gameObject instanceof clazz);}
 

@@ -41,8 +41,7 @@ function setup() {
   roomManager.load(); //load rooms
   menuManager.load();
 
-  character = new Character(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
-  gameManager.queue(character); // add our character to the render queue
+  gameManager.reset(); // add our character to the render queue
 
   let canvas = createCanvas(GameManager.CANVAS_X, GameManager.CANVAS_Y);
   canvas.style('cursor', 'url(\'assets/hud/crosshair.png\'), none');
