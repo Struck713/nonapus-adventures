@@ -268,7 +268,7 @@ class AnglerFish extends Enemy {
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
-        movement.setMag(1.5); //speed
+        movement.setMag(2.25); //speed
         this.position.add(movement);
     }
 
