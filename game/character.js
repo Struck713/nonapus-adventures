@@ -82,7 +82,9 @@ class Character extends GameObject {
 
     onCollision(other) {
         if (!(other instanceof Enemy)) return;
+
         this.loseHealth();
+
     }
     
     // event stuff
@@ -143,10 +145,10 @@ class Character extends GameObject {
         if ((this.ink - 2) < 0) return;
         this.ink -= 2;
 
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 18)));
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 36)));
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 36)));
-        gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 18)));
+        gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 18)));
+        gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 36)));
+        gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 36)));
+        gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 18)));
     }
 
     setSpeed(movement){
@@ -166,6 +168,8 @@ class Character extends GameObject {
             if (this.health < 0) menuManager.set("End");
             --this.health;
             this.damageCoolDown = 120;
+            this.sprite.swapAnimation("iframes", true, () => (this.idling = 0));
+
         } else --this.damageCoolDown;
         this.tookDamage = false;
     }
@@ -189,7 +193,29 @@ class InkProjectile extends Projectile {
         this.sprite.show(this.position.x, this.position.y);
 
         let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));
-        angleVector.setMag(3.5); //speed
+        angleVector.setMag(4); //speed
+        this.position.add(angleVector);
+    }
+}
+class ShotgunProjectile extends Projectile {
+
+    constructor (x, y, direction) {
+        super(x, y, spriteManager.get("InkProjectile"));
+        super.collider = true;
+        this.direction = direction;
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Enemy)) return;
+        this.destroy();
+    }
+
+    render() {
+        this.sprite.angle = this.direction;
+        this.sprite.show(this.position.x, this.position.y);
+
+        let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));
+        angleVector.setMag(2.5); //speed
         this.position.add(angleVector);
     }
 }

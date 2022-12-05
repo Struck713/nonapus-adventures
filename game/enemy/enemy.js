@@ -43,6 +43,11 @@
             if (this.dead) this.destroy();
             --this.health;
             this.displayHealth = true;
+        } else 
+        if (other instanceof ShotgunProjectile) {
+            if (this.dead) this.destroy();
+            --this.health;
+            this.displayHealth = true;
         }
     }
 
