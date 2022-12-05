@@ -231,7 +231,7 @@ class Room {
 
     // returns a random vector that is not within a tile
     randomPosition() {
-        let column = Utils.randomInt(1, TileManager.COLUMNS - 1);
+        let column = Utils.randomInt(5, TileManager.COLUMNS - 5);
         let rows = this.tiles[column];
         let nonCollideableRows = rows.filter(row => (row.collide == false));
         let tile = random(nonCollideableRows);
