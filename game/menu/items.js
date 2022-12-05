@@ -51,6 +51,7 @@ class MenuText extends MenuItem {
         this.text = text;
         this.font = font;
         this.size = size;
+        
     }
 
     render() {
@@ -59,7 +60,7 @@ class MenuText extends MenuItem {
         textSize(this.size);
         textFont(this.font);
         translate(this.x - (this.size / 2), this.y - (this.size / 2));
-        fill(0);
+        if (this.font == fontConfa) fill(214,79,104); else fill(0);
         text(this.text, this.size, this.size);
         pop();
     }

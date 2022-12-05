@@ -53,14 +53,14 @@ class MainMenu extends Menu {
 class EndMenu extends Menu {
     constructor() {
         super("End", [ 
-            new MenuText((GameManager.CANVAS_X / 2)-53, (GameManager.CANVAS_Y / 2) - 140, "You Died.", fontFranx, 100),
+            new MenuText((GameManager.CANVAS_X / 2)-53, (GameManager.CANVAS_Y / 2) - 140, "You Died :(", fontFranx, 100),
             new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2), 150, 50, "Return to Main Menu", () => {
                 roomManager.reset();
                 gameManager.reset();
                 
                 menuManager.set("Main");
             }),
-            new MenuText(43, GameManager.CANVAS_Y, `Your score was ${100} coins.`, 15)
+            new MenuText(43, GameManager.CANVAS_Y, `Your score was ${100} coins.`, fontFranx, 15)
         ]);
     }
 }
