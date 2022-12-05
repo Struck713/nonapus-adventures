@@ -62,15 +62,4 @@ class Tile {
         this.row = row;
         this.column = column;
     }
-
-    // checkCollisionX(x) {
-    //     let distanceX = abs(this.center.x - x) - 8;
-    //     return !(distanceX < LevelManager.TILE_SIZE && this.collide);
-    // }
-
-    // checkCollisionY(y) {
-    //     let distanceY = abs(this.center.y - y) - 8;
-    //     return !(distanceY < LevelManager.TILE_SIZE && this.collide);
-    // }
-
 }
