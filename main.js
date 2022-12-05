@@ -6,9 +6,6 @@ const roomManager = new RoomManager();
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
 
-let titleFont;
-let otherFont;
-
 function preload() {
   spriteManager.preload([ 
     "nona.png", 
