@@ -22,7 +22,6 @@ class GameManager {
 
     render() {
         // render
-        
         this.gameObjects.sort((a, b) => (a.priority - b.priority)).forEach(gameObject => {
             
             if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other)); // check collisions
@@ -32,7 +31,6 @@ class GameManager {
             if (GameManager.DEBUG) this.drawHitbox(gameObject);
             gameObject.render();
         });
-        console.log(this.gameObjects);
     }
 
     queue(gameObject)   { this.gameObjects.push(gameObject); }
