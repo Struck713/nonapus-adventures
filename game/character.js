@@ -83,9 +83,7 @@ class Character extends GameObject {
 
     onCollision(other) {
         if (!(other instanceof Enemy)) return;
-
         this.loseHealth();
-
     }
     
     // event stuff
@@ -140,6 +138,7 @@ class Character extends GameObject {
         this.ink--;
 
         gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
+        soundManager.play("shoot");
     }
 
     fireBurst() {
@@ -150,6 +149,7 @@ class Character extends GameObject {
         gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 36)));
         gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 36)));
         gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle + (Math.PI / 18)));
+        soundManager.play("shoot");
     }
 
     setSpeed(movement){

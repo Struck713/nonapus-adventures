@@ -5,6 +5,7 @@ const tileManager = new TileManager();
 const roomManager = new RoomManager();
 const hudManager = new HUDManager();
 const spriteManager = new SpriteManager();
+const soundManager = new SoundManager();
 
 function preload() {
   spriteManager.preload([ 
@@ -20,6 +21,7 @@ function preload() {
 
     "inkProjectile.png", "boltProjectile.png", "laserProjectile.png"
   ]);
+  soundManager.preload([ "shoot" ]);
   hudManager.preload();
   tileManager.preload();
 
