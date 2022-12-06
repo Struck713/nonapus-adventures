@@ -12,7 +12,7 @@
     static HEALTH_BAR_HEIGHT = 5;
 
     static random(x, y) {
-        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab, AnglerFish, ElectricEel ];
+        let enemies = [ Pufferfish, Shark, Urchin, Clam, Crab, AnglerFish, ElectricEel, Mimic ];
         let enemy = random(enemies);
         return new enemy(x, y);
     }
@@ -220,6 +220,52 @@ class Clam extends Enemy {
     }
 
 }
+
+
+class Mimic extends Enemy {
+
+
+    constructor (x, y) { 
+        super(x, y, 18, spriteManager.get("Mimic"));
+        this.targetting = false;
+    }
+
+    onCollision(other) {
+        if (!this.targetting) return;
+        super.onCollision(other);
+    }
+
+    render () {
+        super.render();
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+    
+
+        if (!this.targetting) {
+            if (this.cooldownTime >= 0) {
+                this.cooldownTime--;
+                return;
+            }
+
+            this.findTarget();
+            let targetVector = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+            if (targetVector.mag() <= 100) {
+                this.sprite.swapAnimation("attack", false);
+                this.targetting = true;
+            }
+            return;
+        }
+
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
+
+        movement.setMag(2.25); //speed
+        this.position.add(movement);
+        
+    }
+}
+
 
 class Crab extends Enemy {
 
