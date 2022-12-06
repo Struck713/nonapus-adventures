@@ -119,7 +119,7 @@ class BasicRoomGenerator extends RoomGenerator {
             this.multiply(room, Chest, Utils.randomInt(1, 3));
         } else if (weight > 65 && weight <= 75) {
             this.multiply(room, Chest, Utils.randomInt(3, 5));
-            this.multiply(room, Mimic, Utils.randomInt(1, 2));
+            this.multiply(room, Mimic, Utils.randomInt(0, 2));
             
         } else if (weight > 75 && weight <= 80) {
             room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
