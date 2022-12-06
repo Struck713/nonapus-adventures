@@ -19,6 +19,7 @@
 
     constructor (x, y, health, sprite) {
         super(x, y, sprite);
+        super.priority = GameManager.Priority.HIGH;
         this.maxHealth = health;
         this.health = this.maxHealth;
         this.displayHealth = false;

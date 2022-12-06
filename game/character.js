@@ -23,6 +23,7 @@ class Character extends GameObject {
         // set super tags
         super(x, y, spriteManager.get("Nona"));
         super.collider = true;
+        super.priority = GameManager.Priority.HIGH;
 
         // set game object tags
         this.tag = Character.TAG;

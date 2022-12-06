@@ -8,6 +8,12 @@
  */
 class GameManager {
 
+    static Priority = {
+        LOW: 1,
+        MEDIUM: 2,
+        HIGH: 3
+    }
+
     static DEBUG = false;
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
@@ -16,17 +22,17 @@ class GameManager {
 
     render() {
         // render
-        this.gameObjects.slice().reverse().forEach(gameObject => {
+        
+        this.gameObjects.sort((a, b) => (a.priority - b.priority)).forEach(gameObject => {
             
-            // check collisions
-            if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other));
-            // check if still on screen (object cleanup)
-            if (!gameObject.isRenderable()) gameObject.destroy();
+            if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other)); // check collisions
+            if (!gameObject.isRenderable()) gameObject.destroy(); // check if still on screen (object cleanup)
 
             // draw hitboxes
             if (GameManager.DEBUG) this.drawHitbox(gameObject);
             gameObject.render();
         });
+        console.log(this.gameObjects);
     }
 
     queue(gameObject)   { this.gameObjects.push(gameObject); }
@@ -77,6 +83,7 @@ class GameObject {
     constructor (x, y, sprite) {
         this.position = new p5.Vector(x, y);
         this.collider = false;
+        this.priority = GameManager.Priority.LOW;
 
         this.sprite = sprite;
         if (!this.sprite.loaded) this.sprite.load();
@@ -141,4 +148,11 @@ class GameObject {
 
 }
 
-class Projectile extends GameObject { constructor(x, y, sprite) { super(x, y, sprite) } }
+class Projectile extends GameObject { 
+    
+    constructor(x, y, sprite) { 
+        super(x, y, sprite)
+        super.priority = GameManager.Priority.HIGH;
+    }
+    
+}

@@ -41,7 +41,13 @@ class Menu {
 class MainMenu extends Menu {
     constructor() {
         super("Main", [ 
-            new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2), 150, 50, "Play", () => menuManager.start()),
+            new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2), 150, 50, "Play", () => {
+                // let room = roomManager.room;
+                // room.destroy();
+                // room.build();
+
+                menuManager.start()
+            }),
             new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2) + 60, 150, 50, "How To Play",
             () => alert("If you can't figure out how to play our game, we don't want you playing it. Slay.")),
             new MenuText((GameManager.CANVAS_X / 2)-46, (GameManager.CANVAS_Y / 2) - 140, "Nonapus Adventures!", fontConfa, 92),

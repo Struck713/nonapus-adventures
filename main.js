@@ -16,7 +16,7 @@ function preload() {
 
     "coin.png", "chest.png",
 
-    "laserShark.png", 
+    "laserShark.png", "delozierMouth.png",
 
     "inkProjectile.png", "boltProjectile.png", "laserProjectile.png"
   ]);

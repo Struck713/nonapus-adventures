@@ -8,6 +8,7 @@ class Collectable extends GameObject {
 
     constructor (x, y, sprite) {
         super(x, y, sprite);
+        super.priority = GameManager.Priority.LOW;
         this.index = 0;
         this.frames = 0;
         this.dead = false;

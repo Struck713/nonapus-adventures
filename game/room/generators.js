@@ -179,7 +179,7 @@ class BossRoomGenerator extends RoomGenerator {
     }
 
     spawn(room) {
-        room.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), false);
+        room.spawn(new Boss(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2), true);
     }
 
 }

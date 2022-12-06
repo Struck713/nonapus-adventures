@@ -1,5 +1,7 @@
 class Boss extends Enemy {
 
+    static DELOZIER = false;
+
     static HEALTH_BAR_WIDTH = 500;
     static HEALTH_BAR_HEIGHT = 30;
     static HEALTH_BAR_OFFSET = 15;
@@ -11,7 +13,7 @@ class Boss extends Enemy {
     static TAG = "LASER_SHARK_BOSS"
 
     constructor(x, y) {
-        super(x, y, 50, spriteManager.get("laserShark"));
+        super(x, y, 50, Boss.DELOZIER ? spriteManager.get("Delozier") : spriteManager.get("laserShark"));
         super.collider = true;
         this.tag = Boss.TAG;
         this.showBar = false;
@@ -144,7 +146,6 @@ class Boss extends Enemy {
         // dialog phase 2
         if (this.phase == 5) {
             this.sprite.swapAnimation("charging", false);
-            console.log(this.phase);
             if (!this.dialogPhase) this.dialogPhase = 0;
             if (!this.wait) this.wait = 0;
 
