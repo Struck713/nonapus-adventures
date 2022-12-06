@@ -91,7 +91,7 @@ class Coin extends Collectable {
     onCollision(other) {
         if (!(other instanceof Character)) return;
         if (this.spawnAnimation <= Coin.COIN_DROP_SCALAR) return;
-        other.coins++;
+        ++other.coins;
         this.destroy();
     }
 

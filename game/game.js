@@ -99,13 +99,6 @@ class GameObject {
 
         other.onCollision(this);
         this.onCollision(other);
-        // let diff = p5.Vector.sub(this.position, other.position);
-        // let diffDistance = diff.mag();
-
-        // if (diffDistance <= (this.sprite.width / 2) && diffDistance <= (this.sprite.height / 2)) {
-        //     other.onCollision(this);
-        //     this.onCollision(other);
-        // }
     }
 
     onCollision(other) {} // upon colliding

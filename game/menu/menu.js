@@ -44,7 +44,7 @@ class MainMenu extends Menu {
             new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2), 150, 50, "Play", () => menuManager.start()),
             new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2) + 60, 150, 50, "How To Play",
             () => alert("If you can't figure out how to play our game, we don't want you playing it. Slay.")),
-            new MenuText((GameManager.CANVAS_X / 2)-32, (GameManager.CANVAS_Y / 2) - 140, "Nonapus Adventures!", fontConfa, 80),
+            new MenuText((GameManager.CANVAS_X / 2)-46, (GameManager.CANVAS_Y / 2) - 140, "Nonapus Adventures!", fontConfa, 92),
             new MenuText(43, GameManager.CANVAS_Y - 17, "© 8+1 Man Carry", fontFranx, 15)
         ]);
     }
@@ -54,13 +54,13 @@ class EndMenu extends Menu {
     constructor() {
         super("End", [ 
             new MenuText((GameManager.CANVAS_X / 2)-53, (GameManager.CANVAS_Y / 2) - 140, "You Died :(", fontFranx, 100),
-            new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2), 150, 50, "Return to Main Menu", () => {
+            new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2)+50, 150, 50, "Return to Main Menu", () => {
                 roomManager.reset();
                 gameManager.reset();
                 
                 menuManager.set("Main");
             }),
-            new MenuText(43, GameManager.CANVAS_Y, `Your score was ${100} coins.`, fontFranx, 15)
+            new MenuText((GameManager.CANVAS_X/2)-20, (GameManager.CANVAS_Y/2)-30, `You earned ${100} coins!`, fontFranx, 30)
         ]);
     }
 }
