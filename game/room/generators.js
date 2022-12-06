@@ -90,9 +90,11 @@ class BasicRoomGenerator extends RoomGenerator {
         }
     }
 
+
     spawn(room) {
 
         room.objects = [];
+        let mimicChance = random(0, 9);
 
         let weight = room.weight;
         if (weight >= 10 && weight <= 25) {
@@ -109,20 +111,36 @@ class BasicRoomGenerator extends RoomGenerator {
             this.multiply(room, AnglerFish, Utils.randomInt(0, 1));
             this.multiply(room, Pufferfish, Utils.randomInt(1, 3));
             this.multiply(room, Shark, Utils.randomInt(2, 4));
-            this.multiply(room, Chest, Utils.randomInt(0, 2));
             this.multiply(room, Coin, Utils.randomInt(0, 5));
+
+            if(mimicChance < 1) {
+                this.multiply(room, Chest, 1);
+                this.multiply(room, Mimic, 1);
+            } else 
+                this.multiply(room, Chest, Utils.randomInt(0, 2));
+
         } else if (weight > 50 && weight <= 65) {
             this.multiply(room, Clam, 3);
             this.multiply(room, Crab, Utils.randomInt(1, 3));
             this.multiply(room, AnglerFish, Utils.randomInt(2, 5));
             this.multiply(room, ElectricEel, Utils.randomInt(2, 4));
-            this.multiply(room, Chest, Utils.randomInt(1, 3));
+
+            if(mimicChance < 1) {
+                this.multiply(room, Chest, Utils.randomInt(1, 2));
+                this.multiply(room, Mimic, 1);
+            } else 
+                this.multiply(room, Chest, Utils.randomInt(0, 3));
+
+
         } else if (weight > 65 && weight <= 75) {
             this.multiply(room, Chest, Utils.randomInt(3, 5));
             this.multiply(room, Mimic, Utils.randomInt(0, 2));
-            
+
         } else if (weight > 75 && weight <= 80) {
-            room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
+            if(mimicChance < 1) {
+                room.spawn(new Mimic(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
+            } else 
+                room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
 
             let scale = 150;
             for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {
@@ -131,7 +149,11 @@ class BasicRoomGenerator extends RoomGenerator {
             }
         } else if (weight > 80 && weight <= 90) {
             this.multiply(room, Clam, 2);
-            room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
+    
+            if(mimicChance < 1) {
+                room.spawn(new Mimic(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
+            } else 
+                room.spawn(new Chest(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2), false);
             
             let scale = 150;
             for (let i = 0; i < WaveUtils.CIRCLE_12.length; ++i) {

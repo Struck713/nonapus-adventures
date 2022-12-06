@@ -258,7 +258,7 @@ class Mimic extends Enemy {
         }
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
+        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.findTarget();
 
         movement.setMag(2.25); //speed
         this.position.add(movement);
@@ -317,7 +317,7 @@ class AnglerFish extends Enemy {
         this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
+        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.findTarget();
 
         movement.setMag(2.25); //speed
         this.position.add(movement);
