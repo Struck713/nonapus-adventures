@@ -161,8 +161,6 @@ class BasicRoomGenerator extends RoomGenerator {
                 room.spawn(new Coin((GameManager.CANVAS_X / 2) + (scale * adjustmentPosition.x), (GameManager.CANVAS_Y / 2) + (scale * adjustmentPosition.y)), false);
             }
         }
-
-        console.log(`${room.x}, ${room.y}: ${room.objects.length} objects`);
     }
 
     multiply(room, clazz, amount) {
