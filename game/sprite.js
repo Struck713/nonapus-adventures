@@ -10,9 +10,7 @@
  */
 class SpriteManager {
 
-    constructor() {
-        this.sprites = [];
-    }
+    constructor() { this.sprites = []; }
 
     get(spriteName) {
 

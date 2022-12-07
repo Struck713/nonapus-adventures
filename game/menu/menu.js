@@ -1,8 +1,6 @@
 class MenuManager {
 
-    constructor () {
-        this.active = true;
-    }
+    constructor () { this.active = true; }
 
     load() {
         this.menus = [ new MainMenu(), new EndMenu() ];

@@ -10,7 +10,7 @@ class Boss extends Enemy {
     static DIALOG_BOX_HEIGHT = 75;
     static DIALOG_BOX_OFFSET = 15;
 
-    static TAG = "LASER_SHARK_BOSS"
+    static TAG = "LASER_SHARK_BOSS";
 
     constructor(x, y) {
         super(x, y, 50, Boss.DELOZIER ? spriteManager.get("Delozier") : spriteManager.get("laserShark"));
@@ -36,7 +36,7 @@ class Boss extends Enemy {
         // roll out phase
         if (this.phase == 0) {
             this.moveToTarget(1);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 1) this.phase++;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
         }
 
 
@@ -56,15 +56,16 @@ class Boss extends Enemy {
             if (this.dialogPhase == 9) this.displayDialog("Be that way.", 100);
             if (this.dialogPhase == 10) this.displayDialog(" ", 200);
             if (this.dialogPhase == 11) this.displayDialog("Jerk.", 100);
-            this.wait++;
+
+            ++this.wait;
             if (this.wait >= this.transitionTime) {
                 if (this.dialogPhase < 11) {
-                    this.dialogPhase++;
+                    ++this.dialogPhase;
                     this.wait = 0;
                     return;
                 }
 
-                this.phase++;
+                ++this.phase;
                 this.showBar = true;
                 this.health = 0;
                 this.invincible = false;
@@ -78,7 +79,7 @@ class Boss extends Enemy {
         // charge up phase
         if (this.phase == 2) {
             if (!this.wait) this.wait = 0;
-            this.wait++;
+            ++this.wait;
 
             this.sprite.swapAnimation("charging", false);
 
@@ -86,10 +87,10 @@ class Boss extends Enemy {
                 if (this.health >= this.maxHealth) {
                     this.sprite.callback = () => {
                         this.sprite.swapAnimation("idle", false);
-                        this.phase++;
+                        ++this.phase;
                         delete this.wait;
                     }
-                } else this.health++;
+                } else ++this.health;
             }
         }
 
@@ -123,7 +124,6 @@ class Boss extends Enemy {
                     this.sprite.angle = 0;
                     delete this.wait;
                 }
-
                 return;
             }
 
@@ -140,7 +140,7 @@ class Boss extends Enemy {
 
         if (this.phase == 4) {
             this.moveToTarget(1);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 1) this.phase++;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
         }
         
         // dialog phase 2
@@ -158,12 +158,12 @@ class Boss extends Enemy {
             this.wait++;
             if (this.wait >= this.transitionTime) {
                 if (this.dialogPhase < 4) {
-                    this.dialogPhase++;
+                    ++this.dialogPhase;
                     this.wait = 0;
                     return;
                 }
 
-                this.phase++;
+                ++this.phase;
                 this.invincible = false;
 
                 delete this.wait;
@@ -172,9 +172,7 @@ class Boss extends Enemy {
             }
         }
 
-        if (this.phase == 6) {
-            return;
-        }
+        if (this.phase == 6) { return; }
 
         // testing
         // if (this.phase == 3) {
@@ -232,7 +230,6 @@ class Boss extends Enemy {
         // spawn projectile
         gameManager.queue(new LaserProjectile(this.position.x, this.position.y, angleToTarget, this.sprite.flipped));
     }
-
 }
 
 class LaserProjectile extends Projectile {
@@ -263,5 +260,4 @@ class LaserProjectile extends Projectile {
         angleVector.setMag(5); //speed
         this.position.add(angleVector);
     }
-    
 }
