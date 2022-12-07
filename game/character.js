@@ -145,7 +145,7 @@ class Character extends GameObject {
     }
 
     fireBurst() {
-        if ((this.ink - 2) < 0) return;
+        if (this.ink < 2) return;
         this.ink -= 2;
 
         gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 18)));
