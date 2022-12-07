@@ -54,11 +54,13 @@ class Character extends GameObject {
     }
 
     render () {
-        // sprite animation and display
-        this.sprite.cycleAnimation();
+        this.sprite.cycleAnimation(); // sprite animation and display
 
         this.sprite.show(this.position.x, this.position.y); // show on screen
-        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8, this.mousePosition.x - this.position.x + 8) - (PI/2); // we add 16 to center the nona and cursor and subtract PI/2  
+        
+        // we add 16 to center the nona and cursor and subtract PI/2 
+        this.sprite.angle = atan2(this.mousePosition.y - this.position.y + 8,
+                                  this.mousePosition.x - this.position.x + 8) - (PI/2);  
         
         // damage management
         if (this.tookDamage) this.loseHealth();
@@ -84,6 +86,7 @@ class Character extends GameObject {
     onCollision(other) {
         if (!(other instanceof Enemy)) return;
         this.loseHealth();
+    /*  soundManager.play("ouch"); (for when there is sound for Nona taking damage) */
     }
     
     // event stuff
@@ -135,7 +138,7 @@ class Character extends GameObject {
 
     fire() {
         if (this.ink <= 0) return;
-        this.ink--;
+        --this.ink;
 
         gameManager.queue(new InkProjectile(this.position.x, this.position.y, this.sprite.angle));
         soundManager.play("shoot");
@@ -143,7 +146,7 @@ class Character extends GameObject {
 
     fireBurst() {
         if ((this.ink - 2) < 0) return;
-        this.ink -= 3;
+        this.ink -= 2;
 
         gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 18)));
         gameManager.queue(new ShotgunProjectile(this.position.x, this.position.y, this.sprite.angle - (Math.PI / 36)));
@@ -153,15 +156,11 @@ class Character extends GameObject {
     }
 
     setSpeed(movement){
-        if (this.boostTime <= 0)
-            this.isSpeedBoosted = false;
-        else
-            --this.boostTime;
+        if (this.boostTime <= 0) this.isSpeedBoosted = false;
+        else                     --this.boostTime;
         
-        if (this.isSpeedBoosted)
-            movement.setMag(this.speed * 2);  //boosted speed
-        else
-            movement.setMag(this.speed); // normal speed
+        if (this.isSpeedBoosted) movement.setMag(this.speed * 2); //boosted speed
+        else                     movement.setMag(this.speed);     // normal speed
     }
 
     loseHealth() {

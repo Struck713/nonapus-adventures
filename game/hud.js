@@ -125,7 +125,7 @@ class Minimap extends HUDItem {
         this.map.noFill();
         this.map.circle(this.scale / 2, this.scale / 2, 10 * this.scale);
 
-        this.map.fill(0, 255, 0);
+        this.map.fill(250, 115, 253);
         this.map.square(0, 0, this.scale);
         this.map.fill(0);
 
@@ -138,7 +138,7 @@ class Minimap extends HUDItem {
     drawCell(cell, direction, x, y) {
         if (cell.walls[direction]) return;
 
-        if (roomManager.getRelative(cell, direction).visited) this.map.fill(255, 0, 0);
+        if (roomManager.getRelative(cell, direction).visited) this.map.fill(72, 188, 253);
         this.map.square(x, y, this.scale);
         this.map.fill(0);
     }
