@@ -234,11 +234,6 @@ class Mimic extends Enemy {
     onCollision(other) {
         if (!this.targetting) return;
         super.onCollision(other);
-
-
-
-
-
     }
 
     dropLoot() {
@@ -263,22 +258,6 @@ class Mimic extends Enemy {
             roomManager.room.spawn(object);
 
         }
-
-        // for (let x = 0; x <= coinAmount; x++) {
-        //     let coin = new Coin(this.position.x, this.position.y);
-        //     coin.position.x += (sin(x * coinAmount) * coin.sprite.width);
-        //     roomManager.room.spawn(coin);
-        // }
-        // for(let x = 0; x < healthAmount; x++) {
-        //     let healthBoost = new HealthBoost(this.position.x, this.position.y);
-        //     healthBoost.position.x += (x * healthBoost.sprite.width - x * 16);
-        //     roomManager.room.spawn(healthBoost);
-        // }
-        // for(let x = 0; x < speedAmount; x++) {
-        //     let speedBoost = new SpeedBoost(this.position.x, this.position.y);
-        //     speedBoost.position.x -= (x * speedBoost.sprite.width + x * 16);
-        //     roomManager.room.spawn(speedBoost);
-        // }
     }
 
     render () {
@@ -304,11 +283,17 @@ class Mimic extends Enemy {
         }
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.findTarget();
+        if(abs(this.target.x - this.position.x) < 2.3 && abs(this.target.y - this.position.y) < 2.3) this.findTarget();
+        this.sprite.flipped = this.target.x - this.position.x >= 0;
 
-        movement.setMag(2.25); //speed
+
+        movement.setMag(2.3); //speed
         this.position.add(movement);
         
+    }
+    findTarget() {
+        super.findTarget();
+        //this.sprite.flipped = this.target.x - this.position.x >= 0;
     }
 }
 
