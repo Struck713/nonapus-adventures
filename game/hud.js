@@ -133,31 +133,33 @@ class Minimap extends HUDItem {
         this.map.fill(0);
 
         this.needDrawn = [];
-        this.drawCell(room, Room.UP, 0, -10);
-        this.drawCell(room, Room.LEFT, 10, 0);
-        this.drawCell(room, Room.DOWN, 0, 10);
-        this.drawCell(room, Room.RIGHT, -10, 0);
+        this.drawCell(room, Room.UP, 0, -10, 1);
+        this.drawCell(room, Room.LEFT, 10, 0, 1);
+        this.drawCell(room, Room.DOWN, 0, 10, 1);
+        this.drawCell(room, Room.RIGHT, -10, 0, 1);
 
         //console.log(this.needDrawn);
         this.needDrawn.forEach(room => {
             if (room.visited) this.map.fill(72, 188, 253);
             else this.map.fill(0);
-            this.map.square(room.x, room.y, this.scale);
+            this.map.square(room.offsetX, room.offsetY, this.scale);
         });
     }
 
-    drawCell(room, direction, x, y, adjustment = 1) {
+    drawCell(room, direction, x, y, adjustment) {
         if (room.walls[direction]) return;
-        if (this.needDrawn.some(room => (room.x == x && room.y == y))) return;
-        if (adjustment >= 3) return;
-
+        if (adjustment > 4) return;
+        
         let offsetRoom = roomManager.getRelative(room, direction);
-        this.needDrawn.push({ x: x * adjustment, y: y * adjustment, visited: offsetRoom.visited });
+        this.needDrawn.push({ offsetX: x, offsetY: y, visited: offsetRoom.visited });
 
-        // this.drawCell(room, Room.UP, 0, -10, adjustment + 1);
-        // this.drawCell(room, Room.LEFT, 10, 0, adjustment + 1);
-        // this.drawCell(room, Room.DOWN, 0, 10, adjustment + 1);
-        // this.drawCell(room, Room.RIGHT, -10, 0, adjustment + 1);
+        adjustment += 1;
+
+        if (!offsetRoom.visited) return;
+        if (direction != Room.DOWN) this.drawCell(offsetRoom, Room.UP, x, y - 10, adjustment);
+        if (direction != Room.RIGHT) this.drawCell(offsetRoom, Room.LEFT, x + 10, y, adjustment);
+        if (direction != Room.UP) this.drawCell(offsetRoom, Room.DOWN, x, y + 10, adjustment);
+        if (direction != Room.LEFT) this.drawCell(offsetRoom, Room.RIGHT, x - 10, y, adjustment);
     }
 
 }
