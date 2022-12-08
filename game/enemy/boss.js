@@ -1,6 +1,6 @@
 class Boss extends Enemy {
 
-    static DELOZIER = false;
+    static DELOZIER = true;
 
     static HEALTH_BAR_WIDTH = 500;
     static HEALTH_BAR_HEIGHT = 30;
@@ -154,25 +154,37 @@ class Boss extends Enemy {
             if (this.dialogPhase == 2) this.displayDialog("Well.. it is a game.", 100);
             if (this.dialogPhase == 3) this.displayDialog("ANYWAYS...", 150);
             if (this.dialogPhase == 4) this.displayDialog("I am done playing around.", 150);
+            if (this.dialogPhase == 5) this.displayDialog("Let's see how you deal with this!", 150);
             
             this.wait++;
             if (this.wait >= this.transitionTime) {
-                if (this.dialogPhase < 4) {
+                if (this.dialogPhase < 5) {
                     ++this.dialogPhase;
                     this.wait = 0;
                     return;
                 }
 
                 ++this.phase;
-                this.invincible = false;
 
                 delete this.wait;
                 delete this.dialogPhase;
                 delete this.transitionTime;
+                delete this.target;
             }
         }
 
-        if (this.phase == 6) { return; }
+        if (this.phase == 6) { 
+            if (!this.target) this.target = createVector(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2);
+            this.moveToTarget(2);
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
+            return; 
+        }
+
+        if (this.phase == 7) {
+            let rand = roomManager.room.randomPosition();
+            roomManager.room.spawn(new RemoraFish(rand.x, rand.y));
+            return; 
+        }
 
         // testing
         // if (this.phase == 3) {
@@ -260,4 +272,32 @@ class LaserProjectile extends Projectile {
         angleVector.setMag(5); //speed
         this.position.add(angleVector);
     }
+}
+
+class RemoraFish extends Enemy {
+
+    constructor (x, y) { super(x, y, 0, spriteManager.get("remoraFish")); }
+
+    findTarget() {
+        super.findTarget();
+        this.angle = atan2(this.target.y - this.position.y, this.target.x - this.position.x);
+    }
+
+    render () {
+        super.render();
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.angle = this.angle + (3 * Math.PI / 2);
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        if (!this.target) this.findTarget();
+
+        let movement = p5.Vector.fromAngle(this.angle);
+        if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
+
+        movement.setMag(1.15); //speed
+
+        this.position.add(movement);
+    }
+
 }

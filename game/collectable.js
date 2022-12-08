@@ -51,6 +51,8 @@ class SpeedBoost extends Collectable {
     static useSpeedItem(other){
         other.isSpeedBoosted = true;
         other.boostTime = 500;
+        soundManager.play(`upgrade_${Utils.randomInt(1, 2)}`);
+        this.destroy();
     }
 }
 
@@ -70,6 +72,8 @@ class HealthBoost extends Collectable {
         other.isHealthBoosted = true;
         other.health += Character.HEALTH_BOOST_VALUE;
         if (other.health > 6) other.health = 6;
+        soundManager.play(`upgrade_${Utils.randomInt(1, 2)}`);
+        this.destroy();
     }
 }
 
@@ -110,6 +114,7 @@ class Chest extends Collectable {
 
     constructor(x, y) {
         super(x, y, spriteManager.get("Chest"));
+        this.priority = GameManager.Priority.LOW;
         this.opened = false;
     }
 
@@ -119,32 +124,29 @@ class Chest extends Collectable {
     }
 
     dropLoot() {
-        let amount = random(0, 5);
-        let coinAmount = random(0, 5);
-        let healthAmount = Utils.randomInt(0, 2);
-        let speedAmount = Utils.randomInt(0, 2);
-        if (amount <= 0) {
-            for (let x = 0; x < 10; x++) {
-                let rand = roomManager.room.randomPosition();
-                roomManager.room.spawn(new Urchin(rand.x, rand.y, true));
-            }
-            return;
-        }
 
-        for (let x = 0; x <= coinAmount; x++) {
-            let coin = new Coin(this.position.x, this.position.y);
-            coin.position.x += (x * coin.sprite.width);
-            roomManager.room.spawn(coin);
-        }
-        if(healthAmount == 1) {
-            let healthBoost = new HealthBoost(this.position.x, this.position.y);
-            healthBoost.position.x += (healthBoost.sprite.width);
-            roomManager.room.spawn(healthBoost);
-        }
-        if(speedAmount == 1) {
-            let speedBoost = new SpeedBoost(this.position.x, this.position.y);
-            speedBoost.position.x += (speedBoost.sprite.width + 32);
-            roomManager.room.spawn(speedBoost);
+        soundManager.play("chest_open");
+
+        let coinAmount = random(0, 5);
+        let healthAmount = Utils.randomInt(0, 5);
+        let speedAmount = Utils.randomInt(0, 2);
+
+        let scale = 100;
+        let allAmount = coinAmount + healthAmount + speedAmount;
+        let circle = WaveUtils.pointsAlongCircle(allAmount);
+
+        for (let x = 0; x < allAmount; x++) {
+            let healthAdjustment = x - coinAmount;
+            let speedAdjustment = healthAdjustment - healthAmount;
+
+            let object = new Coin(0, 0);
+            if (healthAdjustment > 0 && healthAdjustment <= healthAmount) object = new HealthBoost(0, 0);
+            else if (speedAdjustment > 0 && speedAdjustment <= speedAmount) object = new SpeedBoost(0, 0);
+
+            let adjustmentPosition = circle[x];
+            object.position = new p5.Vector(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
+            roomManager.room.spawn(object);
+
         }
     }
 

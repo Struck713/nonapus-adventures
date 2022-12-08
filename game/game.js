@@ -18,11 +18,21 @@ class GameManager {
     static CANVAS_X = 960;
     static CANVAS_Y = 736;
 
-    constructor() { this.gameObjects = []; }
+    constructor() { 
+        this.gameObjects = []; 
+        this.changed = false;
+    }
 
     render() {
         // render
-        this.gameObjects.sort((a, b) => (a.priority - b.priority)).forEach(gameObject => {
+
+        if (this.changed) {
+            let sorted = this.gameObjects.sort((a, b) => (a.priority - b.priority));
+            this.gameObjects = sorted;
+            this.changed = false;
+        }
+
+        this.gameObjects.forEach(gameObject => {
             
             if (gameObject.collider) this.gameObjects.forEach(other => gameObject.checkCollisions(other)); // check collisions
             if (!gameObject.isRenderable()) gameObject.destroy(); // check if still on screen (object cleanup)
@@ -33,8 +43,15 @@ class GameManager {
         });
     }
 
-    queue(gameObject)   { this.gameObjects.push(gameObject); }
-    dequeue(gameObject) { Utils.remove(this.gameObjects, gameObject); } 
+    queue(gameObject)   { 
+        this.gameObjects.push(gameObject);
+        this.changed = true;
+    }
+
+    dequeue(gameObject) { 
+        Utils.remove(this.gameObjects, gameObject); 
+        this.changed = true;
+    } 
     
     reset() { 
         this.gameObjects = [];
