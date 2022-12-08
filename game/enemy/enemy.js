@@ -234,6 +234,33 @@ class Mimic extends Enemy {
     onCollision(other) {
         if (!this.targetting) return;
         super.onCollision(other);
+
+
+
+
+
+    }
+
+    dropLoot() {
+        let coinAmount = random(15, 20);
+        let healthAmount = Utils.randomInt(4, 6);
+        let speedAmount = Utils.randomInt(2, 3);
+
+        for (let x = 0; x <= coinAmount; x++) {
+            let coin = new Coin(this.position.x, this.position.y);
+            coin.position.x += (x * coin.sprite.width);
+            roomManager.room.spawn(coin);
+        }
+        for(let x = 0; x < healthAmount; x++) {
+            let healthBoost = new HealthBoost(this.position.x, this.position.y);
+            healthBoost.position.x += (x * healthBoost.sprite.width);
+            roomManager.room.spawn(healthBoost);
+        }
+        for(let x = 0; x < speedAmount; x++) {
+            let speedBoost = new SpeedBoost(this.position.x, this.position.y);
+            speedBoost.position.x += (x * speedBoost.sprite.width + 32);
+            roomManager.room.spawn(speedBoost);
+        }
     }
 
     render () {
