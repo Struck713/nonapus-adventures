@@ -104,6 +104,7 @@ class Chest extends Collectable {
 
     constructor(x, y) {
         super(x, y, spriteManager.get("Chest"));
+        this.priority = GameManager.Priority.LOW;
         this.opened = false;
     }
 

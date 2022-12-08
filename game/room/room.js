@@ -198,7 +198,7 @@ class Room {
         this.weight = Utils.randomInt(0, 100);
 
         RoomGenerators.BASIC.generate(this);
-        RoomGenerators.BASIC.spawn(this);
+        //RoomGenerators.BASIC.spawn(this);
         
     }
     

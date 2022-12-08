@@ -102,7 +102,9 @@ class Coins extends HUDItem {
 
 class Minimap extends HUDItem {
 
-    constructor(x, y) { super(x, y) }
+    constructor(x, y) { 
+        super(x, y);
+    }
 
     render() {
 
@@ -119,6 +121,7 @@ class Minimap extends HUDItem {
 
         let room = roomManager.room;
         if (room == this.oldRoom) return; // dont draw!
+
         this.oldRoom = room;
 
         this.map.clear();
@@ -129,18 +132,32 @@ class Minimap extends HUDItem {
         this.map.square(0, 0, this.scale);
         this.map.fill(0);
 
+        this.needDrawn = [];
         this.drawCell(room, Room.UP, 0, -10);
         this.drawCell(room, Room.LEFT, 10, 0);
         this.drawCell(room, Room.DOWN, 0, 10);
         this.drawCell(room, Room.RIGHT, -10, 0);
+
+        //console.log(this.needDrawn);
+        this.needDrawn.forEach(room => {
+            if (room.visited) this.map.fill(72, 188, 253);
+            else this.map.fill(0);
+            this.map.square(room.x, room.y, this.scale);
+        });
     }
 
-    drawCell(cell, direction, x, y) {
-        if (cell.walls[direction]) return;
+    drawCell(room, direction, x, y, adjustment = 1) {
+        if (room.walls[direction]) return;
+        if (this.needDrawn.some(room => (room.x == x && room.y == y))) return;
+        if (adjustment >= 3) return;
 
-        if (roomManager.getRelative(cell, direction).visited) this.map.fill(72, 188, 253);
-        this.map.square(x, y, this.scale);
-        this.map.fill(0);
+        let offsetRoom = roomManager.getRelative(room, direction);
+        this.needDrawn.push({ x: x * adjustment, y: y * adjustment, visited: offsetRoom.visited });
+
+        // this.drawCell(room, Room.UP, 0, -10, adjustment + 1);
+        // this.drawCell(room, Room.LEFT, 10, 0, adjustment + 1);
+        // this.drawCell(room, Room.DOWN, 0, 10, adjustment + 1);
+        // this.drawCell(room, Room.RIGHT, -10, 0, adjustment + 1);
     }
 
 }
