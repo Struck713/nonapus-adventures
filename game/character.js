@@ -116,25 +116,19 @@ class Character extends GameObject {
             case 'R':
                 ++this.health;
                 break;
-            case 'Q':
-                if(this.healthItems > 0 && !this.healthPressed){
+            case 'Q': // this eventually becomes case 'R'
+                if (this.healthItems > 0 && !this.healthPressed) {
                     --this.healthItems;
                     HealthBoost.useHealthItem(this);
                     this.healthPressed = true;
-                }
-                else{
-                    this.healthPressed = false;
-                }
+                } else this.healthPressed = false;
                 break;
             case 'F':
-                if(this.speedItems > 0 && !this.speedPressed){
+                if (this.speedItems > 0 && !this.speedPressed) {
                     --this.speedItems;
                     SpeedBoost.useSpeedItem(this);
                     this.speedPressed = true;
-                }
-                else{
-                    this.speedPressed = false;
-                }
+                } else this.speedPressed = false;
                 break;
             default:
                 break;

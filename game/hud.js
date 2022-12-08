@@ -3,11 +3,11 @@ class HUDManager {
     constructor() {
         this.hudItems = [
             new Minimap(GameManager.CANVAS_X - 80, 10),
-            new Ink(15, 10),
-            new Health(15, 45),
-            new Coins(15, 80),
-            new HealthItem(50, 80),
-            new SpeedItem(85, 80),
+            new Ink(4, 40),
+            new Health(6, 9),
+            new Coins(5, 80),
+            new HealthItem(39, 80),
+            new SpeedItem(75, 80),
             new BossBar()
         ];
     }
