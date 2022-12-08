@@ -1,5 +1,6 @@
 class RoomManager {
 
+    static BOSS = false;
     static ROWS = 5;
     static COLUMNS = 5;
 
@@ -109,7 +110,18 @@ class RoomManager {
             insideRooms.forEach(room => (room.visited = false));
         })
     }
-        
+    
+    bossMode() {
+        this.room = new Room(0, 0);
+
+        this.room.objects = [];
+        RoomGenerators.BOSS.generate(this.room);
+        RoomGenerators.BOSS.spawn(this.room);
+
+        this.room.build();
+        character.position = new p5.Vector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+    }
+
     getNeighbors(room) {
         let neighbors = [];
         

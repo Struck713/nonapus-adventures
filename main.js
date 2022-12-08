@@ -13,7 +13,7 @@ function preload() {
 
     "shark.png", "urchin.png", "clam.png", "pufferfish.png",
     "crab.png", "speedBoost.png", "healthPotion.png", "anglerFish.png", 
-    "electricEel.png", "mimic.png",
+    "electricEel.png", "mimic.png", "remoraFish.png",
 
     "coin.png", "chest.png",
 
@@ -21,7 +21,7 @@ function preload() {
 
     "inkProjectile.png", "boltProjectile.png", "laserProjectile.png"
   ]);
-  soundManager.preload([ "shoot" ]);
+  soundManager.preload([ "shoot", "chest_open", "upgrade_1", "upgrade_2" ]);
   hudManager.preload();
   tileManager.preload();
 
