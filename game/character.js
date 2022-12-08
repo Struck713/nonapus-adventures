@@ -189,7 +189,7 @@ class Character extends GameObject {
 
     loseHealth() {
         if(this.damageCoolDown <= 0) {
-            if (this.health <= 0) menuManager.set("End");
+            if (this.health <= 1) menuManager.set("End");
             --this.health;
             this.damageCoolDown = 120;
             this.sprite.swapAnimation("iframes", true, () => (this.idling = 0));
