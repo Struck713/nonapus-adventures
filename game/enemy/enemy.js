@@ -246,21 +246,37 @@ class Mimic extends Enemy {
         let healthAmount = Utils.randomInt(4, 6);
         let speedAmount = Utils.randomInt(2, 3);
 
-        for (let x = 0; x <= coinAmount; x++) {
-            let coin = new Coin(this.position.x, this.position.y);
-            coin.position.x += (x * coin.sprite.width);
-            roomManager.room.spawn(coin);
-        }
-        for(let x = 0; x < healthAmount; x++) {
-            let healthBoost = new HealthBoost(this.position.x, this.position.y);
-            healthBoost.position.x += (x * healthBoost.sprite.width);
-            roomManager.room.spawn(healthBoost);
-        }
-        for(let x = 0; x < speedAmount; x++) {
-            let speedBoost = new SpeedBoost(this.position.x, this.position.y);
-            speedBoost.position.x += (x * speedBoost.sprite.width + 32);
-            roomManager.room.spawn(speedBoost);
-        }
+        let allAmount = coinAmount + healthAmount + speedAmount;
+        let circle = WaveUtils.pointsAlongCircle(allAmount);
+
+//        for (let x = 0; x < allAmount; x++) {
+//            let healthAdjustment = x - coinAmount;
+//          let speedAdjustment = healthAdjustment - healthAmount;
+//
+//            let clazz = Coin;
+//            if (healthAdjustment > 0 && healthAdjustment < healthAmount) clazz = HealthBoost;
+//            else if (speedAdjustment > 0 && speedAdjustment < speedAmount) clazz = SpeedBoost;
+//            let adjustmentPosition = circle[x];
+//            let object = new clazz(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
+//          roomManager.room.spawn(object);
+//
+//        }
+
+         for (let x = 0; x <= coinAmount; x++) {
+             let coin = new Coin(this.position.x, this.position.y);
+             coin.position.x += (sin(x * coinAmount) * coin.sprite.width);
+             roomManager.room.spawn(coin);
+         }
+         for(let x = 0; x < healthAmount; x++) {
+             let healthBoost = new HealthBoost(this.position.x, this.position.y);
+             healthBoost.position.x += (x * healthBoost.sprite.width - x * 16);
+             roomManager.room.spawn(healthBoost);
+         }
+         for(let x = 0; x < speedAmount; x++) {
+             let speedBoost = new SpeedBoost(this.position.x, this.position.y);
+             speedBoost.position.x -= (x * speedBoost.sprite.width + x * 16);
+             roomManager.room.spawn(speedBoost);
+         }
     }
 
     render () {

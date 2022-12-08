@@ -113,7 +113,7 @@ class BasicRoomGenerator extends RoomGenerator {
             this.multiply(room, Shark, Utils.randomInt(2, 4));
             this.multiply(room, Coin, Utils.randomInt(0, 5));
 
-            if(mimicChance < 1) {
+            if(mimicChance > 1) {
                 this.multiply(room, Chest, 1);
                 this.multiply(room, Mimic, 1);
             } else 
@@ -125,7 +125,7 @@ class BasicRoomGenerator extends RoomGenerator {
             this.multiply(room, AnglerFish, Utils.randomInt(2, 5));
             this.multiply(room, ElectricEel, Utils.randomInt(2, 4));
 
-            if(mimicChance < 1) {
+            if(mimicChance > 1) {
                 this.multiply(room, Chest, Utils.randomInt(1, 2));
                 this.multiply(room, Mimic, 1);
             } else 
