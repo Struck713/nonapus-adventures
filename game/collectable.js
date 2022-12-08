@@ -115,8 +115,6 @@ class Chest extends Collectable {
         let coinAmount = random(0, 5);
         let healthAmount = Utils.randomInt(0, 2);
         let speedAmount = Utils.randomInt(0, 2);
-        console.log(healthAmount);
-        console.log(speedAmount);
         if (amount <= 0) {
             for (let x = 0; x < 10; x++) {
                 let rand = roomManager.room.randomPosition();
