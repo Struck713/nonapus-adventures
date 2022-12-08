@@ -43,6 +43,10 @@ class Character extends GameObject {
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
         this.coins = 0;
+        this.healthItems = 0;
+        this.speedItems = 0;
+        this.healthPressed = false;
+        this.speedPressed = false;
         this.idling = 0;
 
         this.ink = Character.INK_DEFAULT_VALUE;
@@ -111,6 +115,26 @@ class Character extends GameObject {
                 break;
             case 'R':
                 ++this.health;
+                break;
+            case 'Q':
+                if(this.healthItems > 0 && !this.healthPressed){
+                    --this.healthItems;
+                    HealthBoost.useHealthItem(this);
+                    this.healthPressed = true;
+                }
+                else{
+                    this.healthPressed = false;
+                }
+                break;
+            case 'F':
+                if(this.speedItems > 0 && !this.speedPressed){
+                    --this.speedItems;
+                    SpeedBoost.useSpeedItem(this);
+                    this.speedPressed = true;
+                }
+                else{
+                    this.speedPressed = false;
+                }
                 break;
             default:
                 break;

@@ -44,9 +44,13 @@ class SpeedBoost extends Collectable {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
+        ++other.speedItems;
+        this.destroy();
+    }
+
+    static useSpeedItem(other){
         other.isSpeedBoosted = true;
         other.boostTime = 500;
-        this.destroy();
     }
 }
 
@@ -58,10 +62,14 @@ class HealthBoost extends Collectable {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
+        ++other.healthItems;
+        this.destroy();
+    }
+
+    static useHealthItem(other){
         other.isHealthBoosted = true;
         other.health += Character.HEALTH_BOOST_VALUE;
         if (other.health > 6) other.health = 6;
-        this.destroy();
     }
 }
 

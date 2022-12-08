@@ -6,6 +6,8 @@ class HUDManager {
             new Ink(15, 10),
             new Health(15, 45),
             new Coins(15, 80),
+            new HealthItem(50, 80),
+            new SpeedItem(85, 80),
             new BossBar()
         ];
     }
@@ -96,6 +98,46 @@ class Coins extends HUDItem {
         fill(0);
         image(this.coin, this.x, this.y);
         text(this.character.coins, this.x + 16, this.y + 15);
+    }
+
+}
+
+class HealthItem extends HUDItem {
+
+    constructor(x, y) { super(x, y); }
+
+    preload() { this.healthItem = loadImage('assets/hud/healthPotion.png'); }
+
+    render() {
+
+        if (!this.character) this.character = gameManager.getByTag(Character.TAG);
+
+        // fix later
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(0);
+        image(this.healthItem, this.x, this.y);
+        text(this.character.healthItems, this.x + 16, this.y + 15);
+    }
+
+}
+
+class SpeedItem extends HUDItem {
+
+    constructor(x, y) { super(x, y); }
+
+    preload() { this.speedItem = loadImage('assets/hud/speedBoost.png'); }
+
+    render() {
+
+        if (!this.character) this.character = gameManager.getByTag(Character.TAG);
+
+        // fix later
+        textAlign(CENTER, CENTER);
+        textSize(16);
+        fill(0);
+        image(this.speedItem, this.x, this.y);
+        text(this.character.speedItems, this.x + 16, this.y + 15);
     }
 
 }
