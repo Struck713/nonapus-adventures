@@ -234,11 +234,6 @@ class Mimic extends Enemy {
     onCollision(other) {
         if (!this.targetting) return;
         super.onCollision(other);
-
-
-
-
-
     }
 
     dropLoot() {
@@ -288,11 +283,17 @@ class Mimic extends Enemy {
         }
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.findTarget();
+        if(abs(this.target.x - this.position.x) < 2.3 && abs(this.target.y - this.position.y) < 2.3) this.findTarget();
+        this.sprite.flipped = this.target.x - this.position.x >= 0;
 
-        movement.setMag(2.25); //speed
+
+        movement.setMag(2.3); //speed
         this.position.add(movement);
         
+    }
+    findTarget() {
+        super.findTarget();
+        //this.sprite.flipped = this.target.x - this.position.x >= 0;
     }
 }
 
