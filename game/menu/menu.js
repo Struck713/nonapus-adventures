@@ -26,7 +26,7 @@ class MenuManager {
     set = (name) => { this.current = this.get(name); this.end(); }
     get = (name) => this.menus.find(menu => menu.name == name);
 
-    start =() => this.active = false;
+    start = () => this.active = false;
     end = () => this.active = true;
 }
 
