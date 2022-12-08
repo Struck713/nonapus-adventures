@@ -69,8 +69,8 @@ class HealthBoost extends Collectable {
 
     static useHealthItem(other){
         other.isHealthBoosted = true;
-        other.health += Character.HEALTH_BOOST_VALUE;
-        if (other.health > 6) other.health = 6;
+        if (other.health + Character.HEALTH_BOOST_VALUE > 6) other.health = 6;
+        else other.health += Character.HEALTH_BOOST_VALUE;
         soundManager.play(`upgrade_${Utils.randomInt(1, 2)}`);
     }
 }
