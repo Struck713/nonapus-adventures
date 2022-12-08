@@ -112,6 +112,11 @@ class Chest extends Collectable {
 
     dropLoot() {
         let amount = random(0, 5);
+        let coinAmount = random(0, 5);
+        let healthAmount = Utils.randomInt(0, 2);
+        let speedAmount = Utils.randomInt(0, 2);
+        console.log(healthAmount);
+        console.log(speedAmount);
         if (amount <= 0) {
             for (let x = 0; x < 10; x++) {
                 let rand = roomManager.room.randomPosition();
@@ -120,10 +125,20 @@ class Chest extends Collectable {
             return;
         }
 
-        for (let x = 0; x < amount; x++) {
+        for (let x = 0; x <= coinAmount; x++) {
             let coin = new Coin(this.position.x, this.position.y);
             coin.position.x += (x * coin.sprite.width);
             roomManager.room.spawn(coin);
+        }
+        if(healthAmount == 1) {
+            let healthBoost = new HealthBoost(this.position.x, this.position.y);
+            healthBoost.position.x += (healthBoost.sprite.width);
+            roomManager.room.spawn(healthBoost);
+        }
+        if(speedAmount == 1) {
+            let speedBoost = new SpeedBoost(this.position.x, this.position.y);
+            speedBoost.position.x += (speedBoost.sprite.width + 32);
+            roomManager.room.spawn(speedBoost);
         }
     }
 
