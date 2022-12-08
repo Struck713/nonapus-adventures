@@ -1,8 +1,6 @@
 class SoundManager {
 
-    constructor() {
-        this.sounds = [];
-    }
+    constructor() { this.sounds = []; }
 
     preload(sounds) {
         sounds.forEach(name => {
@@ -11,26 +9,15 @@ class SoundManager {
             this.sounds.push(sound);
         });
     }
-
+    
     play(name) {
         let sound = this.sounds.find(sound => sound.name == name);
         sound.play();
     }
-
 }
 
 class Sound {
-
-    constructor(name) {
-        this.name = name;
-    }
-
-    preload() {
-        this.data = loadSound(`assets/sound/${this.name}.mp3`);
-    }
-
-    play() {
-        this.data.play();
-    }
-
+    constructor(name) { this.name = name; }
+    preload    ()     { this.data = loadSound(`assets/sound/${this.name}.mp3`); }
+    play       ()     { this.data.play(); }
 }
