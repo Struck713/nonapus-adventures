@@ -52,7 +52,6 @@ class SpeedBoost extends Collectable {
         other.isSpeedBoosted = true;
         other.boostTime = 500;
         soundManager.play(`upgrade_${Utils.randomInt(1, 2)}`);
-        this.destroy();
     }
 }
 
@@ -73,7 +72,6 @@ class HealthBoost extends Collectable {
         other.health += Character.HEALTH_BOOST_VALUE;
         if (other.health > 6) other.health = 6;
         soundManager.play(`upgrade_${Utils.randomInt(1, 2)}`);
-        this.destroy();
     }
 }
 
