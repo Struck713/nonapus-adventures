@@ -84,7 +84,7 @@ class Character extends GameObject {
     }
 
     onCollision(other) {
-        if (!(other instanceof Enemy)) return;
+        if (!(other instanceof Enemy) && !(other instanceof BoltProjectile)) return;
         this.loseHealth();
     /*  soundManager.play("ouch"); (for when there is sound for Nona taking damage) */
     }
