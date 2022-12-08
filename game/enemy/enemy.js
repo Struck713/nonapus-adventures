@@ -263,22 +263,6 @@ class Mimic extends Enemy {
             roomManager.room.spawn(object);
 
         }
-
-        // for (let x = 0; x <= coinAmount; x++) {
-        //     let coin = new Coin(this.position.x, this.position.y);
-        //     coin.position.x += (sin(x * coinAmount) * coin.sprite.width);
-        //     roomManager.room.spawn(coin);
-        // }
-        // for(let x = 0; x < healthAmount; x++) {
-        //     let healthBoost = new HealthBoost(this.position.x, this.position.y);
-        //     healthBoost.position.x += (x * healthBoost.sprite.width - x * 16);
-        //     roomManager.room.spawn(healthBoost);
-        // }
-        // for(let x = 0; x < speedAmount; x++) {
-        //     let speedBoost = new SpeedBoost(this.position.x, this.position.y);
-        //     speedBoost.position.x -= (x * speedBoost.sprite.width + x * 16);
-        //     roomManager.room.spawn(speedBoost);
-        // }
     }
 
     render () {
