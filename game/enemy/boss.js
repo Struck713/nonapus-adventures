@@ -10,6 +10,8 @@ class Boss extends Enemy {
     static DIALOG_BOX_HEIGHT = 75;
     static DIALOG_BOX_OFFSET = 15;
 
+    static REMORA_COUNT = 10;
+
     static TAG = "LASER_SHARK_BOSS";
 
     constructor(x, y) {
@@ -64,7 +66,6 @@ class Boss extends Enemy {
                     this.wait = 0;
                     return;
                 }
-
                 ++this.phase;
                 this.showBar = true;
                 this.health = 0;
@@ -151,14 +152,13 @@ class Boss extends Enemy {
 
             if (this.dialogPhase == 0) this.displayDialog("OUCH.", 200);
             if (this.dialogPhase == 1) this.displayDialog("You think this is some kind of game?", 250);
-            if (this.dialogPhase == 2) this.displayDialog("Well.. it is a game.", 100);
-            if (this.dialogPhase == 3) this.displayDialog("ANYWAYS...", 150);
-            if (this.dialogPhase == 4) this.displayDialog("I am done playing around.", 150);
-            if (this.dialogPhase == 5) this.displayDialog("Let's see how you deal with this!", 150);
+            if (this.dialogPhase == 2) this.displayDialog("ANYWAYS...", 150);
+            if (this.dialogPhase == 3) this.displayDialog("I am done playing around.", 150);
+            if (this.dialogPhase == 4) this.displayDialog("Let's see how you deal with this!", 150);
             
             this.wait++;
             if (this.wait >= this.transitionTime) {
-                if (this.dialogPhase < 5) {
+                if (this.dialogPhase < 4) {
                     ++this.dialogPhase;
                     this.wait = 0;
                     return;
@@ -181,8 +181,21 @@ class Boss extends Enemy {
         }
 
         if (this.phase == 7) {
-            let rand = roomManager.room.randomPosition();
-            roomManager.room.spawn(new RemoraFish(rand.x, rand.y));
+            if(!this.wait) this.wait = 0;
+            for(let i = 0; i < 4; i++){
+                if(i == 1 || 3) {
+                    for(let j = 0; j < Boss.REMORA_COUNT; j++) {
+                        roomManager.room.spawn(new RemoraFish(Utils.randomInt(32, 160), Utils.randomInt(j * 30, 300)));
+                    }
+                }
+                if(i == 2|| 4) {
+                    for(let j = 0; j < Boss.REMORA_COUNT; j++) {
+                        roomManager.room.spawn(new RemoraFish(Utils.randomInt(j * 30, 300), Utils.randomInt(32, 480)));
+                    }
+                }
+            }
+            delete this.wait;
+            ++this.phase;
             return; 
         }
 
@@ -202,7 +215,7 @@ class Boss extends Enemy {
 
     onCollision(other) {
         if (this.invincible) return;
-        if (other instanceof InkProjectile) --this.health;
+        if (other instanceof InkProjectile || other instanceof ShotgunProjectile) --this.health;
         console.log(this.sprite.width);
         console.log(this.sprite.height);
     }
@@ -269,7 +282,7 @@ class LaserProjectile extends Projectile {
         pop();
 
         let angleVector = p5.Vector.fromAngle(this.direction);
-        angleVector.setMag(5); //speed
+        angleVector.setMag(10); //speed
         this.position.add(angleVector);
     }
 }
@@ -295,9 +308,12 @@ class RemoraFish extends Enemy {
         let movement = p5.Vector.fromAngle(this.angle);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
-        movement.setMag(1.15); //speed
+        movement.setMag(5); //speed
 
         this.position.add(movement);
+    }
+    dropLoot() {
+        return;
     }
 
 }

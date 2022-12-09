@@ -126,6 +126,19 @@ class Shark extends Enemy {
         this.position.add(movement);
     }
 
+    dropLoot(){
+        if(Utils.randomInt(1, 3) % 2 == 0) {
+            let speedPotion = new SpeedBoost(this.position.x, this.position.y);
+            roomManager.room.spawn(speedPotion);
+        } else {
+            for (let amount = 0; amount < random(0, 2); amount++) {
+                let coin = new Coin(this.position.x, this.position.y);
+                coin.position.x += (amount * coin.sprite.width);
+                roomManager.room.spawn(coin);
+            }
+        }
+    }
+
 }
 
 class Urchin extends Enemy {
@@ -220,6 +233,19 @@ class Clam extends Enemy {
         }
     }
 
+    dropLoot(){
+        if(Utils.randomInt(1, 3) % 2 == 0) {
+            let healthPotion = new HealthBoost(this.position.x, this.position.y);
+            roomManager.room.spawn(healthPotion);
+        } else {
+            for (let amount = 0; amount < random(0, 2); amount++) {
+                let coin = new Coin(this.position.x, this.position.y);
+                coin.position.x += (amount * coin.sprite.width);
+                roomManager.room.spawn(coin);
+            }
+        }
+    }
+
 }
 
 
@@ -238,8 +264,8 @@ class Mimic extends Enemy {
 
     dropLoot() {
         let coinAmount = random(15, 20);
-        let healthAmount = Utils.randomInt(0, 1);
-        let inkAmount = Utils.randomInt(0, 1);
+        let healthAmount = Utils.randomInt(0, 2);
+        let inkAmount = Utils.randomInt(0, 2);
 
         let scale = 100;
         let allAmount = coinAmount + healthAmount + inkAmount;
