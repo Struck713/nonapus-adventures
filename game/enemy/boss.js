@@ -1,6 +1,6 @@
 class Boss extends Enemy {
 
-    static DELOZIER = true;
+    static DELOZIER = false;
 
     static HEALTH_BAR_WIDTH = 500;
     static HEALTH_BAR_HEIGHT = 30;

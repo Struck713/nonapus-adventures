@@ -13,7 +13,7 @@ function preload() {
 
     "shark.png", "urchin.png", "clam.png", "pufferfish.png",
     "crab.png", "speedBoost.png", "healthPotion.png", "anglerFish.png", 
-    "electricEel.png", "mimic.png", "remoraFish.png",
+    "electricEel.png", "mimic.png", "remoraFish.png", "healthUpgrade.png", "inkUpgrade.png",
 
     "coin.png", "chest.png",
 

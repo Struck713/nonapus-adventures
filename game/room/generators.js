@@ -98,22 +98,22 @@ class BasicRoomGenerator extends RoomGenerator {
 
         let weight = room.weight;
         if (weight >= 10 && weight <= 25) {
-            this.multiply(room, Crab, Utils.randomInt(1, 10));
+            this.multiply(room, Crab, Utils.randomInt(1, 8));
             this.multiply(room, Clam, Utils.randomInt(8, 12));
 
             
         } else if (weight > 25 && weight <= 30) {
-            this.multiply(room, AnglerFish, Utils.randomInt(2, 6));
+            this.multiply(room, AnglerFish, Utils.randomInt(2, 4));
             this.multiply(room, Clam, Utils.randomInt(8, 12));
         } else if (weight > 30 && weight <= 50) {
             this.multiply(room, Clam, Utils.randomInt(1, 2));
-            this.multiply(room, Crab, Utils.randomInt(2, 4));
+            this.multiply(room, Crab, Utils.randomInt(1, 3));
             this.multiply(room, AnglerFish, Utils.randomInt(0, 1));
-            this.multiply(room, Pufferfish, Utils.randomInt(1, 3));
+            this.multiply(room, Pufferfish, Utils.randomInt(1, 2));
             this.multiply(room, Shark, Utils.randomInt(2, 4));
-            this.multiply(room, Coin, Utils.randomInt(0, 5));
+            this.multiply(room, Coin, Utils.randomInt(0, 10));
 
-            if(mimicChance > 1) {
+            if(mimicChance < 1) {
                 this.multiply(room, Chest, 1);
                 this.multiply(room, Mimic, 1);
             } else 
@@ -122,7 +122,7 @@ class BasicRoomGenerator extends RoomGenerator {
         } else if (weight > 50 && weight <= 65) {
             this.multiply(room, Clam, 3);
             this.multiply(room, Crab, Utils.randomInt(1, 3));
-            this.multiply(room, AnglerFish, Utils.randomInt(2, 5));
+            this.multiply(room, AnglerFish, Utils.randomInt(2, 3));
             this.multiply(room, ElectricEel, Utils.randomInt(2, 4));
 
             if(mimicChance < 1) {

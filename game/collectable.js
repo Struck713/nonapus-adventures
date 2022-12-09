@@ -63,15 +63,48 @@ class HealthBoost extends Collectable {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
-        ++other.healthItems;
+        if(other.healthItems < Character.HEALTH_POTION_MAX)
+            ++other.healthItems;
         this.destroy();
     }
 
     static useHealthItem(other){
         other.isHealthBoosted = true;
-        if (other.health + Character.HEALTH_BOOST_VALUE > 6) other.health = 6;
-        else other.health += Character.HEALTH_BOOST_VALUE;
+        if (other.health >= other.maxHealth) other.health = other.maxHealth;
+        else other.health += 2;
+        --other.healthItems;
         soundManager.play(`upgrade_${Utils.randomInt(1, 2)}`);
+    }
+}
+
+class HealthUpgrade extends Collectable {
+    constructor (x, y) {
+        super(x, y, spriteManager.get("healthUpgrade"));
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Character)) return;
+        if(other.maxHealth < Character.HEALTH_MAX_VALUE) {
+            ++other.maxHealth;
+            other.health = other.maxHealth;
+        }
+        this.destroy();
+    }
+
+}
+
+class InkUpgrade extends Collectable {
+    constructor (x, y) {
+        super(x, y, spriteManager.get("inkUpgrade"));
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Character)) return;
+        if(other.maxInk < Character.INK_MAX_VALUE) {
+            ++other.maxInk;
+            other.ink = other.maxInk;
+        }
+        this.destroy();
     }
 }
 

@@ -224,10 +224,10 @@ class Clam extends Enemy {
 
 
 class Mimic extends Enemy {
-
+    
 
     constructor (x, y) { 
-        super(x, y, 18, spriteManager.get("Mimic"));
+        super(x, y, 15, spriteManager.get("Mimic"));
         this.targetting = false;
     }
 
@@ -238,20 +238,20 @@ class Mimic extends Enemy {
 
     dropLoot() {
         let coinAmount = random(15, 20);
-        let healthAmount = Utils.randomInt(4, 6);
-        let speedAmount = Utils.randomInt(2, 3);
+        let healthAmount = Utils.randomInt(0, 1);
+        let inkAmount = Utils.randomInt(0, 1);
 
         let scale = 100;
-        let allAmount = coinAmount + healthAmount + speedAmount;
+        let allAmount = coinAmount + healthAmount + inkAmount;
         let circle = WaveUtils.pointsAlongCircle(allAmount);
 
         for (let x = 0; x < allAmount; x++) {
             let healthAdjustment = x - coinAmount;
-            let speedAdjustment = healthAdjustment - healthAmount;
+            let inkAdjustment = healthAdjustment - healthAmount;
 
             let object = new Coin(0, 0);
-            if (healthAdjustment > 0 && healthAdjustment <= healthAmount) object = new HealthBoost(0, 0);
-            else if (speedAdjustment > 0 && speedAdjustment <= speedAmount) object = new SpeedBoost(0, 0);
+            if (healthAdjustment > 0 && healthAdjustment <= healthAmount) object = new HealthUpgrade(0, 0);
+            else if (inkAdjustment > 0 && inkAdjustment <= inkAmount) object = new InkUpgrade(0, 0);
 
             let adjustmentPosition = circle[x];
             object.position = new p5.Vector(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
@@ -285,9 +285,10 @@ class Mimic extends Enemy {
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 2.3 && abs(this.target.y - this.position.y) < 2.3) this.findTarget();
         this.sprite.flipped = this.target.x - this.position.x >= 0;
-
-
-        movement.setMag(2.3); //speed
+    
+        movement.setMag(2); //speed
+        
+        movement.setMag(2.3);
         this.position.add(movement);
         
     }
@@ -326,6 +327,29 @@ class Crab extends Enemy {
 
         movement.setMag(.97); //speed
         this.position.add(movement);
+    }
+    dropLoot() {
+        let coinAmount = random(0, 3);
+        let healthAmount = Utils.randomInt(0, 1);
+        let speedAmount = Utils.randomInt(0, 1);
+
+        let scale = 50;
+        let allAmount = coinAmount + healthAmount + speedAmount;
+        let circle = WaveUtils.pointsAlongCircle(allAmount);
+
+        for (let x = 0; x < allAmount; x++) {
+            let healthAdjustment = x - coinAmount;
+            let speedAdjustment = healthAdjustment - healthAmount;
+
+            let object = new Coin(0, 0);
+            if (healthAdjustment > 0 && healthAdjustment <= healthAmount) object = new HealthBoost(0, 0);
+            else if (speedAdjustment > 0 && speedAdjustment <= speedAmount) object = new SpeedBoost(0, 0);
+
+            let adjustmentPosition = circle[x];
+            object.position = new p5.Vector(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
+            roomManager.room.spawn(object);
+
+        }
     }
 
 }

@@ -9,12 +9,16 @@ class Character extends GameObject {
     static IDLING_THRESHOLD = 5;
 
     static INK_DEFAULT_VALUE = 4; // how many shots
+    static INK_MAX_VALUE = 10;
     static INK_INCREASE_SECONDS = 1000; // how many milliseconds to increate
 
     static HEALTH_DEFAULT_VALUE = 4; // player health starting amount
-    static HEALTH_BOOST_VALUE = 2;
+    static HEALTH_MAX_VALUE = 10;
 
     static SPEED_DEFAULT_VALUE = 2.5;
+
+    static SPEED_POTION_MAX = 10;
+    static HEALTH_POTION_MAX = 10;
 
     static TAG = "CHARACTER";
 
@@ -30,9 +34,9 @@ class Character extends GameObject {
 
         // player health
         this.health = Character.HEALTH_DEFAULT_VALUE;
+        this.maxHealth = Character.HEALTH_DEFAULT_VALUE;
         this.tookDamage = false;
         this.damageCoolDown = 0;
-        this.isHealthBoosted = false;
 
         // player speed
         this.speed = Character.SPEED_DEFAULT_VALUE;
@@ -43,14 +47,16 @@ class Character extends GameObject {
         this.mousePosition = createVector(0, 0);
         this.movementMatrix = [ false, false, false, false ];
         this.coins = 0;
-        this.healthItems = 0;
-        this.speedItems = 0;
+        this.healthItems = 2;
+        this.speedItems = 2;
         this.healthPressed = false;
         this.speedPressed = false;
         this.idling = 0;
 
         this.ink = Character.INK_DEFAULT_VALUE;
-        setInterval(() => { if (this.ink < Character.INK_DEFAULT_VALUE) this.ink++ }, Character.INK_INCREASE_SECONDS);
+        this.maxInk = Character.INK_DEFAULT_VALUE;
+
+        setInterval(() => { if (this.ink < this.maxInk) this.ink++ }, Character.INK_INCREASE_SECONDS);
         setInterval(() => { 
             if (this.idling <= Character.IDLING_THRESHOLD) this.idling++;
             else this.sprite.swapAnimation("yawn", true, () => (this.idling = 0));
@@ -113,17 +119,13 @@ class Character extends GameObject {
             case 'ARROWRIGHT':
                 this.movementMatrix[3] = pressed;
                 break;
-            case 'R':
-                ++this.health;
-                break;
             case 'Q': // this eventually becomes case 'R'
                 if (this.healthItems > 0 && !this.healthPressed) {
-                    --this.healthItems;
                     HealthBoost.useHealthItem(this);
                     this.healthPressed = true;
                 } else this.healthPressed = false;
                 break;
-            case 'F':
+            case 'E':
                 if (this.speedItems > 0 && !this.speedPressed) {
                     --this.speedItems;
                     SpeedBoost.useSpeedItem(this);

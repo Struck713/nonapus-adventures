@@ -37,7 +37,7 @@ class Ink extends HUDItem {
     render() {
         if (!this.character) this.character = gameManager.getByTag(Character.TAG);
 
-        for(let i = 0; i < Character.INK_DEFAULT_VALUE; ++i){
+        for(let i = 0; i < this.character.maxInk; ++i){
             if((i+1) <= this.character.ink)
                 image(this.fullInk, (this.x + 34*i), this.y);
             else
@@ -59,27 +59,17 @@ class Health extends HUDItem {
     render() {
         if (!this.character) this.character = gameManager.getByTag(Character.TAG);
 
-        if(this.character.health <= Character.HEALTH_DEFAULT_VALUE)
+        if(this.character.health <= Character.health)
             this.character.isHealthBoosted = false;
 
-        if(this.character.isHealthBoosted){
-            for(let i = 0; i < Character.HEALTH_DEFAULT_VALUE + Character.HEALTH_BOOST_VALUE; ++i){
-                if((i+1) <= this.character.health)
-                    if (i >= Character.HEALTH_DEFAULT_VALUE) image(this.fullTempHeart, (this.x + 34*i), this.y);
-                    else image(this.fullHeart, (this.x + 34*i), this.y);
-                else
-                    image(this.emptyHeart, (this.x + 34*i), this.y);
-            }
-        }
-        else {
-            for(let i = 0; i < Character.HEALTH_DEFAULT_VALUE; ++i){
+
+            for(let i = 0; i < this.character.maxHealth; ++i){
                 if((i+1) <= this.character.health)
                     image(this.fullHeart, (this.x + 34*i), this.y);
                 else
                     image(this.emptyHeart, (this.x + 34*i), this.y);
             }
         }
-    }
 }
 
 class Coins extends HUDItem {
@@ -117,7 +107,7 @@ class HealthItem extends HUDItem {
         textSize(16);
         fill(0);
         image(this.healthItem, this.x, this.y);
-        text(this.character.healthItems, this.x + 16, this.y + 15);
+        text(this.character.healthItems, this.x + 16, this.y + 18);
     }
 
 }
@@ -137,7 +127,7 @@ class SpeedItem extends HUDItem {
         textSize(16);
         fill(0);
         image(this.speedItem, this.x, this.y);
-        text(this.character.speedItems, this.x + 16, this.y + 15);
+        text(this.character.speedItems, this.x + 16, this.y + 18);
     }
 
 }
