@@ -86,6 +86,10 @@ class RoomManager {
         
         let initial = this.getRandomRoom();
         initial.visited = true;
+        // this is where we do shark alter logic
+        
+
+
         stack.push(initial);
         
         while (stack.length != 0) {

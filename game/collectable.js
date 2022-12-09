@@ -158,26 +158,52 @@ class Chest extends Collectable {
 
         soundManager.play("chest_open");
 
-        let coinAmount = random(0, 5);
-        let healthAmount = Utils.randomInt(0, 5);
+        let coinAmount = Utils.randomInt(0, 5);
+
+        let healthAmount = Utils.randomInt(0, 3);
         let speedAmount = Utils.randomInt(0, 2);
 
+        let healthUpgradeAmount = 0;
+        let inkUpgradeAmount = 0;
+        let upgradeCheck = Utils.randomInt(0, 9);
+        if(upgradeCheck < 8){
+            healthUpgradeAmount = Utils.randomInt(0, 2);
+            inkUpgradeAmount = Utils.randomInt(0, 2);
+        }
+
+        let allAmount = (coinAmount + healthAmount + speedAmount + inkUpgradeAmount + healthUpgradeAmount);
+
         let scale = 100;
-        let allAmount = coinAmount + healthAmount + speedAmount;
         let circle = WaveUtils.pointsAlongCircle(allAmount);
 
-        for (let x = 0; x < allAmount; x++) {
-            let healthAdjustment = x - coinAmount;
-            let speedAdjustment = healthAdjustment - healthAmount;
+        let object;
 
-            let object = new Coin(0, 0);
-            if (healthAdjustment > 0 && healthAdjustment <= healthAmount) object = new HealthBoost(0, 0);
-            else if (speedAdjustment > 0 && speedAdjustment <= speedAmount) object = new SpeedBoost(0, 0);
+        let coinAdjustment = allAmount - (healthAmount + speedAmount + inkUpgradeAmount + healthUpgradeAmount);
+        let healthAdjustment = allAmount - (speedAmount + inkUpgradeAmount + healthUpgradeAmount);
+        let speedAdjustment = allAmount - (inkUpgradeAmount + healthUpgradeAmount);
+        let healthUpgradeAdjustment = allAmount - (healthUpgradeAmount);
+        let inkUpgradeAdjustment = allAmount;
 
-            let adjustmentPosition = circle[x];
+        for (let i = 0; i < allAmount; i++) {
+            if (0 <= i && i < coinAdjustment) {
+                object = new Coin(0, 0);
+            }
+            else if (coinAdjustment <= i && i < healthAdjustment) {
+                object = new HealthBoost(0, 0);
+            }
+            else if (healthAdjustment <= i && i < speedAdjustment) {
+                object = new SpeedBoost(0, 0);
+            }
+            else if (speedAdjustment <= i && i < healthUpgradeAdjustment && upgradeCheck < 2) {
+                object = new HealthUpgrade(0, 0);
+            }
+            else if (healthUpgradeAdjustment <= i && i < inkUpgradeAdjustment && upgradeCheck < 2) {
+                object = new InkUpgrade(0, 0);
+            }
+
+            let adjustmentPosition = circle[i];
             object.position = new p5.Vector(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
             roomManager.room.spawn(object);
-
         }
     }
 

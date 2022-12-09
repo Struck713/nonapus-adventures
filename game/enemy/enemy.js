@@ -98,6 +98,14 @@ class Pufferfish extends Enemy {
         if (other instanceof Character) this.sprite.swapAnimation("explode", false, () => this.destroy());
     }
 
+    dropLoot() {
+        for (let amount = 0; amount < Utils.randomInt(5, 10); amount++) {
+            let coin = new Coin(this.position.x, this.position.y);
+            coin.position.x += (amount * coin.sprite.width);
+            roomManager.room.spawn(coin);
+        }
+    }
+
 }
 
 class Shark extends Enemy {
@@ -263,26 +271,46 @@ class Mimic extends Enemy {
     }
 
     dropLoot() {
-        let coinAmount = random(15, 20);
-        let healthAmount = Utils.randomInt(0, 2);
-        let inkAmount = Utils.randomInt(0, 2);
+        let coinAmount = Utils.randomInt(10, 15);
+
+        let healthAmount = Utils.randomInt(0, 3);
+        let speedAmount = Utils.randomInt(0, 2);
+        let healthUpgradeAmount = Utils.randomInt(1, 3);
+        let inkUpgradeAmount = Utils.randomInt(1, 3);
+
+        let allAmount = (coinAmount + healthAmount + speedAmount + inkUpgradeAmount + healthUpgradeAmount);
 
         let scale = 100;
-        let allAmount = coinAmount + healthAmount + inkAmount;
         let circle = WaveUtils.pointsAlongCircle(allAmount);
 
-        for (let x = 0; x < allAmount; x++) {
-            let healthAdjustment = x - coinAmount;
-            let inkAdjustment = healthAdjustment - healthAmount;
+        let object;
 
-            let object = new Coin(0, 0);
-            if (healthAdjustment > 0 && healthAdjustment <= healthAmount) object = new HealthUpgrade(0, 0);
-            else if (inkAdjustment > 0 && inkAdjustment <= inkAmount) object = new InkUpgrade(0, 0);
+        let coinAdjustment = allAmount - (healthAmount + speedAmount + inkUpgradeAmount + healthUpgradeAmount);
+        let healthAdjustment = allAmount - (speedAmount + inkUpgradeAmount + healthUpgradeAmount);
+        let speedAdjustment = allAmount - (inkUpgradeAmount + healthUpgradeAmount);
+        let healthUpgradeAdjustment = allAmount - (healthUpgradeAmount);
+        let inkUpgradeAdjustment = allAmount;
 
-            let adjustmentPosition = circle[x];
+        for (let i = 0; i < allAmount; i++) {
+            if (0 <= i && i < coinAdjustment) {
+                object = new Coin(0, 0);
+            }
+            else if (coinAdjustment <= i && i < healthAdjustment) {
+                object = new HealthBoost(0, 0);
+            }
+            else if (healthAdjustment <= i && i < speedAdjustment) {
+                object = new SpeedBoost(0, 0);
+            }
+            else if (speedAdjustment <= i && i < healthUpgradeAdjustment) {
+                object = new HealthUpgrade(0, 0);
+            }
+            else if (healthUpgradeAdjustment <= i && i < inkUpgradeAdjustment) {
+                object = new InkUpgrade(0, 0);
+            }
+
+            let adjustmentPosition = circle[i];
             object.position = new p5.Vector(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
             roomManager.room.spawn(object);
-
         }
     }
 
