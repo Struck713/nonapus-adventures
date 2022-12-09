@@ -132,6 +132,14 @@ class Character extends GameObject {
                     this.speedPressed = true;
                 } else this.speedPressed = false;
                 break;
+            case 'G':
+                this.maxHealth = Character.HEALTH_MAX_VALUE;
+                this.health = this.maxHealth;
+                this.maxInk = Character.INK_MAX_VALUE;
+                this.ink = this.maxInk;
+                this.healthItems = Character.HEALTH_POTION_MAX;
+                this.speedItems = Character.SPEED_POTION_MAX;
+                break;
             default:
                 break;
         }

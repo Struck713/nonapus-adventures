@@ -39,9 +39,9 @@ class Ink extends HUDItem {
 
         for(let i = 0; i < this.character.maxInk; ++i){
             if((i+1) <= this.character.ink)
-                image(this.fullInk, (this.x + 34*i), this.y);
+                image(this.fullInk, (this.x + 26*i), this.y);
             else
-                image(this.emptyInk, (this.x + 34*i), this.y);
+                image(this.emptyInk, (this.x + 26*i), this.y);
         }
     }
 }
