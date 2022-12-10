@@ -1,0 +1,10 @@
+{
+    "name": "BossAltar",
+    "width": 128,
+    "height": 128,
+    "animations": {
+        "idle": [
+            { "x": 0,  "y": 0 }
+        ]
+    }
+}

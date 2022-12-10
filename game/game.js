@@ -171,3 +171,30 @@ class Projectile extends GameObject {
     }
     
 }
+
+class Altar extends GameObject {
+    static startBossFight = false;
+    constructor(x, y, sprite) { 
+        super(x, y, sprite);
+        this.priority = GameManager.Priority.LOW;
+    }
+
+    render () {
+        if(Altar.startBossFight){
+            this.destroy();
+            roomManager.bossMode();
+            let characterReference = gameManager.getByTag(Character.TAG);
+            characterReference.position = createVector(GameManager.CANVAS_X/4, GameManager.CANVAS_Y/2);
+            characterReference.movementMatrix = [ false, false, false, false ];
+        }
+        else
+            this.sprite.show(this.position.x, this.position.y); // show on screen
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Character)) return;      
+        if(other.coins >= 150){
+            menuManager.set("Boss");   
+        }    
+    }
+}

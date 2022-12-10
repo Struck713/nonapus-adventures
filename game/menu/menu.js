@@ -3,7 +3,7 @@ class MenuManager {
     constructor () { this.active = true; }
 
     load() {
-        this.menus = [ new MainMenu(), new EndMenu() ];
+        this.menus = [ new MainMenu(), new EndMenu(), new BossMenu() ];
         this.current = this.menus[0];
     }
 
@@ -74,6 +74,29 @@ class EndMenu extends Menu {
     render() {
         super.render();
         this.coinText.text = `You earned ${gameManager.getByTag(Character.TAG).coins} coins!`;
+    }
+
+}
+
+class BossMenu extends Menu {
+    constructor() {
+        super("Boss", [ 
+            new MenuText((GameManager.CANVAS_X / 2)-53, (GameManager.CANVAS_Y / 2) - 140, "Fight Boss?", fontFranx, 100),
+            new MenuButton((GameManager.CANVAS_X / 2)-100, (GameManager.CANVAS_Y / 2)+50, 150, 50, "No", () => {
+                menuManager.start();
+                let characterReference = gameManager.getByTag(Character.TAG);
+                characterReference.position = createVector(GameManager.CANVAS_X/2, GameManager.CANVAS_Y/2);
+                characterReference.movementMatrix = [ false, false, false, false ];
+            }),
+            new MenuButton((GameManager.CANVAS_X / 2)+100, (GameManager.CANVAS_Y / 2)+50, 150, 50, "Yes", () => {
+                menuManager.start();
+                Altar.startBossFight = true;
+            }),
+        ]);
+    }
+
+    render() {
+        super.render();
     }
 
 }

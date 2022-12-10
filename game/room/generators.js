@@ -97,7 +97,11 @@ class BasicRoomGenerator extends RoomGenerator {
         let mimicChance = random(0, 9);
 
         let weight = room.weight;
-        if (weight >= 10 && weight <= 25) {
+        if(!Room.AltarSpawned){
+            room.spawn(new Altar(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 3, spriteManager.get("BossAltar")));
+            Room.AltarSpawned = true;
+        }
+        else if (weight >= 10 && weight <= 25) {
             this.multiply(room, Crab, Utils.randomInt(1, 8));
             this.multiply(room, Clam, Utils.randomInt(8, 12));
 
