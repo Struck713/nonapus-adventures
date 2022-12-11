@@ -1,8 +1,8 @@
 class RoomManager {
 
     static BOSS = false;
-    static ROWS = 5;
-    static COLUMNS = 5;
+    static ROWS = 3;
+    static COLUMNS = 3;
 
     constructor() {
         this.rooms = [];

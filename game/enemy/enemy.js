@@ -478,6 +478,19 @@ class ElectricEel extends Enemy {
         this.position.add(movement);
     }
 
+    dropLoot(){
+        if(Utils.randomInt(1, 3) % 2 == 0) {
+            let inkUpgrade = new InkUpgrade(this.position.x, this.position.y);
+            roomManager.room.spawn(inkUpgrade);
+        } else {
+            for (let amount = 0; amount < random(0, 2); amount++) {
+                let coin = new Coin(this.position.x, this.position.y);
+                coin.position.x += (amount * coin.sprite.width);
+                roomManager.room.spawn(coin);
+            }
+        }
+    }
+
 }
 
 class BoltProjectile extends Projectile {
