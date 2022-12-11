@@ -193,7 +193,7 @@ class Altar extends GameObject {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;      
-        if(other.coins >= 40){
+        if(other.coins >= 50){
             menuManager.set("Boss");   
         }    
     }
