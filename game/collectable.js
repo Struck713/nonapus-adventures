@@ -201,6 +201,7 @@ class Chest extends Collectable {
             }
 
             let adjustmentPosition = circle[i];
+            if (!object) continue;
             object.position = new p5.Vector(this.position.x + (scale * adjustmentPosition.x), this.position.y + (scale * adjustmentPosition.y));
             roomManager.room.spawn(object);
         }
