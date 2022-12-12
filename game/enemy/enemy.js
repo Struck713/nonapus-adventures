@@ -340,7 +340,7 @@ class Mimic extends Enemy {
         if(abs(this.target.x - this.position.x) < 2.3 && abs(this.target.y - this.position.y) < 2.3) this.findTarget();
         this.sprite.flipped = this.target.x - this.position.x >= 0;
     
-        movement.setMag(2); //speed
+        //movement.setMag(2); //speed
         
         movement.setMag(2.3);
         this.position.add(movement);

@@ -165,11 +165,10 @@ class Chest extends Collectable {
 
         let healthUpgradeAmount = 0;
         let inkUpgradeAmount = 0;
-        let upgradeCheck = Utils.randomInt(0, 9);
-        if(upgradeCheck < 8){
-            healthUpgradeAmount = Utils.randomInt(0, 2);
-            inkUpgradeAmount = Utils.randomInt(0, 2);
-        }
+        let upgradeCheck = Utils.randomInt(0, 4);
+
+        healthUpgradeAmount = Utils.randomInt(0, 2);
+        inkUpgradeAmount = Utils.randomInt(0, 2);
 
         let allAmount = (coinAmount + healthAmount + speedAmount + inkUpgradeAmount + healthUpgradeAmount);
 
@@ -194,10 +193,10 @@ class Chest extends Collectable {
             else if (healthAdjustment <= i && i < speedAdjustment) {
                 object = new SpeedBoost(0, 0);
             }
-            else if (speedAdjustment <= i && i < healthUpgradeAdjustment && upgradeCheck < 2) {
+            else if (speedAdjustment <= i && i < healthUpgradeAdjustment && upgradeCheck > 2) {
                 object = new HealthUpgrade(0, 0);
             }
-            else if (healthUpgradeAdjustment <= i && i < inkUpgradeAdjustment && upgradeCheck < 2) {
+            else if (healthUpgradeAdjustment <= i && i < inkUpgradeAdjustment && upgradeCheck > 2) {
                 object = new InkUpgrade(0, 0);
             }
 
