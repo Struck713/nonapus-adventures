@@ -44,7 +44,8 @@ class SpeedBoost extends Collectable {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
-        ++other.speedItems;
+        if(other.speedItems < Character.SPEED_POTION_MAX)
+            ++other.speedItems;
         this.destroy();
     }
 
