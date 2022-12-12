@@ -500,10 +500,16 @@ class Delozier extends Enemy {
         this.talking = false;
     }
 
+    // no collision
+    onCollision(other) {}
+
     render () {
         super.render();
 
         if (this.talking) {
+            if (!this.wait) this.wait = 0;
+
+            this.wait++;
             this.swapAnimation("bite", false);
             this.displayDialog("You win! Congrats!", 100);
             return;

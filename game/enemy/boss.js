@@ -140,7 +140,10 @@ class Boss extends Enemy {
 
         if (this.phase == 4) {
             this.moveToTarget(2);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1) {
+                ++this.phase;
+                this.showBar = false;
+            }
         }
         
         // dialog phase 2
@@ -172,9 +175,10 @@ class Boss extends Enemy {
             }
         }
 
-        if (this.phase == 6) { 
+        if (this.phase == 6) {
             if (!this.target) this.target = createVector(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2);
             this.moveToTarget(2);
+            this.showBar = true;
             if(p5.Vector.sub(this.target, this.position).mag() <= 2) ++this.phase;
             return; 
         }
@@ -265,8 +269,6 @@ class Boss extends Enemy {
                 }
                 return;
             }
-
-
 
             if (this.movements % 2 == 0)  this.moveToTarget(6);
             else this.moveToTarget(2);
