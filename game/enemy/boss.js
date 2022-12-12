@@ -183,21 +183,47 @@ class Boss extends Enemy {
 
         if (this.phase == 7) {
             if(!this.wait) this.wait = 0;
-            for(let i = 0; i < 4; i++){
-                if(i == 1 || 3) {
-                    for(let j = 0; j < Boss.REMORA_COUNT; j++) {
-                        roomManager.room.spawn(new RemoraFish(Utils.randomInt(32, 160), Utils.randomInt(j * 30, 300)));
-                    }
-                }
-                if(i == 2|| 4) {
-                    for(let j = 0; j < Boss.REMORA_COUNT; j++) {
-                        roomManager.room.spawn(new RemoraFish(Utils.randomInt(j * 30, 300), Utils.randomInt(32, 480)));
-                    }
-                }
+            if (!this.movements) this.movements = 0;
+            if (!this.moving) this.moving = 0;
+
+            if (this.moving == 1) {
+                this.moveToTarget(10);
+                if(p5.Vector.sub(this.target, this.position).mag() <= 10) this.moving = 0;
+                return;
             }
-            delete this.wait;
-            ++this.phase;
+
+            if (this.movements % 3 == 0) {
+                let movementOffset = this.movements / 3;
+                let positionOffset = ((GameManager.CANVAS_Y / 3) * movementOffset);
+                this.moving = 1;
+                this.target = new p5.Vector((movementOffset == 2 ? -100 : GameManager.CANVAS_X + 100), GameManager.CANVAS_Y + positionOffset);
+                return;
+            }
+
+            if (this.movements >= 9) {
+                delete this.wait;
+                delete this.movements;
+                delete this.target;
+                this.phase++;
+                return;
+            }
+
+            this.wait++;
+            if (this.wait >= 250) {
+                for(let j = 0; j < Boss.REMORA_COUNT; j++) {
+                    roomManager.room.spawn(new RemoraFish(Utils.randomInt(j * 30, 300), Utils.randomInt(32, 480)));
+                }
+                this.movements++;   
+                this.wait = 0;
+            }
             return; 
+        }
+
+        if (this.phase == 8) {
+            if (!this.target) this.target = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+            this.moveToTarget(2);
+            if(p5.Vector.sub(this.target, this.position).mag() <= 2) ++this.phase;
+            return;
         }
 
         // testing
