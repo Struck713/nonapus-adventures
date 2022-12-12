@@ -220,15 +220,18 @@ class Boss extends Enemy {
         if (this.phase == 8) {
             if (!this.target) this.target = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
             this.moveToTarget(2);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 2) ++this.phase;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 2) {
+                this.invincible = false;
+                ++this.phase;
+            }
             return;
         }
 
         // dash and basic attacks plus occasional remora spawns
-        this.invincible = false;
         if (this.phase == 9) {
             if (this.health <= 0) {
-                //WIN
+                roomManager.room.spawn(new Delozier(-100, 0));
+                super.destroy();
                 return;
             }
 

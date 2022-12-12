@@ -505,7 +505,7 @@ class Delozier extends Enemy {
 
         if (this.talking) {
             this.swapAnimation("bite", false);
-            
+            this.displayDialog("You win! Congrats!", 100);
             return;
         }
 
@@ -519,6 +519,24 @@ class Delozier extends Enemy {
 
         movement.setMag(2.25); //speed
         this.position.add(movement);
+    }
+
+    displayDialog(dialog, transitionTime) {
+        this.transitionTime = transitionTime;
+
+        let characters = Array.from(dialog);
+        let percentage = ceil(characters.length * (this.wait / (this.transitionTime / 2)));
+        if (percentage >= characters.length) percentage = characters.length;
+        let printedText = characters.slice(0, percentage).join("");
+
+        push();
+        fill(255);
+        rect((GameManager.CANVAS_X / 2) - (Boss.DIALOG_BOX_WIDTH / 2), GameManager.CANVAS_Y - Boss.DIALOG_BOX_HEIGHT - Boss.DIALOG_BOX_OFFSET, Boss.DIALOG_BOX_WIDTH, Boss.DIALOG_BOX_HEIGHT);
+        fill(0);
+        textAlign(CENTER, CENTER);
+        rectMode(CENTER);
+        text(printedText, (GameManager.CANVAS_X / 2), GameManager.CANVAS_Y  - (Boss.DIALOG_BOX_HEIGHT / 2) - Boss.DIALOG_BOX_OFFSET, Boss.DIALOG_BOX_WIDTH, Boss.DIALOG_BOX_HEIGHT);
+        pop();
     }
 
 }
