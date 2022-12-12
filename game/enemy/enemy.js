@@ -493,6 +493,37 @@ class ElectricEel extends Enemy {
 
 }
 
+class Delozier extends Enemy {
+
+    constructor (x, y) { 
+        super(x, y, 2, spriteManager.get("Delozier")); 
+        this.talking = false;
+    }
+
+    render () {
+        super.render();
+
+        if (this.talking) {
+            this.swapAnimation("bite", false);
+            
+            return;
+        }
+
+        if (!this.target) this.target = new p5.Vector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.talking = true;
+
+        movement.setMag(2.25); //speed
+        this.position.add(movement);
+    }
+
+}
+
+
 class BoltProjectile extends Projectile {
 
     constructor (x, y, direction) {
@@ -517,3 +548,4 @@ class BoltProjectile extends Projectile {
     }
 
 }
+
