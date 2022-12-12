@@ -507,6 +507,8 @@ class BoltProjectile extends Projectile {
     }
 
     render() {
+        this.sprite.cycleAnimation();
+
         this.sprite.show(this.position.x, this.position.y);
 
         let angleVector = p5.Vector.fromAngle(this.direction + (PI / 2));
