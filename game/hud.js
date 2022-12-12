@@ -180,7 +180,7 @@ class Minimap extends HUDItem {
 
     drawCell(room, direction, x, y, adjustment) {
         if (room.walls[direction]) return;
-        if (adjustment > 4) return;
+        if (adjustment > 9) return;
         
         let offsetRoom = roomManager.getRelative(room, direction);
         this.needDrawn.push({ offsetX: x, offsetY: y, visited: offsetRoom.visited });
