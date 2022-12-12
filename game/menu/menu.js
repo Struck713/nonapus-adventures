@@ -58,7 +58,7 @@ class EndMenu extends Menu {
     constructor() {
         let coinText = new MenuText((GameManager.CANVAS_X/2)-20, (GameManager.CANVAS_Y/2)-30, "Loading..", fontFranx, 30);
         super("End", [ 
-            new MenuText((GameManager.CANVAS_X / 2)-53, (GameManager.CANVAS_Y / 2) - 140, "You Died :(", fontFranx, 100),
+            new MenuText((GameManager.CANVAS_X / 2)-53, (GameManager.CANVAS_Y / 2) - 140, "You Died", fontFranx, 100),
             new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2)+50, 150, 50, "Return to Main Menu", () => {
                 //roomManager.reset();
                 //gameManager.reset();
