@@ -45,7 +45,7 @@ class Boss extends Enemy {
         
         // dialog phase
          if (this.phase == 1) {
-            if (!this.dialogPhase) this.dialogPhase = 0;
+            if (!this.dialogPhase) this.dialogPhase = 11;
             if (!this.wait) this.wait = 0;
             if (this.dialogPhase == 0) this.displayDialog("Hello, Nona. I have been expecting you.", 200);
             if (this.dialogPhase == 1) this.displayDialog("I've actually been expecting you for a long... long... time.", 250);
@@ -183,21 +183,30 @@ class Boss extends Enemy {
 
         if (this.phase == 7) {
             if(!this.wait) this.wait = 0;
-            if (!this.movements) this.movements = 0;
+            if (!this.movements) this.movements = 1;
             if (!this.moving) this.moving = 0;
 
             if (this.moving == 1) {
-                this.moveToTarget(10);
-                if(p5.Vector.sub(this.target, this.position).mag() <= 10) this.moving = 0;
+                this.moveToTarget(5);
+                if(p5.Vector.sub(this.target, this.position).mag() <= 11) this.moving = 0;
                 return;
+            }
+
+            this.wait++;
+            if (this.wait >= 150) {
+                for(let j = 0; j < Boss.REMORA_COUNT; j++) {
+                    let rand = roomManager.room.randomPosition();
+                    roomManager.room.spawn(new RemoraFish(rand.x, rand.y));
+                }
+                this.movements++;   
+                this.wait = 0;
             }
 
             if (this.movements % 3 == 0) {
                 let movementOffset = this.movements / 3;
                 let positionOffset = ((GameManager.CANVAS_Y / 3) * movementOffset);
                 this.moving = 1;
-                this.target = new p5.Vector((movementOffset == 2 ? -100 : GameManager.CANVAS_X + 100), GameManager.CANVAS_Y + positionOffset);
-                return;
+                this.target = new p5.Vector((movementOffset == 2 ?  GameManager.CANVAS_X + 100 : -100), positionOffset);
             }
 
             if (this.movements >= 9) {
@@ -206,15 +215,6 @@ class Boss extends Enemy {
                 delete this.target;
                 this.phase++;
                 return;
-            }
-
-            this.wait++;
-            if (this.wait >= 250) {
-                for(let j = 0; j < Boss.REMORA_COUNT; j++) {
-                    roomManager.room.spawn(new RemoraFish(Utils.randomInt(j * 30, 300), Utils.randomInt(32, 480)));
-                }
-                this.movements++;   
-                this.wait = 0;
             }
             return; 
         }
@@ -228,13 +228,8 @@ class Boss extends Enemy {
 
         // dash and basic attacks
         if (this.phase == 9) {
-            if (this.health <= (this.maxHealth / 2)) {
-                this.target = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
-                this.invincible = true;
-                this.phase++;
-
-                delete this.wait;
-                delete this.movements;
+            if (this.health <= 0) {
+                //WIN
                 return;
             }
 
