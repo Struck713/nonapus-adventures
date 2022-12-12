@@ -47,7 +47,7 @@ class MainMenu extends Menu {
                 menuManager.start()
             }),
             new MenuButton((GameManager.CANVAS_X / 2), (GameManager.CANVAS_Y / 2) + 60, 150, 50, "How To Play",
-            () => alert("If you can't figure out how to play our game, we don't want you playing it. Slay.")),
+            () => alert("Here's our Wiki: https://github.com/Struck713/8-1-Man-Carry/wiki")),
             new MenuText((GameManager.CANVAS_X / 2)-46, (GameManager.CANVAS_Y / 2) - 140, "Nonapus Adventures!", fontConfa, 92),
             new MenuText(43, GameManager.CANVAS_Y - 17, "© 8+1 Man Carry", fontFranx, 15)
         ]);

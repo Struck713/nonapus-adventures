@@ -4,7 +4,7 @@ class Boss extends Enemy {
 
     static HEALTH_BAR_WIDTH = 500;
     static HEALTH_BAR_HEIGHT = 30;
-    static HEALTH_BAR_OFFSET = 15;
+    static HEALTH_BAR_OFFSET = 692;
 
     static DIALOG_BOX_WIDTH = 250;
     static DIALOG_BOX_HEIGHT = 75;
@@ -21,6 +21,7 @@ class Boss extends Enemy {
         this.showBar = false;
         this.invincible = true;
         this.phase = 0;
+        this.maxHealth = 200;
     }
 
     findTarget() {
@@ -37,13 +38,13 @@ class Boss extends Enemy {
 
         // roll out phase
         if (this.phase == 0) {
-            this.moveToTarget(1);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
+            this.moveToTarget(1.75);
+            if(p5.Vector.sub(this.target, this.position).mag() <= 1.75) ++this.phase;
         }
 
-
+        
         // dialog phase
-        if (this.phase == 1) {
+         if (this.phase == 1) {
             if (!this.dialogPhase) this.dialogPhase = 0;
             if (!this.wait) this.wait = 0;
             if (this.dialogPhase == 0) this.displayDialog("Hello, Nona. I have been expecting you.", 200);
@@ -108,13 +109,13 @@ class Boss extends Enemy {
             }
 
             if (!this.movements) this.movements = 0;
-            if (this.movements >= 9) {
+            if (this.movements >= 4) {
                 if (!this.wait) {
                     this.wait = 1;
                     this.invincible = true;
                 }
                 
-                if ((this.wait >= 200) && (this.wait % 10 == 0)) this.shootTarget();
+                if ((this.wait >= 100) && (this.wait % 10 == 0)) this.shootTarget();
 
                 this.wait++;
                 if (this.wait >= 400) {
@@ -128,8 +129,8 @@ class Boss extends Enemy {
                 return;
             }
 
-            if (this.movements % 3 == 0)  this.moveToTarget(5);
-            else this.moveToTarget(1);
+            if (this.movements % 2 == 0)  this.moveToTarget(6);
+            else this.moveToTarget(2);
 
             if(p5.Vector.sub(this.target, this.position).mag() < 10) {
                 this.sprite.swapAnimation("bite", true, () => {
@@ -140,7 +141,7 @@ class Boss extends Enemy {
         }
 
         if (this.phase == 4) {
-            this.moveToTarget(1);
+            this.moveToTarget(2);
             if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
         }
         
@@ -176,7 +177,7 @@ class Boss extends Enemy {
         if (this.phase == 6) { 
             if (!this.target) this.target = createVector(GameManager.CANVAS_X + 100, GameManager.CANVAS_Y / 2);
             this.moveToTarget(2);
-            if(p5.Vector.sub(this.target, this.position).mag() <= 1) ++this.phase;
+            if(p5.Vector.sub(this.target, this.position).mag() <= 2) ++this.phase;
             return; 
         }
 
@@ -268,6 +269,7 @@ class LaserProjectile extends Projectile {
 
     onCollision(other) {
         if (!(other instanceof Character)) return;
+        --other.health;
         this.destroy();
     }
 

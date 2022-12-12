@@ -139,6 +139,7 @@ class Character extends GameObject {
                 this.ink = this.maxInk;
                 this.healthItems = Character.HEALTH_POTION_MAX;
                 this.speedItems = Character.SPEED_POTION_MAX;
+                this.coins = 100;
                 break;
             default:
                 break;

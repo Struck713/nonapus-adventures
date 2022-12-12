@@ -169,6 +169,7 @@ class Projectile extends GameObject {
         super(x, y, sprite)
         super.priority = GameManager.Priority.HIGH;
     }
+    onCollision(other){    }
     
 }
 
