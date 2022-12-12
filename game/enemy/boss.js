@@ -45,7 +45,7 @@ class Boss extends Enemy {
         
         // dialog phase
          if (this.phase == 1) {
-            if (!this.dialogPhase) this.dialogPhase = 11;
+            if (!this.dialogPhase) this.dialogPhase = 0;
             if (!this.wait) this.wait = 0;
             if (this.dialogPhase == 0) this.displayDialog("Hello, Nona. I have been expecting you.", 200);
             if (this.dialogPhase == 1) this.displayDialog("I've actually been expecting you for a long... long... time.", 250);
@@ -148,7 +148,7 @@ class Boss extends Enemy {
         // dialog phase 2
         if (this.phase == 5) {
             this.sprite.swapAnimation("charging", false);
-            if (!this.dialogPhase) this.dialogPhase = 4;
+            if (!this.dialogPhase) this.dialogPhase = 0;
             if (!this.wait) this.wait = 0;
 
             if (this.dialogPhase == 0) this.displayDialog("OUCH.", 200);
