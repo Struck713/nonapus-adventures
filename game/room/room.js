@@ -230,6 +230,7 @@ class Room {
 
         this.graphics.remove();
         this.graphics = null;
+        delete this.graphics;
     }
 
     render() { image(this.graphics, 0, 0); }
