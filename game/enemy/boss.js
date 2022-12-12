@@ -45,7 +45,7 @@ class Boss extends Enemy {
         
         // dialog phase
          if (this.phase == 1) {
-            if (!this.dialogPhase) this.dialogPhase = 0;
+            if (!this.dialogPhase) this.dialogPhase = 11;
             if (!this.wait) this.wait = 0;
             if (this.dialogPhase == 0) this.displayDialog("Hello, Nona. I have been expecting you.", 200);
             if (this.dialogPhase == 1) this.displayDialog("I've actually been expecting you for a long... long... time.", 250);
@@ -148,7 +148,7 @@ class Boss extends Enemy {
         // dialog phase 2
         if (this.phase == 5) {
             this.sprite.swapAnimation("charging", false);
-            if (!this.dialogPhase) this.dialogPhase = 0;
+            if (!this.dialogPhase) this.dialogPhase = 4;
             if (!this.wait) this.wait = 0;
 
             if (this.dialogPhase == 0) this.displayDialog("OUCH.", 200);
@@ -226,7 +226,8 @@ class Boss extends Enemy {
             return;
         }
 
-        // dash and basic attacks
+        // dash and basic attacks plus occasional remora spawns
+        this.invincible = false;
         if (this.phase == 9) {
             if (this.health <= 0) {
                 //WIN
@@ -243,16 +244,28 @@ class Boss extends Enemy {
                 if ((this.wait >= 100) && (this.wait % 10 == 0)) this.shootTarget();
 
                 this.wait++;
+                
                 if (this.wait >= 400) {
+                    for(let j = 0; j < Boss.REMORA_COUNT - 5; j++) {
+                        let rand = roomManager.room.randomPosition();
+                        roomManager.room.spawn(new RemoraFish(rand.x, rand.y));
+                    }
+                    this.movements++;   
+                    this.wait = 0;
+                    
+
                     this.wait = 0;
                     this.movements = 0;
                     this.invincible = false;
 
                     this.sprite.angle = 0;
                     delete this.wait;
+                    
                 }
                 return;
             }
+
+
 
             if (this.movements % 2 == 0)  this.moveToTarget(6);
             else this.moveToTarget(2);
@@ -375,12 +388,21 @@ class RemoraFish extends Enemy {
         let movement = p5.Vector.fromAngle(this.angle);
         if(abs(this.target.x - this.position.x) < 1 && abs(this.target.y - this.position.y) < 1) this.findTarget();
 
-        movement.setMag(5); //speed
+        movement.setMag(2.4); //speed
 
         this.position.add(movement);
     }
-    dropLoot() {
-        return;
+    dropLoot(){
+        if(Utils.randomInt(1, 20) % 20 == 1) {
+            if(Utils.randomInt(1, 20) % 20 == 1) {
+                let speedPotion = new SpeedBoost(this.position.x, this.position.y);
+                roomManager.room.spawn(speedPotion);
+            } else {
+                let healthPotion = new HealthBoost(this.position.x, this.position.y);
+                roomManager.room.spawn(healthPotion);
+
+            }
+        }
     }
 
 }
