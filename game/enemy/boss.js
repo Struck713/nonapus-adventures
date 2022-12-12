@@ -226,6 +226,50 @@ class Boss extends Enemy {
             return;
         }
 
+        // dash and basic attacks
+        if (this.phase == 9) {
+            if (this.health <= (this.maxHealth / 2)) {
+                this.target = createVector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+                this.invincible = true;
+                this.phase++;
+
+                delete this.wait;
+                delete this.movements;
+                return;
+            }
+
+            if (!this.movements) this.movements = 0;
+            if (this.movements >= 4) {
+                if (!this.wait) {
+                    this.wait = 1;
+                    this.invincible = true;
+                }
+                
+                if ((this.wait >= 100) && (this.wait % 10 == 0)) this.shootTarget();
+
+                this.wait++;
+                if (this.wait >= 400) {
+                    this.wait = 0;
+                    this.movements = 0;
+                    this.invincible = false;
+
+                    this.sprite.angle = 0;
+                    delete this.wait;
+                }
+                return;
+            }
+
+            if (this.movements % 2 == 0)  this.moveToTarget(6);
+            else this.moveToTarget(2);
+
+            if(p5.Vector.sub(this.target, this.position).mag() < 10) {
+                this.sprite.swapAnimation("bite", true, () => {
+                    this.findTarget();
+                    this.movements++;
+                });
+            }
+        }
+
         // testing
         // if (this.phase == 3) {
         //     this.moveToTarget(5);
