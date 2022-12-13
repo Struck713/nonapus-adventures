@@ -399,8 +399,8 @@ class RemoraFish extends Enemy {
         this.position.add(movement);
     }
     dropLoot(){
-        if(Utils.randomInt(1, 20) % 20 == 1) {
-            if(Utils.randomInt(1, 20) % 20 == 1) {
+        if(Utils.randomInt(1, 10) % 10 == 1) {
+            if(Utils.randomInt(0, 2) % 2 == 1) {
                 let speedPotion = new SpeedBoost(this.position.x, this.position.y);
                 roomManager.room.spawn(speedPotion);
             } else {
@@ -451,7 +451,9 @@ class Delozier extends Enemy {
     }
 
     // no collision
-    onCollision(other) {}
+    onCollision(other) {
+        return
+    }
     destroy() {}
 
     render () {

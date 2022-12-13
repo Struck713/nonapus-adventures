@@ -480,11 +480,12 @@ class ElectricEel extends Enemy {
     }
 
     dropLoot(){
-        this.dropLoot();
         if(Utils.randomInt(1, 3) % 2 == 0) {
             let inkUpgrade = new InkUpgrade(this.position.x, this.position.y);
             roomManager.room.spawn(inkUpgrade);
-        }
+        } else
+            this.dropLoot();
+
     }
 
 }
