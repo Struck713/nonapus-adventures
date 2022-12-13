@@ -116,6 +116,7 @@ class BasicRoomGenerator extends RoomGenerator {
             this.multiply(room, Pufferfish, Utils.randomInt(1, 2));
             this.multiply(room, Shark, Utils.randomInt(2, 4));
             this.multiply(room, Coin, Utils.randomInt(0, 10));
+            this.multiply(room, Urchin, Utils.randomInt(0, 2));
 
             if(mimicChance < 1) {
                 this.multiply(room, Chest, 1);
