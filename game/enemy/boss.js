@@ -300,8 +300,8 @@ class Boss extends Enemy {
         for (let x = 0; x < 100; x++) {
             let rand = roomManager.room.randomPosition();
             roomManager.room.spawn(new Coin(rand.x, rand.y));
-
         }
+        this.showBar = false;
         super.destroy();
     }
 
@@ -452,9 +452,13 @@ class Delozier extends Enemy {
 
     // no collision
     onCollision(other) {}
+    destroy() {}
 
     render () {
-        super.render();
+        if (!this.target) this.target = new p5.Vector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
 
         if (this.talking) {
             if (!this.wait) this.wait = 0;
@@ -464,11 +468,6 @@ class Delozier extends Enemy {
             this.displayDialog(`You win! Congrats! You collected ${gameManager.getByTag(Character.TAG).coins}.`, 100);
             return;
         }
-
-        if (!this.target) this.target = new p5.Vector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
-
-        this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
 
         let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
         if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.talking = true;
