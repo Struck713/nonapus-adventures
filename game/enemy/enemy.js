@@ -382,6 +382,7 @@ class Crab extends Enemy {
         movement.setMag(.97); //speed
         this.position.add(movement);
     }
+
     dropLoot() {
         let coinAmount = random(0, 3);
         let healthAmount = Utils.randomInt(0, 1);
@@ -479,77 +480,14 @@ class ElectricEel extends Enemy {
     }
 
     dropLoot(){
+        this.dropLoot();
         if(Utils.randomInt(1, 3) % 2 == 0) {
             let inkUpgrade = new InkUpgrade(this.position.x, this.position.y);
             roomManager.room.spawn(inkUpgrade);
-        } else {
-            for (let amount = 0; amount < random(0, 2); amount++) {
-                let coin = new Coin(this.position.x, this.position.y);
-                coin.position.x += (amount * coin.sprite.width);
-                roomManager.room.spawn(coin);
-            }
         }
     }
 
 }
-
-class Delozier extends Enemy {
-
-    static TAG = "THE_MAN";
-
-    constructor (x, y) { 
-        super(x, y, 0, spriteManager.get("Delozier"));
-        this.tag = "THE_MAN"; 
-        this.talking = false;
-    }
-
-    // no collision
-    onCollision(other) {}
-
-    render () {
-        super.render();
-
-        if (this.talking) {
-            if (!this.wait) this.wait = 0;
-
-            this.wait++;
-            this.swapAnimation("bite", false);
-            this.displayDialog("You win! Congrats!", 100);
-            return;
-        }
-
-        if (!this.target) this.target = new p5.Vector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
-
-        this.sprite.cycleAnimation(); // run animation
-        this.sprite.show(this.position.x, this.position.y); // show on screen
-
-        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
-        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.talking = true;
-
-        movement.setMag(2.25); //speed
-        this.position.add(movement);
-    }
-
-    displayDialog(dialog, transitionTime) {
-        this.transitionTime = transitionTime;
-
-        let characters = Array.from(dialog);
-        let percentage = ceil(characters.length * (this.wait / (this.transitionTime / 2)));
-        if (percentage >= characters.length) percentage = characters.length;
-        let printedText = characters.slice(0, percentage).join("");
-
-        push();
-        fill(255);
-        rect((GameManager.CANVAS_X / 2) - (Boss.DIALOG_BOX_WIDTH / 2), GameManager.CANVAS_Y - Boss.DIALOG_BOX_HEIGHT - Boss.DIALOG_BOX_OFFSET, Boss.DIALOG_BOX_WIDTH, Boss.DIALOG_BOX_HEIGHT);
-        fill(0);
-        textAlign(CENTER, CENTER);
-        rectMode(CENTER);
-        text(printedText, (GameManager.CANVAS_X / 2), GameManager.CANVAS_Y  - (Boss.DIALOG_BOX_HEIGHT / 2) - Boss.DIALOG_BOX_OFFSET, Boss.DIALOG_BOX_WIDTH, Boss.DIALOG_BOX_HEIGHT);
-        pop();
-    }
-
-}
-
 
 class BoltProjectile extends Projectile {
 
