@@ -465,7 +465,7 @@ class Delozier extends Enemy {
 
             this.wait++;
             this.sprite.swapAnimation("bite", false);
-            this.displayDialog(`You win! Congrats! You collected ${gameManager.getByTag(Character.TAG).coins}.`, 100);
+            this.displayDialog(`You win! Congrats! You collected ${gameManager.getByTag(Character.TAG).coins} coins.`, 100);
             return;
         }
 
