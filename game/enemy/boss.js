@@ -110,7 +110,6 @@ class Boss extends Enemy {
             if (this.movements >= 4) {
                 if (!this.wait) {
                     this.wait = 1;
-                    this.invincible = true;
                 }
                 
                 if ((this.wait >= 100) && (this.wait % 10 == 0)) this.shootTarget();
@@ -119,7 +118,6 @@ class Boss extends Enemy {
                 if (this.wait >= 400) {
                     this.wait = 0;
                     this.movements = 0;
-                    this.invincible = false;
 
                     this.sprite.angle = 0;
                     delete this.wait;
