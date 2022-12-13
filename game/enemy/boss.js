@@ -296,8 +296,15 @@ class Boss extends Enemy {
     onCollision(other) {
         if (this.invincible) return;
         if (other instanceof InkProjectile || other instanceof ShotgunProjectile) --this.health;
-        console.log(this.sprite.width);
-        console.log(this.sprite.height);
+    }
+
+    destroy() {
+        for (let x = 0; x < 100; x++) {
+            let rand = roomManager.room.randomPosition();
+            roomManager.room.spawn(new Coin(rand.x, rand.y));
+
+        }
+        super.destroy();
     }
 
     displayDialog(dialog, transitionTime) {
@@ -433,4 +440,61 @@ class Altar extends GameObject {
             menuManager.set("Boss");   
         }    
     }
+}
+
+class Delozier extends Enemy {
+
+    static TAG = "THE_MAN";
+
+    constructor (x, y) { 
+        super(x, y, 0, spriteManager.get("Delozier"));
+        this.tag = "THE_MAN"; 
+        this.talking = false;
+    }
+
+    // no collision
+    onCollision(other) {}
+
+    render () {
+        super.render();
+
+        if (this.talking) {
+            if (!this.wait) this.wait = 0;
+
+            this.wait++;
+            this.sprite.swapAnimation("bite", false);
+            this.displayDialog(`You win! Congrats! You collected ${gameManager.getByTag(Character.TAG).coins}.`, 100);
+            return;
+        }
+
+        if (!this.target) this.target = new p5.Vector(GameManager.CANVAS_X / 2, GameManager.CANVAS_Y / 2);
+
+        this.sprite.cycleAnimation(); // run animation
+        this.sprite.show(this.position.x, this.position.y); // show on screen
+
+        let movement = createVector(this.target.x - this.position.x, this.target.y - this.position.y);
+        if(abs(this.target.x - this.position.x) < 2.25 && abs(this.target.y - this.position.y) < 2.25) this.talking = true;
+
+        movement.setMag(2.25); //speed
+        this.position.add(movement);
+    }
+
+    displayDialog(dialog, transitionTime) {
+        this.transitionTime = transitionTime;
+
+        let characters = Array.from(dialog);
+        let percentage = ceil(characters.length * (this.wait / (this.transitionTime / 2)));
+        if (percentage >= characters.length) percentage = characters.length;
+        let printedText = characters.slice(0, percentage).join("");
+
+        push();
+        fill(255);
+        rect((GameManager.CANVAS_X / 2) - (Boss.DIALOG_BOX_WIDTH / 2), GameManager.CANVAS_Y - Boss.DIALOG_BOX_HEIGHT - Boss.DIALOG_BOX_OFFSET, Boss.DIALOG_BOX_WIDTH, Boss.DIALOG_BOX_HEIGHT);
+        fill(0);
+        textAlign(CENTER, CENTER);
+        rectMode(CENTER);
+        text(printedText, (GameManager.CANVAS_X / 2), GameManager.CANVAS_Y  - (Boss.DIALOG_BOX_HEIGHT / 2) - Boss.DIALOG_BOX_OFFSET, Boss.DIALOG_BOX_WIDTH, Boss.DIALOG_BOX_HEIGHT);
+        pop();
+    }
+
 }
