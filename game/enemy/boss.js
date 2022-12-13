@@ -243,7 +243,6 @@ class Boss extends Enemy {
             if (this.movements >= 4) {
                 if (!this.wait) {
                     this.wait = 1;
-                    this.invincible = true;
                 }
                 
                 if ((this.wait >= 100) && (this.wait % 10 == 0)) this.shootTarget();
@@ -261,7 +260,6 @@ class Boss extends Enemy {
 
                     this.wait = 0;
                     this.movements = 0;
-                    this.invincible = false;
 
                     this.sprite.angle = 0;
                     delete this.wait;
@@ -408,4 +406,31 @@ class RemoraFish extends Enemy {
         }
     }
 
+}
+
+class Altar extends GameObject {
+    static startBossFight = false;
+    constructor(x, y, sprite) { 
+        super(x, y, sprite);
+        this.priority = GameManager.Priority.LOW;
+    }
+
+    render () {
+        if(Altar.startBossFight){
+            this.destroy();
+            roomManager.bossMode();
+            let characterReference = gameManager.getByTag(Character.TAG);
+            characterReference.position = createVector(GameManager.CANVAS_X/4, GameManager.CANVAS_Y/2);
+            characterReference.movementMatrix = [ false, false, false, false ];
+        }
+        else
+            this.sprite.show(this.position.x, this.position.y); // show on screen
+    }
+
+    onCollision(other) {
+        if (!(other instanceof Character)) return;      
+        if(other.coins >= 50){
+            menuManager.set("Boss");   
+        }    
+    }
 }

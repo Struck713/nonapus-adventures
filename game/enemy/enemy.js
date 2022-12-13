@@ -495,8 +495,11 @@ class ElectricEel extends Enemy {
 
 class Delozier extends Enemy {
 
+    static TAG = "THE_MAN";
+
     constructor (x, y) { 
-        super(x, y, 2, spriteManager.get("Delozier")); 
+        super(x, y, 0, spriteManager.get("Delozier"));
+        this.tag = "THE_MAN"; 
         this.talking = false;
     }
 
