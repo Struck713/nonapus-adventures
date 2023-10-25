@@ -60,7 +60,7 @@ class MenuText extends MenuItem {
         textSize(this.size);
         textFont(this.font);
         translate(this.x - (this.size / 2), this.y - (this.size / 2));
-        if (this.font == fontConfa) fill(214,79,104); else fill(0);
+        this.font == fontConfa ? fill(214,79,104) : fill(0);
         text(this.text, this.size, this.size);
         pop();
     }
