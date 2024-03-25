@@ -141,6 +141,11 @@ class Character extends GameObject {
                 this.speedItems = Character.SPEED_POTION_MAX;
                 this.coins = 100;
                 break;
+            case ' ':
+                if(gameManager.getByTag("LASER_SHARK_BOSS")) {
+                    gameManager.getByTag("LASER_SHARK_BOSS").incDialogPhase()
+                }
+                
             default:
                 break;
         }

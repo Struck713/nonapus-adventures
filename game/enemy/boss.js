@@ -340,6 +340,10 @@ class Boss extends Enemy {
         // spawn projectile
         gameManager.queue(new LaserProjectile(this.position.x, this.position.y, angleToTarget, this.sprite.flipped));
     }
+
+    incDialogPhase() {
+        this.dialogPhase++
+    }
 }
 
 class LaserProjectile extends Projectile {
