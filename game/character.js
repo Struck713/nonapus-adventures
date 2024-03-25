@@ -142,7 +142,10 @@ class Character extends GameObject {
                 this.coins = 100;
                 break;
             case ' ':
-                gameManager.getByTag("LASER_SHARK_BOSS").incDialogPhase()
+                if(gameManager.getByTag("LASER_SHARK_BOSS")) {
+                    gameManager.getByTag("LASER_SHARK_BOSS").incDialogPhase()
+                }
+                
             default:
                 break;
         }
